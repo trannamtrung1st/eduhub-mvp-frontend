@@ -1,1 +1,1 @@
-# eduhub-mvp-frontend
+# EduHub - FrontEnd (MVP)
