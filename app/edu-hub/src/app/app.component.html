@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div class="fh5co-loader"></div>
+
+<div id="page">
+    <app-top-nav></app-top-nav>
+    <ng-scrollbar #scrollable="ngScrollbar" class="app-scrollbar" appearance="compact">
+        <router-outlet></router-outlet>
+    </ng-scrollbar>
+</div>
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop" (click)="onGoToTopClicked($event)"><i class="icon-arrow-up"></i></a>
+</div>

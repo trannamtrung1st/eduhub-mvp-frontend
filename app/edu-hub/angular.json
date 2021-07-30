@@ -30,10 +30,36 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/sass"
+              ]
+            },
             "styles": [
+              "src/assets/css/animate.css",
+              "src/assets/css/icomoon.css",
+              "src/assets/sass/bootstrap/bootstrap.scss",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/owl.theme.default.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "src/styles.less",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/modernizr-2.6.2.min.js",
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/jquery.easing.1.3.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.waypoints.min.js",
+              "src/assets/js/jquery.stellar.min.js",
+              "src/assets/js/owl.carousel.min.js",
+              "src/assets/js/jquery.countTo.js",
+              "src/assets/js/jquery.magnific-popup.min.js",
+              "src/assets/js/magnific-popup-options.js",
+              "src/assets/js/main.js"
+            ]
           },
           "configurations": {
             "production": {

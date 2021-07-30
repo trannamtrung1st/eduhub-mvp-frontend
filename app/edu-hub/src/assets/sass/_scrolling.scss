@@ -1,0 +1,8 @@
+.app-scrollbar {
+  --scrollbar-thumb-color: #{rgba($brand-primary, 0.4)} !important;
+  --scrollbar-thumb-hover-color: #{rgba($brand-primary, 0.7)} !important;
+}
+
+.ng-scroll-content {
+  display: block !important;
+}
