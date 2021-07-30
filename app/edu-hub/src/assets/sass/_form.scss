@@ -1,0 +1,19 @@
+.custom-checkbox-lg {
+    .ant-checkbox {
+        .ant-checkbox-inner {
+            width: $custom-checkbox-lg-size;
+            height: $custom-checkbox-lg-size;
+            &::after {
+                top: 56%;
+                left: 33%;
+                transform: rotate(45deg) scale(1.4) translate(-50%, -50%);
+            }
+        }
+    }
+
+    span:not(.ant-checkbox) {
+        font-size: 16px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
