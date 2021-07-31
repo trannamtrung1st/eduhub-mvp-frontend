@@ -1,0 +1,18 @@
+<div class="edh-blog animate-box">
+    <div class="edh-blog__info row">
+        <div class="col-md-4">
+            <a href="#"><img class="img-fluid h-100" [src]="post.thumbnailUrl" alt=""></a>
+        </div>
+        <div class="col-md-8">
+            <div class="edh-blog__heading">
+                <h4><a class="text-dark" href="#">{{ post.title }}</a></h4>
+                <span class="text-secondary">{{ post.createdTime | date: 'medium' }}</span>
+                &nbsp;
+                <span class="comment"><a href="">{{ post.commentCount }}<i class="icon-speech-bubble"></i></a></span>
+            </div>
+            <p class="edh-blog__description">
+                {{ post.description }}
+            </p>
+        </div>
+    </div>
+</div>

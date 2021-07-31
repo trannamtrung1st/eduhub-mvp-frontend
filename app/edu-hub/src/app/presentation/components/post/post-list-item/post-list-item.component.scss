@@ -1,0 +1,23 @@
+@import "variables";
+
+.edh-blog {
+    &__heading {
+        h4 {
+            margin-bottom: 0;
+        }
+        span {
+            font-size: small;
+        }
+        i {
+            position: relative;
+            top: 1px;
+            left: 2px;
+        }
+    }
+    &__description {
+        max-height: 100px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

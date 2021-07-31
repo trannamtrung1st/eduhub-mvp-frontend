@@ -1,0 +1,21 @@
+@import "variables";
+@import "mixin";
+
+.edh-bg {
+    background-image: url("../../../../assets/images/login-bg.jpg");
+    background-size: cover;
+}
+
+.edh-logo-container {
+    @include absoluteCenter();
+    height: 200px;
+    background-color: rgba($brand-black, 0.5);
+
+    app-logo {
+        @include absoluteCenter();
+    }
+}
+
+.edh-login-container {
+    background-color: $brand-white;
+}

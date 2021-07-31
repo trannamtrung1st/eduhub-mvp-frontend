@@ -1,0 +1,4 @@
+<div class="edh-logo" [class.logo-lg]="size === LogoSize.large" [class.logo-md]="size === LogoSize.medium">
+    <a *ngIf="!useHref" [routerLink]="logoUrl">Edu<span>Hub</span></a>
+    <a *ngIf="useHref" [href]="logoUrl">Edu<span>Hub</span></a>
+</div>

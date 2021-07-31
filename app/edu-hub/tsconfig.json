@@ -21,20 +21,29 @@
       "dom"
     ],
     "paths": {
-      "@app/*": [
-        "src/app/*"
-      ],
       "@assets/*": [
         "src/assets/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
       ],
       "@cross/*": [
         "src/app/cross/*"
       ],
-      "@pages/*": [
-        "src/app/pages/*"
-      ],
       "@domains/*": [
         "src/app/domains/*"
+      ],
+      "@infras/*": [
+        "src/app/infras/*"
+      ],
+      "@persistence/*": [
+        "src/app/persistence/*"
+      ],
+      "@presentation/*": [
+        "src/app/presentation/*"
+      ],
+      "@app/*": [
+        "src/app/*"
       ]
     }
   },
