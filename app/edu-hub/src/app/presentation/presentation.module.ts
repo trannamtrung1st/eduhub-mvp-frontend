@@ -8,15 +8,15 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { AppRoutingModule } from '@app/app-routing.module';
 
-import { TopNavComponent } from './layout/normal/top-nav/top-nav.component';
-import { NormalLayoutComponent } from './layout/normal/normal-layout.component';
+import { TopNavComponent } from './layouts/normal/top-nav/top-nav.component';
+import { NormalLayoutComponent } from './layouts/normal/normal-layout.component';
 import { LogoComponent } from './components/cross/logo/logo.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { VideoListItemComponent } from './components/video/video-list-item/video-list-item.component';
 import { PostListItemComponent } from './components/post/post-list-item/post-list-item.component';
 
-import { NavDropdownDirective } from './layout/normal/top-nav/nav-dropdown/nav-dropdown.directive';
+import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-dropdown.directive';
 
 @NgModule({
   declarations: [
