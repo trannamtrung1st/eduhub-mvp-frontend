@@ -1,4 +1,4 @@
-import { PAGINATION } from "@app/constants";
+import { PAGINATION } from "../constants";
 
 export class PaginationModel {
     current: number;

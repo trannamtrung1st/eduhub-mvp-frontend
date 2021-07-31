@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/edu-hub",
+            "outputPath": "dist/edu-hub/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -36,29 +36,19 @@
               ]
             },
             "styles": [
-              "src/assets/css/animate.css",
-              "src/assets/css/icomoon.css",
-              "src/assets/sass/bootstrap/bootstrap.scss",
-              "src/assets/css/magnific-popup.css",
-              "src/assets/css/owl.carousel.min.css",
-              "src/assets/css/owl.theme.default.min.css",
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/magnific-popup/dist/magnific-popup.css",
+              "src/assets/css/animate.css",
+              "src/assets/css/icomoon.css",
               "src/styles.less",
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/js/modernizr-2.6.2.min.js",
-              "src/assets/js/jquery.min.js",
-              "src/assets/js/jquery.easing.1.3.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/jquery.waypoints.min.js",
-              "src/assets/js/jquery.stellar.min.js",
-              "src/assets/js/owl.carousel.min.js",
-              "src/assets/js/jquery.countTo.js",
-              "src/assets/js/jquery.magnific-popup.min.js",
-              "src/assets/js/magnific-popup-options.js",
-              "src/assets/js/main.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/magnific-popup/dist/jquery.magnific-popup.min.js"
             ]
           },
           "configurations": {
@@ -129,6 +119,70 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/edu-hub/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/sass"
+              ]
+            },
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "edu-hub:build:development",
+              "serverTarget": "edu-hub:server:development"
+            },
+            "production": {
+              "browserTarget": "edu-hub:build:production",
+              "serverTarget": "edu-hub:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "edu-hub:build:production",
+              "serverTarget": "edu-hub:server:production"
+            },
+            "development": {
+              "browserTarget": "edu-hub:build:development",
+              "serverTarget": "edu-hub:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

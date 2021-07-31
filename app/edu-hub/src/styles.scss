@@ -1,11 +1,14 @@
-@import "assets/sass/bootstrap/functions";
-@import "assets/sass/bootstrap/mixins";
-@import "assets/sass/bootstrap/variables";
-@import "assets/sass/bootstrap/mixins/breakpoints";
-@import "assets/sass/variables";
-@import "assets/sass/sizing";
-@import "assets/sass/scrolling";
-@import "assets/sass/form";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins/breakpoints";
+
+@import "variables";
+@import "mixin";
+@import "sizing";
+@import "scrolling";
+@import "form";
+@import "antdCustom";
 
 /* =======================================================
 *
@@ -302,8 +305,8 @@ figure {
 #fh5co-explore,
 #fh5co-pricing,
 #fh5co-testimonial,
-#eduhub-started,
-#eduhub-blog,
+#edh-started,
+#edh-blog,
 #fh5co-footer {
     padding: 7em 0;
     clear: both;
@@ -312,8 +315,8 @@ figure {
     }
 }
 
-#eduhub-post,
-#eduhub-browsing {
+#edh-post,
+#edh-browsing {
     clear: both;
 }
 
@@ -423,7 +426,7 @@ figure {
     }
 }
 
-.eduhub-browsing-info {
+.edh-browsing-info {
     ul {
         padding: 0;
         margin: 0;
@@ -471,12 +474,12 @@ figure {
     padding-bottom: 4em;
 }
 
-.eduhub-heading {
+.edh-heading {
     margin-bottom: 2em;
-    &.eduhub-heading-sm {
+    &.edh-heading-sm {
         margin-bottom: 1em;
     }
-    &.eduhub-heading-bottom {
+    &.edh-heading-bottom {
         border-bottom: 5px solid $brand-secondary;
     }
     h2 {
@@ -639,7 +642,7 @@ figure {
     pointer-events: none;
 }
 
-#eduhub-started {
+#edh-started {
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
@@ -656,7 +659,7 @@ figure {
         background: rgba($brand-black, 0.4);
     }
 
-    .eduhub-heading {
+    .edh-heading {
         h2 {
             color: $brand-white;
             margin-bottom: 20px !important;
@@ -885,32 +888,6 @@ figure {
                 padding-left: 20px;
                 display: none;
             }
-            &.offcanvas-has-dropdown {
-                > a {
-                    display: block;
-                    position: relative;
-                    &:after {
-                        position: absolute;
-                        right: 0px;
-                        @include icomoon;
-                        content: "\e921";
-                        font-size: 20px;
-                        color: rgba(255, 255, 255, 0.2);
-                        @include transition(0.5s);
-                    }
-                }
-                &.active {
-                    a {
-                        &:after {
-                            -webkit-transform: rotate(-180deg);
-                            -moz-transform: rotate(-180deg);
-                            -ms-transform: rotate(-180deg);
-                            -o-transform: rotate(-180deg);
-                            transform: rotate(-180deg);
-                        }
-                    }
-                }
-            }
         }
     }
 }
@@ -957,7 +934,7 @@ figure {
 }
 
 // Burger Menu
-.eduhub-nav-toggle {
+.edh-nav-toggle {
     width: 25px;
     height: 25px;
     cursor: pointer;
@@ -996,7 +973,7 @@ figure {
             transition: all 0.2s ease-out;
         }
     }
-    &.eduhub-nav-white {
+    &.edh-nav-white {
         > i {
             color: $brand-white;
             background: $brand-white;
@@ -1008,22 +985,22 @@ figure {
     }
 }
 
-.eduhub-nav-toggle i::before {
+.edh-nav-toggle i::before {
     top: -7px;
 }
-.eduhub-nav-toggle i::after {
+.edh-nav-toggle i::after {
     bottom: -7px;
 }
-.eduhub-nav-toggle:hover i::before {
+.edh-nav-toggle:hover i::before {
     top: -10px;
 }
-.eduhub-nav-toggle:hover i::after {
+.edh-nav-toggle:hover i::after {
     bottom: -10px;
 }
-.eduhub-nav-toggle.active i {
+.edh-nav-toggle.active i {
     background: transparent;
 }
-.eduhub-nav-toggle.active i::before {
+.edh-nav-toggle.active i::before {
     top: 0;
     -webkit-transform: rotateZ(45deg);
     -moz-transform: rotateZ(45deg);
@@ -1031,7 +1008,7 @@ figure {
     -o-transform: rotateZ(45deg);
     transform: rotateZ(45deg);
 }
-.eduhub-nav-toggle.active i::after {
+.edh-nav-toggle.active i::after {
     bottom: 0;
     -webkit-transform: rotateZ(-45deg);
     -moz-transform: rotateZ(-45deg);
@@ -1039,7 +1016,7 @@ figure {
     -o-transform: rotateZ(-45deg);
     transform: rotateZ(-45deg);
 }
-.eduhub-nav-toggle {
+.edh-nav-toggle {
     position: absolute;
     right: 0px;
     top: 65px;
@@ -1263,14 +1240,4 @@ figure {
 }
 .row-pb-sm {
     padding-bottom: 2em !important;
-}
-
-.fh5co-loader {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: url(assets/images/loader.gif) center no-repeat #fff;
 }

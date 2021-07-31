@@ -1,0 +1,24 @@
+@import "variables";
+
+.edh-logo {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-weight: 700;
+    font-family: $font-primary;
+    a {
+        color: $brand-white;
+    }
+    span {
+        color: $brand-primary;
+    }
+
+    &.logo-md {
+        font-size: 40px;
+    }
+
+    &.logo-lg {
+        font-size: 67px;
+    }
+}
