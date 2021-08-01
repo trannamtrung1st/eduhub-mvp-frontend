@@ -180,11 +180,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   private _scrollTo(elementRef: ElementRef) {
-    const scrollBar = this._globalService.pageScrollBar;
+    const pageEl = document.querySelector('html') as HTMLElement;
     const goToElement = elementRef.nativeElement as HTMLElement;
     const offsetParent = goToElement.offsetParent as HTMLElement;
     const nav = document.querySelector('.edh-nav') as HTMLElement;
-    scrollBar?.scrollTo({
+    this._globalService.scrollManager.scrollTo(pageEl, {
       top: offsetParent.offsetTop + goToElement.offsetTop - nav.offsetHeight - goToElement.clientHeight
     });
   }

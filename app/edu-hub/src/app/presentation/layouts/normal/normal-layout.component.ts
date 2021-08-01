@@ -1,7 +1,6 @@
 import { AfterContentChecked, AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-import { NgScrollbar } from 'ngx-scrollbar';
 declare let $: any;
 
 import { fading, VisibilityController } from '@cross/animation/animation-helper';
@@ -16,9 +15,7 @@ import { GlobalService } from '@core/global/services/global.service';
     fading(),
   ]
 })
-export class NormalLayoutComponent implements OnInit, AfterViewInit, AfterContentChecked {
-
-  @ViewChild(NgScrollbar) private _scrollbarRef?: NgScrollbar;
+export class NormalLayoutComponent implements OnInit, AfterContentChecked {
 
   loaderVisibility: VisibilityController;
 
@@ -35,30 +32,26 @@ export class NormalLayoutComponent implements OnInit, AfterViewInit, AfterConten
     }
   }
 
-  ngAfterViewInit(): void {
-    this._globalService.pageScrollBar = this._scrollbarRef;
-    this._scrollbarRef?.scrolled.subscribe(this._onPageScrolled);
-  }
-
   ngAfterContentChecked(): void {
     this.loaderVisibility.hide();
   }
 
   onGoToTopClicked(event: MouseEvent) {
     event.preventDefault();
-    const offsetTop = document.querySelector('html')?.offsetTop;
-    this._scrollbarRef?.scrollTo({
+    const pageEl = document.querySelector('html') as HTMLElement;
+    const offsetTop = pageEl.offsetTop;
+    this._globalService.scrollManager.scrollTo(pageEl, {
       top: offsetTop,
       duration: 500
     });
     return false;
   }
 
-  private _onPageScrolled(scrollEvent: any) {
-    const pageTarget = scrollEvent.target;
-    const scrollTop = pageTarget.scrollTop;
+  onPageScrolled(_: any) {
     const btnGoToTop = document.querySelector('.gototop.js-top');
-    if (scrollTop > 200) {
+    const pageEl = document.querySelector('html') as HTMLElement;
+
+    if (pageEl.scrollTop > 200) {
       btnGoToTop?.classList.add('active');
     } else {
       btnGoToTop?.classList.remove('active');

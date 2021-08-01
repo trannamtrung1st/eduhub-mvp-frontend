@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
 
-import { CoreModule } from '@core/core.module';
+import { SmoothScrollManager } from 'ngx-scrollbar/smooth-scroll';
 
-import { NgScrollbar } from 'ngx-scrollbar';
+import { CoreModule } from '@core/core.module';
 
 @Injectable({
   providedIn: CoreModule
 })
 export class GlobalService {
 
-  private _pageScrollBarRef?: NgScrollbar;
-
-  constructor() { }
-
-  get pageScrollBar(): NgScrollbar | undefined {
-    return this._pageScrollBarRef;
+  constructor(private _scrollManager: SmoothScrollManager) {
   }
 
-  set pageScrollBar(ref: NgScrollbar | undefined) {
-    this._pageScrollBarRef = ref;
+  get scrollManager(): SmoothScrollManager {
+    return this._scrollManager;
   }
 }
