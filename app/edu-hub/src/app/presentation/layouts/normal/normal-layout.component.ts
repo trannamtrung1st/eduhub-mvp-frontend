@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 declare let $: any;
@@ -15,7 +15,7 @@ import { GlobalService } from '@core/global/services/global.service';
     fading(),
   ]
 })
-export class NormalLayoutComponent implements OnInit, AfterContentChecked {
+export class NormalLayoutComponent implements OnInit {
 
   loaderVisibility: VisibilityController;
 
@@ -28,12 +28,9 @@ export class NormalLayoutComponent implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
+      this.loaderVisibility.hide();
       this._initMagnificPopup();
     }
-  }
-
-  ngAfterContentChecked(): void {
-    this.loaderVisibility.hide();
   }
 
   onGoToTopClicked(event: MouseEvent) {
