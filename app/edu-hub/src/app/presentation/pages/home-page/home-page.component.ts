@@ -1,8 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { cloneDeep } from 'lodash';
+import { withLatestFrom } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
 
 import { CONTENT_SORT_BY } from './view-models/constants';
+import { VideoFilterSortBy } from '@core/video/constants';
+import { PostFilterSortBy } from '@core/post/constants';
 
 import { getEnumByKey } from '@cross/enum/enum-helper';
 
@@ -12,26 +17,31 @@ import { VideoViewModel } from './view-models/video-view.model';
 import { FilterViewModel } from './view-models/filter-view.model';
 import { SortByViewModel } from './view-models/sort-by.model';
 import { PaginationModel } from '@cross/pagination/models/pagination.model';
-import { GetAllSubjectQuery } from '@core/subject/queries/get-all-subject.query';
-import { VideoFilterQuery } from '@core/video/queries/video-filter.query';
-import { VideoFilterSortBy } from '@core/video/constants';
-import { PostFilterQuery } from '@core/post/queries/post-filter.query';
-import { PostFilterSortBy } from '@core/post/constants';
+import { FilterResponseModel } from '@cross/filter/models/filter-response.model';
+import { SubjectModel } from '@core/subject/models/subject.model';
+import { SubjectQueries } from '@core/subject/queries/subject.queries';
+import { VideoQueries } from '@core/video/queries/video.queries';
+import { VideoModel } from '@core/video/models/video.model';
+import { PostQueries } from '@core/post/queries/post.queries';
+import { PostModel } from '@core/post/models/post.model';
 
-import { SubjectService } from '@core/subject/services/subject.service';
-import { VideoService } from '@core/video/services/video.service';
-import { PostService } from '@core/post/services/post.service';
-import { GlobalStoreService } from '@core/global/global-store.service';
+import { AllSubjectsState } from '@core/subject/states/all-subjects.state';
+import { FilteredVideosState } from '@core/video/states/filtered-videos.state';
+import { FilteredPostsState } from '@core/post/states/filtered-posts.state';
+
+import { GlobalService } from '@core/global/services/global.service';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 
-  @ViewChild("videoGoTo") private _videoGoToRef?: ElementRef;
-  @ViewChild("postGoTo") private _postGoToRef?: ElementRef;
+  @ViewChild("videoGoTo") private _videoGoToRef!: ElementRef;
+  @ViewChild("postGoTo") private _postGoToRef!: ElementRef;
+
+  CONTENT_SORT_BY = CONTENT_SORT_BY;
 
   videos: VideoViewModel[];
   posts: PostViewModel[];
@@ -41,24 +51,37 @@ export class HomePageComponent implements OnInit {
   videoPaging: PaginationModel;
   filterModel: FilterViewModel;
 
-  CONTENT_SORT_BY = CONTENT_SORT_BY;
+  @Select(AllSubjectsState) _subjects$!: Observable<SubjectModel[]>;
+  @Select(AllSubjectsState.names) _subjectNames$!: Observable<string>;
+  @Select(FilteredVideosState) _videos$!: Observable<FilterResponseModel<VideoModel>>;
+  @Select(FilteredPostsState) _posts$!: Observable<FilterResponseModel<PostModel>>;
+  private _subscriptions: Subscription[];
 
-  constructor(private _subjectService: SubjectService,
-    private _videoService: VideoService,
-    private _postService: PostService,
-    private _globalStoreService: GlobalStoreService) {
+  constructor(
+    private _store: Store,
+    private _globalService: GlobalService) {
     this.subjects = [];
     this.videos = [];
     this.posts = [];
     this.videoPaging = new PaginationModel();
     this.postPaging = new PaginationModel();
     this.filterModel = new FilterViewModel();
+    this._subscriptions = [];
   }
 
   ngOnInit(): void {
     this._getAllSubjects();
     this._getVideos();
     this._getPosts();
+
+    // [TODO]: demo only, need manual unsubscription
+    const subjectNamesSub = this._subjectNames$.subscribe(subjectNames => console.log(subjectNames));
+    this._subscriptions.push(subjectNamesSub);
+  }
+
+  ngOnDestroy(): void {
+    // Or instead use AsyncPipe in template
+    this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   onSortChanged(sortByModel: SortByViewModel) {
@@ -93,14 +116,16 @@ export class HomePageComponent implements OnInit {
   }
 
   private _getAllSubjects() {
-    const query = new GetAllSubjectQuery();
-    this._subjectService.getAll(query).subscribe(subjects => {
-      this.subjects = subjects.map(subject => {
-        const clonedSubject = cloneDeep(subject) as SubjectViewModel;
-        clonedSubject.selected = false;
-        return clonedSubject;
+    const query = new SubjectQueries.GetAll();
+    this._store.dispatch(query)
+      .pipe(withLatestFrom(this._subjects$))
+      .subscribe(([_, subjects]) => {
+        this.subjects = subjects.map(subject => {
+          const clonedSubject = cloneDeep(subject) as SubjectViewModel;
+          clonedSubject.selected = false;
+          return clonedSubject;
+        });
       });
-    });
   }
 
   private _getVideos(isUpdatePaging: boolean = false) {
@@ -108,8 +133,10 @@ export class HomePageComponent implements OnInit {
       this.videoPaging.current = 1;
     }
 
-    const clonedFilterModel: any = cloneDeep(this.filterModel);
-    const query = clonedFilterModel as VideoFilterQuery;
+    const clonedFilterModel = cloneDeep(this.filterModel);
+    const query = new VideoQueries.Filter();
+    Object.assign(query, clonedFilterModel);
+
     query.skip = this.videoPaging.skip;
     query.take = this.videoPaging.pageSize;
 
@@ -119,10 +146,12 @@ export class HomePageComponent implements OnInit {
       query.isDesc = isDesc;
     }
 
-    this._videoService.filter(query).subscribe(filterResponse => {
-      this.videos = filterResponse.records.map(video => cloneDeep(video));
-      this.videoPaging.totalRecords = filterResponse.totalRecords;
-    });
+    this._store.dispatch(query)
+      .pipe(withLatestFrom(this._videos$))
+      .subscribe(([_, videos]) => {
+        this.videos = videos.records.map(video => cloneDeep(video));
+        this.videoPaging.totalRecords = videos.totalRecords;
+      });
   }
 
   private _getPosts(isUpdatePaging: boolean = false) {
@@ -131,7 +160,8 @@ export class HomePageComponent implements OnInit {
     }
 
     const clonedFilterModel: any = cloneDeep(this.filterModel);
-    const query = clonedFilterModel as PostFilterQuery;
+    const query = new PostQueries.Filter();
+    Object.assign(query, clonedFilterModel);
     query.skip = this.postPaging.skip;
     query.take = this.postPaging.pageSize;
 
@@ -141,15 +171,17 @@ export class HomePageComponent implements OnInit {
       query.isDesc = isDesc;
     }
 
-    this._postService.filter(query).subscribe(filterResponse => {
-      this.posts = filterResponse.records.map(post => cloneDeep(post));
-      this.postPaging.totalRecords = filterResponse.totalRecords;
-    });
+    this._store.dispatch(query)
+      .pipe(withLatestFrom(this._posts$))
+      .subscribe(([_, posts]) => {
+        this.posts = posts.records.map(post => cloneDeep(post));
+        this.postPaging.totalRecords = posts.totalRecords;
+      });
   }
 
-  private _scrollTo(elementRef: ElementRef | undefined) {
-    const scrollBar = this._globalStoreService.pageScrollBar;
-    const goToElement = elementRef?.nativeElement as HTMLElement;
+  private _scrollTo(elementRef: ElementRef) {
+    const scrollBar = this._globalService.pageScrollBar;
+    const goToElement = elementRef.nativeElement as HTMLElement;
     const offsetParent = goToElement.offsetParent as HTMLElement;
     const nav = document.querySelector('.edh-nav') as HTMLElement;
     scrollBar?.scrollTo({

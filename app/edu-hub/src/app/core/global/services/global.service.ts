@@ -7,7 +7,7 @@ import { NgScrollbar } from 'ngx-scrollbar';
 @Injectable({
   providedIn: CoreModule
 })
-export class GlobalStoreService {
+export class GlobalService {
 
   private _pageScrollBarRef?: NgScrollbar;
 

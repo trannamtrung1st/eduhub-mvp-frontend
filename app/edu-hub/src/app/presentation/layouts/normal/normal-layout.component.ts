@@ -6,7 +6,7 @@ declare let $: any;
 
 import { fading, VisibilityController } from '@cross/animation/animation-helper';
 
-import { GlobalStoreService } from '@core/global/global-store.service';
+import { GlobalService } from '@core/global/services/global.service';
 
 @Component({
   selector: 'app-normal-layout',
@@ -24,7 +24,7 @@ export class NormalLayoutComponent implements OnInit, AfterViewInit, AfterConten
 
   constructor(
     @Inject(PLATFORM_ID) private _platformId: object,
-    private _globalStoreService: GlobalStoreService
+    private _globalService: GlobalService
   ) {
     this.loaderVisibility = new VisibilityController();
   }
@@ -36,11 +36,8 @@ export class NormalLayoutComponent implements OnInit, AfterViewInit, AfterConten
   }
 
   ngAfterViewInit(): void {
-    this._globalStoreService.pageScrollBar = this._scrollbarRef;
-
-    if (this._scrollbarRef) {
-      this._scrollbarRef.scrolled.subscribe(this._onPageScrolled);
-    }
+    this._globalService.pageScrollBar = this._scrollbarRef;
+    this._scrollbarRef?.scrolled.subscribe(this._onPageScrolled);
   }
 
   ngAfterContentChecked(): void {

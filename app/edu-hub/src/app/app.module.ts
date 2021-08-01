@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { NgxsModule } from '@ngxs/store';
+
+import { environment } from '@environments/environment';
+
 import { CoreModule } from '@core/core.module';
 import { CrossModule } from '@cross/cross.module';
 import { PersistenceModule } from '@persistence/persistence.module';
@@ -15,6 +19,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'edu-hub' }),
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production
+    }),
     AppRoutingModule,
     CrossModule,
     CoreModule,
