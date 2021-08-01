@@ -8,7 +8,6 @@
 @import "sizing";
 @import "scrolling";
 @import "form";
-@import "antdCustom";
 
 /* =======================================================
 *
@@ -307,7 +306,7 @@ figure {
 #fh5co-testimonial,
 #edh-started,
 #edh-blog,
-#fh5co-footer {
+#edh-footer {
     padding: 7em 0;
     clear: both;
     @media screen and (max-width: media-breakpoint-only(sm)) {
@@ -801,9 +800,9 @@ figure {
     }
 }
 
-#fh5co-footer {
+#edh-footer {
     background: #efefef;
-    .fh5co-footer-links {
+    .edh-footer-links {
         padding: 0;
         margin: 0;
         li {
@@ -1240,4 +1239,14 @@ figure {
 }
 .row-pb-sm {
     padding-bottom: 2em !important;
+}
+
+// Resolve conflict between Bootstrap and ng-zorro
+label {
+    margin-bottom: unset;
+}
+
+// Customize ng-zorro antd icon
+.anticon {
+    vertical-align: 0.125em;
 }

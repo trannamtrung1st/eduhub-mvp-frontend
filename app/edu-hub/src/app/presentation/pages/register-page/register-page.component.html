@@ -1,0 +1,112 @@
+<div class="edh-bg vw-100 vh-100 position-absolute">
+</div>
+<div class="edh-logo-container text-center vw-100 position-absolute">
+    <app-logo class="position-absolute" [useHref]="true" [size]="logoSize"></app-logo>
+</div>
+<div class="container vh-100">
+    <div class="row h-100">
+        <div class="edh-register-container col-5 h-100">
+            <div class="row h-100">
+                <div class="col-12 my-auto px-5">
+                    <h1 class="text-center">Create an account</h1>
+                    <form nz-form [formGroup]="registerFormGroup" (ngSubmit)="onFormSubmitted()">
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+                                <input nz-input formControlName="email" id="email" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+                                <input nz-input type="password" id="password" formControlName="password"
+                                    (ngModelChange)="updateConfirmValidator()" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password
+                            </nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+                                <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+                                <ng-template #errorTpl let-control>
+                                    <ng-container *ngIf="control.hasError('required')">Please confirm your password!
+                                    </ng-container>
+                                    <ng-container *ngIf="control.hasError('confirm')">
+                                        Two passwords that you enter is inconsistent!
+                                    </ng-container>
+                                </ng-template>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="nickname" nzRequired
+                                nzTooltipTitle="What do you want other to call you">
+                                <span>Nickname</span>
+                            </nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
+                                <input nz-input id="nickname" formControlName="nickname" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="phoneNumber" nzRequired>Phone Number
+                            </nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24"
+                                [nzValidateStatus]="registerFormGroup.controls['phoneNumber']"
+                                nzErrorTip="Please input your phone number!">
+                                <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                                    <ng-template #addOnBeforeTemplate>
+                                        <nz-select formControlName="phoneNumberPrefix" class="phone-select">
+                                            <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+                                            <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+                                        </nz-select>
+                                    </ng-template>
+                                    <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="website" nzRequired>Website</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input website!">
+                                <input nz-input id="website" formControlName="website" placeholder="Website" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nzJustify="space-around">
+                            <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="captcha" nzRequired
+                                nzTooltipTitle="Please click 'Get captcha'" [nzTooltipIcon]="captchaTooltipIcon">
+                                Captcha
+                            </nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input the captcha you got!"
+                                nzExtra="We must make sure that your are a human.">
+                                <div nz-row [nzGutter]="8">
+                                    <div nz-col [nzSpan]="12">
+                                        <input nz-input formControlName="captcha" id="captcha" />
+                                    </div>
+                                    <div nz-col [nzSpan]="12">
+                                        <button nz-button>Get captcha</button>
+                                    </div>
+                                </div>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nz-row class="register-area">
+                            <nz-form-control [nzSpan]="14" [nzOffset]="9">
+                                <label nz-checkbox formControlName="agree">
+                                    <span>
+                                        I have read the
+                                        <a>agreement</a>
+                                    </span>
+                                </label>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item nz-row class="register-area" nzJustify="center">
+                            <nz-form-control [nzSpan]="14">
+                                <button class="w-100" nz-button nzType="primary">Register</button>
+                            </nz-form-control>
+                            <div nz-col nzSpan="24" class="text-center mt-2">
+                                Or <a [routerLink]="A_ROUTING.login">login now!</a>
+                            </div>
+                        </nz-form-item>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

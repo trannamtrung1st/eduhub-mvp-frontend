@@ -6,6 +6,41 @@
 <div class="container vh-100">
     <div class="row h-100">
         <div class="edh-login-container col-4 offset-8 h-100">
+            <div class="row h-100">
+                <div class="col-12 my-auto px-5">
+                    <h1 class="text-center">Getting started</h1>
+                    <form nz-form [formGroup]="loginFormGroup" class="login-form d-block my-auto"
+                        (ngSubmit)="onFormSubmitted()">
+                        <nz-form-item class="pb-1">
+                            <nz-form-control nzErrorTip="Please input your Username!">
+                                <nz-input-group nzPrefixIcon="user">
+                                    <input type="text" nz-input formControlName="userName" placeholder="Username" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item class="pb-1">
+                            <nz-form-control nzErrorTip="Please input your Password!">
+                                <nz-input-group nzPrefixIcon="lock">
+                                    <input type="password" nz-input formControlName="password" placeholder="Password" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <div nz-row>
+                            <div nz-col [nzSpan]="12">
+                                <label nz-checkbox formControlName="remember">
+                                    <span>Remember me</span>
+                                </label>
+                            </div>
+                            <div nz-col [nzSpan]="12">
+                                <a class="float-right">Forgot password</a>
+                            </div>
+                        </div>
+                        <button nz-button class="w-100 my-3" [nzType]="'primary'">Log in</button>
+                        Or
+                        <a [routerLink]="A_ROUTING.registration">register now!</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

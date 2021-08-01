@@ -6,6 +6,7 @@ import { ROUTING } from './constants';
 import { NormalLayoutComponent } from '@presentation/layouts/normal/normal-layout.component';
 import { HomePageComponent } from '@presentation/pages/home-page/home-page.component';
 import { LoginPageComponent } from '@presentation/pages/login-page/login-page.component';
+import { RegisterPageComponent } from '@presentation/pages/register-page/register-page.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     ]
   },
   { path: ROUTING.login, component: LoginPageComponent },
+  { path: ROUTING.registration, component: RegisterPageComponent },
   { path: '**', redirectTo: ROUTING.home }
 ];
 

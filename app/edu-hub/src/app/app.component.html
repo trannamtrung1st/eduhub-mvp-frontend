@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<ng-container *ngIf="uiSupported; else uiNotSupported">
+    <router-outlet></router-outlet>
+</ng-container>
+<ng-template #uiNotSupported>
+    <div class="container h-100">
+        <div class="row h-100">
+            <p class="col-12 my-auto text-center">
+                Responsiveness is not supported yet!
+                <br />
+                Please switch to a computer browser for a better experience.
+                <br />
+                Sorry for this inconvenience.
+            </p>
+        </div>
+    </div>
+</ng-template>

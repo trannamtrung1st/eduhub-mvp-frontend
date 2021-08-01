@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from '@app/app-routing.module';
 
@@ -18,6 +23,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { VideoListItemComponent } from './components/video/video-list-item/video-list-item.component';
 import { PostListItemComponent } from './components/post/post-list-item/post-list-item.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-dropdown.directive';
 
@@ -30,19 +36,25 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     VideoListItemComponent,
     PostListItemComponent,
     HomePageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    RegisterPageComponent
   ],
   imports: [
     CommonModule,
     NgxsModule.forFeature(STATES),
     NgScrollbarModule,
     AppRoutingModule,
-    FormsModule,
     NzPaginationModule,
     NzFormModule,
     NzCheckboxModule,
+    NzButtonModule,
+    NzIconModule,
+    NzInputModule,
+    NzSelectModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
 })
 export class PresentationModule { }
