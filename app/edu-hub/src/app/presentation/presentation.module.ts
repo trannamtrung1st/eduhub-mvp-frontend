@@ -6,7 +6,10 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from '@app/app-routing.module';
+
+import { STATES } from './constants';
 
 import { TopNavComponent } from './layouts/normal/top-nav/top-nav.component';
 import { NormalLayoutComponent } from './layouts/normal/normal-layout.component';
@@ -31,6 +34,7 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
   ],
   imports: [
     CommonModule,
+    NgxsModule.forFeature(STATES),
     NgScrollbarModule,
     AppRoutingModule,
     FormsModule,
