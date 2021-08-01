@@ -1,3 +1,5 @@
+import { InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline } from '@ant-design/icons-angular/icons';
+
 import { FilteredPostsState } from "@core/post/states/filtered-posts.state";
 import { PostState } from "@core/post/states/post.state";
 import { AllSubjectsState } from "@core/subject/states/all-subjects.state";
@@ -17,4 +19,8 @@ export const STATES = [
     // Post
     PostState,
     FilteredPostsState
+];
+
+export const APP_NZ_ICONS = [
+    InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline
 ];

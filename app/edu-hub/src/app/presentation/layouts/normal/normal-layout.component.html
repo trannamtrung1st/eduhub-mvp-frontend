@@ -1,11 +1,9 @@
 <div class="edh-loader" *ngIf="loaderVisibility.visible" [@visibility]="loaderVisibility.state"
     (@visibility.done)="loaderVisibility.onAnimationDone($event)"></div>
 
-<div id="page">
+<div id="page" (window:scroll)="onPageScrolled($event)">
     <app-top-nav></app-top-nav>
-    <ng-scrollbar #scrollable="ngScrollbar" class="app-scrollbar" appearance="compact">
-        <router-outlet></router-outlet>
-    </ng-scrollbar>
+    <router-outlet></router-outlet>
 </div>
 
 <div class="gototop js-top">

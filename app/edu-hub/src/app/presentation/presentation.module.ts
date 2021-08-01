@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { SmoothScrollModule } from 'ngx-scrollbar/smooth-scroll';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -14,7 +15,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from '@app/app-routing.module';
 
-import { STATES } from './constants';
+import { APP_NZ_ICONS, STATES } from './constants';
 
 import { TopNavComponent } from './layouts/normal/top-nav/top-nav.component';
 import { NormalLayoutComponent } from './layouts/normal/normal-layout.component';
@@ -43,12 +44,13 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     CommonModule,
     NgxsModule.forFeature(STATES),
     NgScrollbarModule,
+    SmoothScrollModule,
     AppRoutingModule,
     NzPaginationModule,
     NzFormModule,
     NzCheckboxModule,
     NzButtonModule,
-    NzIconModule,
+    NzIconModule.forChild(APP_NZ_ICONS),
     NzInputModule,
     NzSelectModule,
     BrowserAnimationsModule,
