@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { orderBy } from 'lodash';
 
 import { PostFilterSortBy, POST_STATES } from '../constants';
@@ -11,9 +11,15 @@ import { PostQueries } from '../queries/post.queries';
 
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
-@State<FilterResponseModel<PostModel>>({
+class FilteredPostsStateModel {
+
+    constructor(public posts = new FilterResponseModel<PostModel>()) {
+    }
+}
+
+@State<FilteredPostsStateModel>({
     name: POST_STATES.post.filteredPosts.name,
-    defaults: new FilterResponseModel<PostModel>()
+    defaults: new FilteredPostsStateModel()
 })
 @Injectable()
 export class FilteredPostsState {
@@ -21,8 +27,13 @@ export class FilteredPostsState {
     constructor(private _databaseService: MockDatabaseService) {
     }
 
+    @Selector()
+    static posts(state: FilteredPostsStateModel) {
+        return state.posts;
+    }
+
     @Action(PostQueries.Filter)
-    filter(context: StateContext<FilterResponseModel<PostModel>>, query: PostQueries.Filter) {
+    filter(context: StateContext<FilteredPostsStateModel>, query: PostQueries.Filter) {
         const srcPosts = this._databaseService.database.posts;
         let posts = [...srcPosts];
 
@@ -44,9 +55,11 @@ export class FilteredPostsState {
         const totalRecords = posts.length;
         posts = posts.slice(query.skip, query.skip + query.take);
 
-        context.setState({
-            records: posts,
-            totalRecords
+        context.patchState({
+            posts: {
+                records: posts,
+                totalRecords
+            }
         });
     }
 

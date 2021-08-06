@@ -1,15 +1,10 @@
-import { SortByViewModel } from "./sort-by.model";
+import { CONTENT_SORT_BY } from "../constants";
 
 export class FilterViewModel {
-    subjects: number[];
     searchTerm?: string;
-    sortByModel: SortByViewModel;
-    isDesc: boolean;
 
-    constructor() {
-        this.subjects = [];
-        this.searchTerm = "";
-        this.sortByModel = {} as SortByViewModel;
-        this.isDesc = false;
+    constructor(public subjects: number[] = [],
+        public sortByModel = CONTENT_SORT_BY.find(sortBy => sortBy.isDefault),
+        public isDesc: boolean = false) {
     }
 }

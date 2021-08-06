@@ -1,0 +1,7 @@
+#edh-video-detail {
+    .edh-video-player {
+        $width: 900px;
+        width: $width;
+        height: $width * 0.5625;
+    }
+}

@@ -1,35 +1,39 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 
-declare let $: any;
+import { Store } from '@ngxs/store';
 
-import { fading, VisibilityController } from '@cross/animation/animation-helper';
+import { LoaderCommands } from '@core/global/commands/loader.commands';
 
-import { GlobalService } from '@core/global/services/global.service';
+import { BaseComponent } from '@presentation/components/cross/base-component/base-component';
+
+import { ScrollingService } from '@infras/scrolling/scrolling.service';
 
 @Component({
   selector: 'app-normal-layout',
   templateUrl: './normal-layout.component.html',
-  styleUrls: ['./normal-layout.component.scss'],
-  animations: [
-    fading(),
-  ]
+  styleUrls: ['./normal-layout.component.scss']
 })
-export class NormalLayoutComponent implements OnInit {
+export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> implements OnInit, OnDestroy {
 
-  loaderVisibility: VisibilityController;
+  protected transferStateKeyName: string = NormalLayoutComponent.name;
 
   constructor(
-    @Inject(PLATFORM_ID) private _platformId: object,
-    private _globalService: GlobalService
+    @Inject(PLATFORM_ID) platformId: object,
+    transferState: TransferState,
+    private _store: Store,
+    private _scrollingService: ScrollingService,
   ) {
-    this.loaderVisibility = new VisibilityController();
+    super(platformId, transferState);
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      this.loaderVisibility.hide();
-      this._initMagnificPopup();
+    super.ngOnInit();
+
+    if (this.needInitData) {
+      this.isPlatformServer && this.setTransferredState(new NormalLayoutState());
+    } else {
+      this.patchTransferredState(this);
     }
   }
 
@@ -37,11 +41,17 @@ export class NormalLayoutComponent implements OnInit {
     event.preventDefault();
     const pageEl = document.querySelector('html') as HTMLElement;
     const offsetTop = pageEl.offsetTop;
-    this._globalService.scrollManager.scrollTo(pageEl, {
+    this._scrollingService.scrollManager.scrollTo(pageEl, {
       top: offsetTop,
       duration: 500
     });
     return false;
+  }
+
+  onPageDeactivated(_: any) {
+    const pageEl = document.querySelector('html') as HTMLElement;
+    pageEl.scrollTop = 0;
+    this._store.dispatch(new LoaderCommands.Reset());
   }
 
   onPageScrolled(_: any) {
@@ -55,39 +65,7 @@ export class NormalLayoutComponent implements OnInit {
     }
   }
 
-  private _initMagnificPopup() {
-    const magnifPopup = function () {
-      $('.image-popup').magnificPopup({
-        type: 'image',
-        removalDelay: 300,
-        mainClass: 'mfp-with-zoom',
-        gallery: {
-          enabled: true
-        },
-        zoom: {
-          enabled: true,
-          duration: 300,
-          easing: 'ease-in-out',
-          opener: function (openerElement: any) {
-            return openerElement.is('img') ? openerElement : openerElement.find('img');
-          }
-        }
-      });
-    };
+}
 
-    const magnifVideo = function () {
-      $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-        disableOn: 700,
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
-        fixedContentPos: false
-      });
-    };
-
-    magnifPopup();
-    magnifVideo();
-  }
-
+class NormalLayoutState {
 }

@@ -1,14 +1,10 @@
 import { PAGINATION } from "../constants";
 
 export class PaginationModel {
-    current: number;
-    totalRecords: number;
-    pageSize: number;
 
-    constructor() {
-        this.current = 1;
-        this.totalRecords = 0;
-        this.pageSize = PAGINATION.defaultPageSize;
+    constructor(public current: number = 1,
+        public totalRecords: number = 0,
+        public pageSize: number = PAGINATION.defaultPageSize) {
     }
 
     get skip(): number {

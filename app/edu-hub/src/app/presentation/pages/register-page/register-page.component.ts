@@ -1,17 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TransferState } from '@angular/platform-browser';
 
+import { Store } from '@ngxs/store';
 import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
 
-import { LogoSize } from '@presentation/components/cross/logo/constants';
 import { A_ROUTING } from '@app/constants';
+import { LogoSize } from '@presentation/components/cross/logo/constants';
+
+import { LoaderCommands } from '@core/global/commands/loader.commands';
+
+import { BaseComponent } from '@presentation/components/cross/base-component/base-component';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss']
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent extends BaseComponent<RegisterPageState> implements OnInit, OnDestroy {
+
+  protected transferStateKeyName: string = RegisterPageComponent.name;
 
   A_ROUTING = A_ROUTING;
 
@@ -22,10 +30,23 @@ export class RegisterPageComponent implements OnInit {
     theme: 'twotone'
   };
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(@Inject(PLATFORM_ID) platformId: object,
+    transferState: TransferState,
+    private _store: Store,
+    private _formBuilder: FormBuilder) {
+    super(platformId, transferState);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
+    const isBrowser = !this.isPlatformServer;
+
+    if (this.needInitData) {
+      this.isPlatformServer && this.setTransferredState(new RegisterPageState());
+    } else {
+      this.patchTransferredState(this);
+    }
+
     this.registerFormGroup = this._formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required]],
@@ -38,6 +59,7 @@ export class RegisterPageComponent implements OnInit {
       agree: [false]
     });
 
+    isBrowser && this._store.dispatch(new LoaderCommands.Hide());
   }
 
   onFormSubmitted(): void {
@@ -74,4 +96,7 @@ export class RegisterPageComponent implements OnInit {
     return {};
   };
 
+}
+
+class RegisterPageState {
 }

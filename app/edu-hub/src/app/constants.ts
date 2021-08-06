@@ -5,12 +5,14 @@ interface AppRouting {
     home: string;
     login: string;
     registration: string;
+    videoDetail: string;
 }
 
 export const ROUTING: AppRouting = {
     home: '',
     login: 'login',
-    registration: 'registration'
+    registration: 'registration',
+    videoDetail: 'video/:id'
 };
 
 let copyRoutes: any = {

@@ -10,6 +10,7 @@ import { CrossModule } from '@cross/cross.module';
 import { PersistenceModule } from '@persistence/persistence.module';
 import { PresentationModule } from '@presentation/presentation.module';
 import { AppRoutingModule } from './app-routing.module';
+import { InfrasModule } from '@infras/infras.module';
 
 import { AppComponent } from './app.component';
 
@@ -26,7 +27,8 @@ import { AppComponent } from './app.component';
     CrossModule,
     CoreModule,
     PresentationModule,
-    PersistenceModule
+    PersistenceModule,
+    InfrasModule
   ],
   providers: [],
   bootstrap: [AppComponent]

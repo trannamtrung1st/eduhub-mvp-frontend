@@ -1,13 +1,9 @@
 export class VideoViewModel {
-    title: string;
-    author: string;
-    thumbnailUrl: string;
-    subjectId: number;
+    thumbnailUrl?: string;
 
-    constructor() {
-        this.title = "";
-        this.thumbnailUrl = "";
-        this.author = "";
-        this.subjectId = 0;
+    constructor(public id: string,
+        public title: string,
+        public author: string,
+        public subjectId: number) {
     }
 }
