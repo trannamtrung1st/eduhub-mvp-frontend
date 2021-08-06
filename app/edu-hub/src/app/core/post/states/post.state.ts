@@ -4,7 +4,8 @@ import { State } from '@ngxs/store';
 
 import { POST_STATES } from '../constants';
 
-import { PostStateModel } from '../models/post-state.model';
+class PostStateModel {
+}
 
 @State<PostStateModel>({
     name: POST_STATES.post.name,

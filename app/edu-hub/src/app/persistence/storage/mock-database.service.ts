@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { PersistenceModule } from '@persistence/persistence.module';
 
 import { DEFAULT_POST_THUMB } from '@domains/post/constants';
-import { DEFAULT_VIDEO_THUMB } from '@domains/video/constants';
+import { DEFAULT_STREAM_URL, DEFAULT_VIDEO_THUMB } from '@domains/video/constants';
 
 import { MockPost } from '@domains/post/mock-post.model';
 import { MockSubject } from '@domains/subject/mock-subject.model';
@@ -51,13 +51,16 @@ export class MockDatabase {
       const currentSubjectId = idx < this._subjects.length ? idx : idx % this._subjects.length;
 
       this._videos.push({
+        id: `${idx + 1}`,
         title: `Web Master ${idx}`,
         author: `Author ${idx}`,
         thumbnailUrl: DEFAULT_VIDEO_THUMB,
+        streamUrl: DEFAULT_STREAM_URL,
         subjectId: currentSubjectId
       });
 
       this._posts.push({
+        id: `${idx + 1}`,
         title: `How to become a Master ${idx}`,
         thumbnailUrl: DEFAULT_POST_THUMB,
         createdTime: new Date(),

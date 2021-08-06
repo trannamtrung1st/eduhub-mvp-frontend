@@ -2,7 +2,8 @@ export const CONTENT_SORT_BY = [
     {
         sortBy: 'Rating',
         display: 'Highest rated',
-        isDesc: true
+        isDesc: true,
+        isDefault: true
     },
     {
         sortBy: 'PostedTime',

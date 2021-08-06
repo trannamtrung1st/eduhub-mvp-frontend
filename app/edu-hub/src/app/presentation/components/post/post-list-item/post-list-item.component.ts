@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { PostViewModel } from './view-models/post-view.model';
+
 @Component({
   selector: 'app-post-list-item',
   templateUrl: './post-list-item.component.html',
@@ -7,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PostListItemComponent implements OnInit {
 
-  @Input() post: any;
+  @Input() post!: PostViewModel;
 
   constructor() { }
 

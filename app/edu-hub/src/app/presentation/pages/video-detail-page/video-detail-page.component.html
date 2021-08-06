@@ -1,0 +1,22 @@
+<div id="edh-video-detail" class="pt-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="edh-video-container d-inline-block">
+                    <video class="edh-video-player" controls>
+                        <source [src]="video?.streamUrl" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <h3 class="m-0 p-0">{{ videoFound ? video?.title : 'Video not found' }}</h3>
+                        </div>
+                        <div class="col-12">
+                            <a href="#">{{ video?.author }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

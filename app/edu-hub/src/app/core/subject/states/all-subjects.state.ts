@@ -9,9 +9,15 @@ import { SubjectQueries } from '../queries/subject.queries';
 
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
-@State<SubjectModel[]>({
+class AllSubjectsStateModel {
+
+    constructor(public subjects: SubjectModel[] = []) {
+    }
+}
+
+@State<AllSubjectsStateModel>({
     name: SUBJECT_STATES.subject.allSubjects.name,
-    defaults: []
+    defaults: new AllSubjectsStateModel()
 })
 @Injectable()
 export class AllSubjectsState {
@@ -19,16 +25,23 @@ export class AllSubjectsState {
     constructor(private _databaseService: MockDatabaseService) {
     }
 
-    // [TODO]: demo only
     @Selector()
-    static names(subjects: SubjectModel[]) {
+    static subjects(state: AllSubjectsStateModel) {
+        return state.subjects;
+    }
+
+    // [TODO]: demo only
+    @Selector([AllSubjectsState.subjects])
+    static subjectNames(_: AllSubjectsStateModel, subjects: SubjectModel[]) {
         return subjects.map(subject => subject.name);
     }
 
     @Action(SubjectQueries.GetAll)
-    getAll(context: StateContext<SubjectModel[]>) {
+    getAll(context: StateContext<AllSubjectsStateModel>) {
         let subjects = [...this._databaseService.database.subjects];
-        context.setState(subjects);
+        context.patchState({
+            subjects
+        });
     }
 
 }

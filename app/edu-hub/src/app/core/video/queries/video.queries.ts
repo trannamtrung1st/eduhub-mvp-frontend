@@ -5,19 +5,20 @@ export namespace VideoQueries {
     export class Filter {
         static readonly type = '[EduHub] Filter Videos';
 
-        skip: number;
-        take: number;
         searchTerm?: string;
-        subjects: number[];
-        sortBy: VideoFilterSortBy;
-        isDesc: boolean;
 
-        constructor() {
-            this.skip = 0;
-            this.take = PAGINATION.defaultPageSize;
-            this.subjects = [];
-            this.sortBy = VideoFilterSortBy.Title;
-            this.isDesc = true;
+        constructor(public skip: number = 0,
+            public take: number = PAGINATION.defaultPageSize,
+            public subjects: number[] = [],
+            public sortBy: VideoFilterSortBy = VideoFilterSortBy.Rating,
+            public isDesc: boolean = true) {
+        }
+    }
+
+    export class GetDetail {
+        static readonly type = '[EduHub] Get Video Detail';
+
+        constructor(public id: string) {
         }
     }
 }

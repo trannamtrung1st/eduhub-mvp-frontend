@@ -1,5 +1,9 @@
-<ng-container *ngIf="uiSupported; else uiNotSupported">
-    <router-outlet></router-outlet>
+<div class="edh-loader" *ngIf="loaderVisible$ | async" [@visibility]="loaderVisibilityState$ | async"
+    (@visibility.done)="onLoaderAnimationDone($event)"></div>
+
+<ng-container *ngIf="uiSupported; else uiNotSupported" [ngSwitch]="appStatus">
+    <app-page-not-found *ngSwitchCase="APP_STATUS_STATES.pageNotFound"></app-page-not-found>
+    <router-outlet (deactivate)="onPageDeactivated($event)" *ngSwitchDefault></router-outlet>
 </ng-container>
 <ng-template #uiNotSupported>
     <div class="container h-100">

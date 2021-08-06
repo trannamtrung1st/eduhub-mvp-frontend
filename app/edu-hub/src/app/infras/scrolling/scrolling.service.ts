@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { SmoothScrollManager } from 'ngx-scrollbar/smooth-scroll';
 
-import { CoreModule } from '@core/core.module';
+import { InfrasModule } from '@infras/infras.module';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: InfrasModule
 })
-export class GlobalService {
+export class ScrollingService {
 
   constructor(private _scrollManager: SmoothScrollManager) {
   }

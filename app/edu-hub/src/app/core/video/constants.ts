@@ -2,7 +2,19 @@ export const VIDEO_STATES = {
     video: {
         name: 'video',
         filteredVideos: {
-            name: 'filteredVideos'
+            name: 'filteredVideos',
+            states: {}
+        },
+        currentWatchingVideo: {
+            name: 'currentWatching',
+            states: {
+                getDetail: {
+                    success: 'success',
+                    notFound: 'notFound',
+                    error: 'error',
+                    unset: 'unset'
+                }
+            }
         }
     }
 };

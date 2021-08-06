@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { orderBy } from 'lodash';
 
 import { VideoFilterSortBy, VIDEO_STATES } from '../constants';
@@ -11,9 +11,15 @@ import { VideoQueries } from '../queries/video.queries';
 
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
-@State<FilterResponseModel<VideoModel>>({
+class FilteredVideosStateModel {
+
+    constructor(public videos = new FilterResponseModel<VideoModel>()) {
+    }
+}
+
+@State<FilteredVideosStateModel>({
     name: VIDEO_STATES.video.filteredVideos.name,
-    defaults: new FilterResponseModel<VideoModel>()
+    defaults: new FilteredVideosStateModel()
 })
 @Injectable()
 export class FilteredVideosState {
@@ -21,8 +27,13 @@ export class FilteredVideosState {
     constructor(private _databaseService: MockDatabaseService) {
     }
 
+    @Selector()
+    static videos(state: FilteredVideosStateModel) {
+        return state.videos;
+    }
+
     @Action(VideoQueries.Filter)
-    filter(context: StateContext<FilterResponseModel<VideoModel>>, query: VideoQueries.Filter) {
+    filter(context: StateContext<FilteredVideosStateModel>, query: VideoQueries.Filter) {
         const srcVideos = this._databaseService.database.videos;
         let videos = [...srcVideos];
 
@@ -44,9 +55,11 @@ export class FilteredVideosState {
         const totalRecords = videos.length;
         videos = videos.slice(query.skip, query.skip + query.take);
 
-        context.setState({
-            records: videos,
-            totalRecords
+        context.patchState({
+            videos: {
+                records: videos,
+                totalRecords
+            }
         });
     }
 

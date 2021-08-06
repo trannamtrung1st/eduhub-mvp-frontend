@@ -25,3 +25,35 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+<br/>
+
+# Documentation
+
+## Instructions
++ Steps to create a new page component (common case):
+  1. Execute: `ng generate component {{ComponentFullName}} --module={{module-full-name.ts}}`
+  2. Define a **ComponentState** class
+  3. Make the class `extends BaseComponent<ComponentState> implements OnInit, OnDestroy`
+  4. Override the property `protected transferStateKeyName: string = {{ComponentClass}}.name;`
+  5. Call `super()` in constructor and `super.ngOnInit()` on `ngOnInit`
+  6. Common `ngOnInit` code:
+```typescript
+  ngOnInit(): void {
+    super.ngOnInit();
+
+    if (this.needInitData) {
+      // Init your data
+      // - Call API
+      // - Set states
+
+      this.isPlatformServer && this.setTransferredState(new ComponentState(
+          // Pass your states here
+      )));
+    } else {
+      this.patchTransferredState(this);
+    }
+
+    // Others
+  }
+```
