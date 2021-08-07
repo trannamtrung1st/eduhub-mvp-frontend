@@ -44,8 +44,8 @@ import { MagnificService } from '@infras/magnific/magnific.service';
 })
 export class HomePageComponent extends BaseComponent<HomePageState> implements OnInit, OnDestroy {
 
-  @ViewChild("videoGoTo") private _videoGoToRef!: ElementRef;
-  @ViewChild("postGoTo") private _postGoToRef!: ElementRef;
+  @ViewChild("videoGoTo") private _videoGoToRef!: ElementRef<HTMLElement>;
+  @ViewChild("postGoTo") private _postGoToRef!: ElementRef<HTMLElement>;
 
   CONTENT_SORT_BY = CONTENT_SORT_BY;
 
@@ -118,6 +118,14 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
     this.videoPaging.current = 1;
     this.postPaging.current = 1;
     Object.assign(this.filterModel, this.formInputModel);
+    this._getVideos();
+    this._getPosts();
+  }
+
+  onSearchCleared(_: any) {
+    this.videoPaging.current = 1;
+    this.postPaging.current = 1;
+    this.filterModel.searchTerm = '';
     this._getVideos();
     this._getPosts();
   }
@@ -200,11 +208,11 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
       });
   }
 
-  private _scrollTo(elementRef: ElementRef) {
+  private _scrollTo(elementRef: ElementRef<HTMLElement>) {
     const pageEl = document.querySelector('html') as HTMLElement;
-    const goToElement = elementRef.nativeElement as HTMLElement;
-    const offsetParent = goToElement.offsetParent as HTMLElement;
     const nav = document.querySelector('.edh-nav') as HTMLElement;
+    const goToElement = elementRef.nativeElement;
+    const offsetParent = goToElement.offsetParent as HTMLElement;
     this._scrollingService.scrollManager.scrollTo(pageEl, {
       top: offsetParent.offsetTop + goToElement.offsetTop - nav.offsetHeight - goToElement.clientHeight
     });

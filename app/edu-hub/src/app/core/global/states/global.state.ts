@@ -1,12 +1,13 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { TransferState } from '@angular/platform-browser';
 
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 
 import { GLOBAL_STATES } from '../constants';
 
 import { GlobalCommands } from '../commands/global.commands';
 
+import { TransferableState } from '@core/cross/state-transferable/transferable-state';
 import { LoaderState } from './loader.state';
 
 export const APP_STATUS_STATES = GLOBAL_STATES.global.states.appStatus;
@@ -14,19 +15,40 @@ export const APP_STATUS_STATES = GLOBAL_STATES.global.states.appStatus;
 class GlobalStateModel {
 
     constructor(public appStatus: string = APP_STATUS_STATES.unset) { }
+
+    static get default() {
+        return new GlobalStateModel();
+    }
 }
 
 @State<GlobalStateModel>({
     name: GLOBAL_STATES.global.name,
-    defaults: new GlobalStateModel(),
+    defaults: GlobalStateModel.default,
     children: [
         LoaderState
     ]
 })
 @Injectable()
-export class GlobalState {
+export class GlobalState extends TransferableState<GlobalStateModel> implements NgxsOnInit {
 
-    constructor(@Inject(PLATFORM_ID) private _platformId: object) {
+    protected transferStateKeyName: string = GlobalState.name;
+
+    constructor(@Inject(PLATFORM_ID) platformId: object,
+        transferState: TransferState
+    ) {
+        super(platformId, transferState);
+    }
+
+    ngxsOnInit(ctx?: StateContext<any>) {
+        super.ngxsOnInit(ctx);
+        const transferredState = GlobalStateModel.default;
+
+        if (this.needInitData) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
     }
 
     @Selector()
@@ -37,15 +59,19 @@ export class GlobalState {
     @Action(GlobalCommands.ChangeAppStatus)
     changeAppStatus(context: StateContext<GlobalStateModel>, cmd: GlobalCommands.ChangeAppStatus) {
         const changeStatus = () => {
-            context.patchState({
+            const patch = {
                 appStatus: cmd.appStatus
-            });
+            };
+
+            context.patchState(patch);
+            this.needInitData && this.isPlatformServer &&
+                this.updateTransferredState((state) => Object.assign(state, patch), GlobalStateModel.default);
         };
 
-        if (isPlatformBrowser(this._platformId)) {
-            setTimeout(changeStatus);
-        } else {
+        if (this.isPlatformServer) {
             changeStatus();
+        } else {
+            setTimeout(changeStatus);
         }
     }
 

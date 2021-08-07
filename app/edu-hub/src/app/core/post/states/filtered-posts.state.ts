@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { orderBy } from 'lodash';
 
 import { PostFilterSortBy, POST_STATES } from '../constants';
@@ -9,22 +10,46 @@ import { FilterResponseModel } from '@cross/filter/models/filter-response.model'
 import { PostModel } from '../models/post.model';
 import { PostQueries } from '../queries/post.queries';
 
+import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
 class FilteredPostsStateModel {
 
     constructor(public posts = new FilterResponseModel<PostModel>()) {
     }
+
+    static get default() {
+        return new FilteredPostsStateModel();
+    }
 }
 
 @State<FilteredPostsStateModel>({
     name: POST_STATES.post.filteredPosts.name,
-    defaults: new FilteredPostsStateModel()
+    defaults: FilteredPostsStateModel.default
 })
 @Injectable()
-export class FilteredPostsState {
+export class FilteredPostsState extends TransferableState<FilteredPostsStateModel> implements NgxsOnInit {
 
-    constructor(private _databaseService: MockDatabaseService) {
+    protected transferStateKeyName: string = FilteredPostsStateModel.name;
+
+    constructor(@Inject(PLATFORM_ID) platformId: object,
+        transferState: TransferState,
+        private _databaseService: MockDatabaseService
+    ) {
+        super(platformId, transferState);
+    }
+
+    ngxsOnInit(ctx?: StateContext<any>) {
+        super.ngxsOnInit(ctx);
+        const transferredState = FilteredPostsStateModel.default;
+
+        if (this.needInitData) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
     }
 
     @Selector()
@@ -54,13 +79,16 @@ export class FilteredPostsState {
 
         const totalRecords = posts.length;
         posts = posts.slice(query.skip, query.skip + query.take);
-
-        context.patchState({
+        const patch = {
             posts: {
                 records: posts,
                 totalRecords
             }
-        });
+        };
+
+        context.patchState(patch);
+        this.needInitData && this.isPlatformServer
+            && this.updateTransferredState((state) => Object.assign(state, patch), FilteredPostsStateModel.default);
     }
 
 }

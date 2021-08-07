@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class NavDropdownDirective {
 
-  constructor(private _el: ElementRef) { }
+  constructor(private _el: ElementRef<HTMLElement>) { }
 
   @HostListener('mouseenter') onMouseEnter() {
     this._showDropdown();
@@ -16,13 +16,13 @@ export class NavDropdownDirective {
   }
 
   private _showDropdown() {
-    const element = this._el.nativeElement as HTMLElement;
+    const element = this._el.nativeElement;
     const dropdown = element.querySelector('.dropdown');
     dropdown?.classList.add('animated-fast', 'fadeInUpMenu', 'd-block');
   }
 
   private _hideDropdown() {
-    const element = this._el.nativeElement as HTMLElement;
+    const element = this._el.nativeElement;
     const dropdown = element.querySelector('.dropdown');
     dropdown?.classList.remove('animated-fast', 'fadeInUpMenu', 'd-block');
     dropdown?.classList.add('d-none');

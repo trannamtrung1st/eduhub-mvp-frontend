@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 
 import { SUBJECT_STATES } from '../constants';
 
 import { SubjectModel } from '../models/subject.model';
 import { SubjectQueries } from '../queries/subject.queries';
+
+import { TransferableState } from '@core/cross/state-transferable/transferable-state';
 
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
@@ -13,16 +16,38 @@ class AllSubjectsStateModel {
 
     constructor(public subjects: SubjectModel[] = []) {
     }
+
+    static get default() {
+        return new AllSubjectsStateModel();
+    }
 }
 
 @State<AllSubjectsStateModel>({
     name: SUBJECT_STATES.subject.allSubjects.name,
-    defaults: new AllSubjectsStateModel()
+    defaults: AllSubjectsStateModel.default
 })
 @Injectable()
-export class AllSubjectsState {
+export class AllSubjectsState extends TransferableState<AllSubjectsStateModel> implements NgxsOnInit {
 
-    constructor(private _databaseService: MockDatabaseService) {
+    protected transferStateKeyName: string = AllSubjectsState.name;
+
+    constructor(@Inject(PLATFORM_ID) platformId: object,
+        transferState: TransferState,
+        private _databaseService: MockDatabaseService
+    ) {
+        super(platformId, transferState);
+    }
+
+    ngxsOnInit(ctx?: StateContext<any>) {
+        super.ngxsOnInit(ctx);
+        const transferredState = AllSubjectsStateModel.default;
+
+        if (this.needInitData) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
     }
 
     @Selector()
@@ -39,9 +64,13 @@ export class AllSubjectsState {
     @Action(SubjectQueries.GetAll)
     getAll(context: StateContext<AllSubjectsStateModel>) {
         let subjects = [...this._databaseService.database.subjects];
-        context.patchState({
+        const patch = {
             subjects
-        });
+        };
+
+        context.patchState(patch);
+        this.needInitData && this.isPlatformServer
+            && this.updateTransferredState((state) => Object.assign(state, patch), AllSubjectsStateModel.default);
     }
 
 }
