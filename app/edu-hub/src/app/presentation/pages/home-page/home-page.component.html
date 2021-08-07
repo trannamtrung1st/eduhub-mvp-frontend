@@ -30,7 +30,7 @@
                 <div class="row form-group mb-1">
                     <div class="col-md-9">
                         <input type="text" class="form-control" placeholder="Type something"
-                            [(ngModel)]="formInputModel.searchTerm">
+                            [(ngModel)]="formInputModel.searchTerm" />
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-primary my-auto w-100 h-98" (click)="onSearchClicked($event)">
@@ -57,7 +57,10 @@
             </div>
             <div class="col-12 edh-filter-apply">
                 <ng-container *ngIf="filterModel.searchTerm">
-                    Results for <nz-tag class="ml-1" nzColor="processing">{{ filterModel.searchTerm }}</nz-tag>
+                    Results for
+                    <nz-tag nzMode="closeable" class="ml-1" nzColor="processing" (nzOnClose)="onSearchCleared($event)">
+                        {{ filterModel.searchTerm }}
+                    </nz-tag>
                 </ng-container>
             </div>
         </div>

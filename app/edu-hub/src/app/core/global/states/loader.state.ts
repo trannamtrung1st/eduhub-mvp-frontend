@@ -1,27 +1,50 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 
 import { DEFAULT_VISIBLE_STATE } from '@cross/animation/animation-helper';
 
 import { GLOBAL_STATES } from '../constants';
 
 import { LoaderCommands } from '../commands/loader.commands';
-import { isPlatformBrowser } from '@angular/common';
+
+import { TransferableState } from '@core/cross/state-transferable/transferable-state';
 
 class LoaderStateModel {
 
     constructor(public visible = true, public visibilityState = DEFAULT_VISIBLE_STATE) { }
+
+    static get default() {
+        return new LoaderStateModel();
+    }
 }
 
 @State<LoaderStateModel>({
     name: GLOBAL_STATES.global.loader.name,
-    defaults: new LoaderStateModel()
+    defaults: LoaderStateModel.default
 })
 @Injectable()
-export class LoaderState {
+export class LoaderState extends TransferableState<LoaderStateModel> implements NgxsOnInit {
 
-    constructor(@Inject(PLATFORM_ID) private _platformId: object) {
+    protected transferStateKeyName: string = LoaderState.name;
+
+    constructor(@Inject(PLATFORM_ID) platformId: object,
+        transferState: TransferState
+    ) {
+        super(platformId, transferState);
+    }
+
+    ngxsOnInit(ctx?: StateContext<any>) {
+        super.ngxsOnInit(ctx);
+        const transferredState = LoaderStateModel.default;
+
+        if (this.needInitData) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
     }
 
     @Selector()
@@ -42,10 +65,10 @@ export class LoaderState {
             })
         };
 
-        if (isPlatformBrowser(this._platformId)) {
-            setTimeout(show);
-        } else {
+        if (this.isPlatformServer) {
             show();
+        } else {
+            setTimeout(show);
         }
     }
 
@@ -57,10 +80,10 @@ export class LoaderState {
             });
         };
 
-        if (isPlatformBrowser(this._platformId)) {
-            setTimeout(hide);
-        } else {
+        if (this.isPlatformServer) {
             hide();
+        } else {
+            setTimeout(hide);
         }
     }
 

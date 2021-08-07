@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { cloneDeep } from 'lodash';
 
 import { VIDEO_STATES } from '../constants';
 
 import { VideoDetailModel } from '../models/video-detail.model';
 import { VideoQueries } from '../queries/video.queries';
+
+import { TransferableState } from '@core/cross/state-transferable/transferable-state';
 
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
@@ -18,16 +21,38 @@ class CurrentWatchingVideoStateModel {
     constructor(public video?: VideoDetailModel,
         public getVideoDetailState: string = GET_VIDEO_DETAIL_STATES.unset) {
     }
+
+    static get default() {
+        return new CurrentWatchingVideoStateModel();
+    }
 }
 
 @State<CurrentWatchingVideoStateModel>({
     name: VIDEO_STATES.video.currentWatchingVideo.name,
-    defaults: new CurrentWatchingVideoStateModel()
+    defaults: CurrentWatchingVideoStateModel.default
 })
 @Injectable()
-export class CurrentWatchingVideoState {
+export class CurrentWatchingVideoState extends TransferableState<CurrentWatchingVideoStateModel> implements NgxsOnInit {
 
-    constructor(private _databaseService: MockDatabaseService) {
+    protected transferStateKeyName: string = CurrentWatchingVideoState.name;
+
+    constructor(@Inject(PLATFORM_ID) platformId: object,
+        transferState: TransferState,
+        private _databaseService: MockDatabaseService
+    ) {
+        super(platformId, transferState);
+    }
+
+    ngxsOnInit(ctx?: StateContext<any>) {
+        super.ngxsOnInit(ctx);
+        const transferredState = CurrentWatchingVideoStateModel.default;
+
+        if (this.needInitData) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
     }
 
     @Selector()
@@ -53,8 +78,12 @@ export class CurrentWatchingVideoState {
         }
 
         const videoDetailModel = cloneDeep(videoDetail) as VideoDetailModel;
-        context.patchState({
+        const patch = {
             video: videoDetailModel
-        });
+        };
+
+        context.patchState(patch);
+        this.needInitData && this.isPlatformServer
+            && this.updateTransferredState((state) => Object.assign(state, patch), CurrentWatchingVideoStateModel.default);
     }
 }

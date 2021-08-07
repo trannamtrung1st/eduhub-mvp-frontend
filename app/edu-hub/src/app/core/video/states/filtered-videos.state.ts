@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { orderBy } from 'lodash';
 
 import { VideoFilterSortBy, VIDEO_STATES } from '../constants';
@@ -9,22 +10,46 @@ import { FilterResponseModel } from '@cross/filter/models/filter-response.model'
 import { VideoModel } from '../models/video.model';
 import { VideoQueries } from '../queries/video.queries';
 
+import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
 class FilteredVideosStateModel {
 
     constructor(public videos = new FilterResponseModel<VideoModel>()) {
     }
+
+    static get default() {
+        return new FilteredVideosStateModel();
+    }
 }
 
 @State<FilteredVideosStateModel>({
     name: VIDEO_STATES.video.filteredVideos.name,
-    defaults: new FilteredVideosStateModel()
+    defaults: FilteredVideosStateModel.default
 })
 @Injectable()
-export class FilteredVideosState {
+export class FilteredVideosState extends TransferableState<FilteredVideosStateModel> implements NgxsOnInit {
 
-    constructor(private _databaseService: MockDatabaseService) {
+    protected transferStateKeyName: string = FilteredVideosState.name;
+
+    constructor(@Inject(PLATFORM_ID) platformId: object,
+        transferState: TransferState,
+        private _databaseService: MockDatabaseService
+    ) {
+        super(platformId, transferState);
+    }
+
+    ngxsOnInit(ctx?: StateContext<any>) {
+        super.ngxsOnInit(ctx);
+        const transferredState = FilteredVideosStateModel.default;
+
+        if (this.needInitData) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
     }
 
     @Selector()
@@ -55,12 +80,16 @@ export class FilteredVideosState {
         const totalRecords = videos.length;
         videos = videos.slice(query.skip, query.skip + query.take);
 
-        context.patchState({
+        const patch = {
             videos: {
                 records: videos,
                 totalRecords
             }
-        });
+        };
+
+        context.patchState(patch);
+        this.needInitData && this.isPlatformServer
+            && this.updateTransferredState((state) => Object.assign(state, patch), FilteredVideosStateModel.default);
     }
 
 }
