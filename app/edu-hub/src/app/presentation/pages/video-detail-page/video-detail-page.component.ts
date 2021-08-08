@@ -54,22 +54,28 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
 
   ngOnInit(): void {
     super.ngOnInit();
+    const isBrowser = !this.isPlatformServer;
 
-    if (this.needInitData) {
-      this._route.params.subscribe(params => {
-        const id = params['id'];
+    this._route.params.subscribe(params => {
+      const id = params['id'];
+
+      if (isBrowser) {
         const pageEl = document.querySelector('html') as HTMLElement;
         pageEl.scrollTop = 0;
         this._store.dispatch(new LoaderCommands.Reset());
-        this._getVideoDetail(id);
-        this._getRecommendedVideos(id);
-      });
+      }
 
+      this._getVideoDetail(id);
+      this._getRecommendedVideos(id);
+    });
+
+    if (this.needInitData) {
       this.isPlatformServer && this.setTransferredState(new VideoDetailState(
-        this.video, this.videoFound
+        this.video, this.videoFound, this.recommendedVideos
       ));
     } else {
       this.patchTransferredState(this);
+      isBrowser && this._store.dispatch(new LoaderCommands.Hide());
     }
   }
 
@@ -116,7 +122,8 @@ class VideoDetailState {
 
   constructor(
     public video?: VideoDetailModel,
-    public videoFound: boolean = true
+    public videoFound: boolean = true,
+    public recommendedVideos: VideoViewModel[] = [],
   ) {
   }
 }
