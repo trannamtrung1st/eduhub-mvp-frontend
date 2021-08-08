@@ -5,4 +5,5 @@ export interface MockVideo {
     thumbnailUrl?: string;
     streamUrl: string;
     subjectId: number;
+    description: string;
 }

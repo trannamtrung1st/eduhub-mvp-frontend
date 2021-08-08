@@ -1,18 +1,16 @@
-<div class="edh-blog animate-box">
-    <div class="edh-blog__info row">
-        <div class="col-md-4">
-            <a href="#"><img class="img-fluid h-100" [src]="post.thumbnailUrl" alt=""></a>
+<div nz-row class="edh-blog">
+    <div nz-col class="edh-img-container mr-3">
+        <a href="#"><img [ngStyle]="tmbStyle" class="edh-blog__thumbnail" [src]="post.thumbnailUrl" alt=""></a>
+    </div>
+    <div nz-col class="edh-blog__info" [ngStyle]="infoStyle">
+        <div class="edh-blog__heading">
+            <div class="edh-blog__title"><a class="text-dark" href="#">{{ post.title }}</a></div>
+            <span class="text-secondary">{{ post.createdTime | date: 'medium' }}</span>
+            &nbsp;
+            <span class="comment"><a href="">{{ post.commentCount }}<i class="icon-speech-bubble"></i></a></span>
         </div>
-        <div class="col-md-8">
-            <div class="edh-blog__heading">
-                <h4><a class="text-dark" href="#">{{ post.title }}</a></h4>
-                <span class="text-secondary">{{ post.createdTime | date: 'medium' }}</span>
-                &nbsp;
-                <span class="comment"><a href="">{{ post.commentCount }}<i class="icon-speech-bubble"></i></a></span>
-            </div>
-            <p class="edh-blog__description">
-                {{ post.description }}
-            </p>
-        </div>
+        <p class="edh-blog__description">
+            {{ post.description }}
+        </p>
     </div>
 </div>

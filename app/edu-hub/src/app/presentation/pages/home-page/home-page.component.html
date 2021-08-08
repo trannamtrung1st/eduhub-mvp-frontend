@@ -1,4 +1,4 @@
-<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(/assets/images/img_bg_1.jpg);"
+<header id="edh-header" class="edh-cover" role="banner" style="background-image:url(/assets/images/img_bg_1.jpg);"
     data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -7,8 +7,9 @@
                 <div class="display-t">
                     <div class="display-tc" data-animate-effect="fadeIn">
                         <h1>The Art of Teaching is the Art of Assisting Discovery</h1>
-                        <h2>Access to the human knowledge at <a href="#" target="_blank">EduHub.com</a>
-                        </h2>
+                        <h5>
+                            Access to the human knowledge at <app-logo></app-logo>
+                        </h5>
                         <p>
                             <a class="btn btn-primary btn-lg btn-learn mr-3" href="#">Take A Course</a>
                             <a class="btn btn-primary btn-lg popup-vimeo btn-video"
@@ -26,7 +27,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Browse through contents created by our communities</h3>
+                <h5>Browse through contents created by our communities</h5>
                 <div class="row form-group mb-1">
                     <div class="col-md-9">
                         <input type="text" class="form-control" placeholder="Type something"
@@ -71,7 +72,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="edh-filter w-100">
+                <div class="edh-subject-filter w-100">
                     <h2>Subject</h2>
                     <hr />
                     <nz-form-control [nzSpan]="24" *ngFor="let subject of subjects">
@@ -91,7 +92,7 @@
                         <div class="row">
                             <ng-container *ngIf="videos?.length;else noVideo">
                                 <div class="col-12" *ngFor="let video of videos">
-                                    <app-video-list-item [video]="video"></app-video-list-item>
+                                    <app-video-list-item [video]="video" infoWidth="50%"></app-video-list-item>
                                     <hr />
                                 </div>
                             </ng-container>
@@ -120,7 +121,7 @@
                         <div class="row">
                             <ng-container *ngIf="posts?.length;else noPost">
                                 <div class="col-12" *ngFor="let post of posts">
-                                    <app-post-list-item [post]="post"></app-post-list-item>
+                                    <app-post-list-item [post]="post" infoWidth="50%"></app-post-list-item>
                                     <hr />
                                 </div>
                             </ng-container>
@@ -145,92 +146,4 @@
     </div>
 </div>
 
-<div id="edh-started" class="mt-5" style="background-image:url(/assets/images/img_bg_2.jpg);">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-2 text-center edh-heading">
-                <h2>Let's Get Started</h2>
-                <p>Start making content and earn yourself what you deserve.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 offset-2 text-center">
-                <p><a href="#" class="btn btn-default btn-lg">Be a member</a></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer id="edh-footer" role="contentinfo">
-    <div class="container">
-        <div class="row row-pb-md">
-            <div class="col-md-3 fh5co-widget">
-                <h4>About Learning</h4>
-                <p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta
-                    adipisci architecto culpa amet.</p>
-            </div>
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-2 col-sm-4 col-6 order-md-1">
-                <h4>Learning</h4>
-                <ul class="edh-footer-links">
-                    <li><a href="#">Course</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Terms</a></li>
-                    <li><a href="#">Meetups</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-2 col-sm-4 col-6 order-md-1">
-                <h4>Learn &amp; Grow</h4>
-                <ul class="edh-footer-links">
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Testimonials</a></li>
-                    <li><a href="#">Handbook</a></li>
-                    <li><a href="#">Held Desk</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-2 col-sm-4 col-6 order-md-1">
-                <h4>Engage us</h4>
-                <ul class="edh-footer-links">
-                    <li><a href="#">Marketing</a></li>
-                    <li><a href="#">Visual Assistant</a></li>
-                    <li><a href="#">System Analysis</a></li>
-                    <li><a href="#">Advertise</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-2 col-sm-4 col-6 order-md-1">
-                <h4>Legal</h4>
-                <ul class="edh-footer-links">
-                    <li><a href="#">Find Designers</a></li>
-                    <li><a href="#">Find Developers</a></li>
-                    <li><a href="#">Teams</a></li>
-                    <li><a href="#">Advertise</a></li>
-                    <li><a href="#">API</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="row copyright">
-            <div class="col-md-12 text-center">
-                <p>
-                    <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
-                    <small class="block">Designed by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a>
-                        Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
-                </p>
-                <ul class="fh5co-social-icons">
-                    <li><a href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-</footer>
+<app-banner></app-banner>

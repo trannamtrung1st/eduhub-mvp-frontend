@@ -14,6 +14,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from '@app/app-routing.module';
 
@@ -29,6 +31,9 @@ import { PostListItemComponent } from './components/post/post-list-item/post-lis
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { VideoDetailPageComponent } from './pages/video-detail-page/video-detail-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { FooterComponent } from './layouts/normal/footer/footer.component';
+import { BannerComponent } from './components/cross/banner/banner.component';
+import { HalfCollapsedSectionComponent } from './components/cross/half-collapsed-section/half-collapsed-section.component';
 
 import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-dropdown.directive';
 
@@ -44,7 +49,10 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     LoginPageComponent,
     RegisterPageComponent,
     VideoDetailPageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    FooterComponent,
+    BannerComponent,
+    HalfCollapsedSectionComponent
   ],
   imports: [
     CommonModule,
@@ -60,6 +68,8 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     NzInputModule,
     NzSelectModule,
     NzTagModule,
+    NzAvatarModule,
+    NzCommentModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

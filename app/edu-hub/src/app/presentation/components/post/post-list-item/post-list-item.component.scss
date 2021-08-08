@@ -1,6 +1,10 @@
 @import "variables";
 
 .edh-blog {
+    &__title {
+        color: $brand-black;
+        font-weight: 500;
+    }
     &__heading {
         h4 {
             margin-bottom: 0;
@@ -15,9 +19,10 @@
         }
     }
     &__description {
-        max-height: 100px;
+        display: -webkit-box;
+        max-height: 50px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
     }
 }

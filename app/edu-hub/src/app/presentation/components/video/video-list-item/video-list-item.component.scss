@@ -1,1 +1,8 @@
 @import "variables";
+
+.edh-post {
+    &__title {
+        color: $brand-black;
+        font-weight: 500;
+    }
+}

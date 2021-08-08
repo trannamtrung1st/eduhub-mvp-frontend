@@ -1,0 +1,1 @@
+export const DEFAULT_TEXT_ELLIPSIS_SELECTOR = '.text-multiline-ellipsis';
