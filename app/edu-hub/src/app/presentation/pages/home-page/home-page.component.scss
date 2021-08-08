@@ -1,4 +1,15 @@
-.edh-filter {
+@import "variables";
+
+.edh-subject-filter {
     position: sticky;
     top: 10vh;
+}
+
+.edh-cover {
+    h1 {
+        font-size: 55px;
+    }
+    h5 {
+        color: $brand-white;
+    }
 }

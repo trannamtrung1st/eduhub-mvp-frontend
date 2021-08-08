@@ -1,8 +1,8 @@
 export const VIDEO_STATES = {
     video: {
         name: 'video',
-        filteredVideos: {
-            name: 'filteredVideos',
+        videoList: {
+            name: 'videoList',
             states: {}
         },
         currentWatchingVideo: {

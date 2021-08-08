@@ -1,0 +1,15 @@
+<div class="edh-collapsed-section">
+    <div class="edh-collapsed-section__content-wrapper" [ngStyle]="contentStyle">
+        <div class="edh-collapsed-section__content" #content>
+            <ng-content></ng-content>
+        </div>
+        <div [ngClass]="overlayClass" [ngStyle]="overlayStyle" *ngIf="overflow && !expanded"></div>
+    </div>
+    <div class="edh-collapsed-section__expander" [ngStyle]="expanderStyle" *ngIf="overflow">
+        <hr />
+        <button nz-button nzType="default" (click)="toggle()">
+            {{ overflow && !expanded ? 'Show more': 'Show less' }}
+            <i nz-icon [nzType]="overflow && !expanded ? 'down': 'up'" theme="outline"></i>
+        </button>
+    </div>
+</div>

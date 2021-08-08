@@ -1,4 +1,4 @@
-<div class="edh-loader" *ngIf="loaderVisible$ | async" [@visibility]="loaderVisibilityState$ | async"
+<div class="edh-loader" *ngIf="uiSupported && (loaderVisible$ | async)" [@visibility]="loaderVisibilityState$ | async"
     (@visibility.done)="onLoaderAnimationDone($event)"></div>
 
 <ng-container *ngIf="uiSupported; else uiNotSupported" [ngSwitch]="appStatus">

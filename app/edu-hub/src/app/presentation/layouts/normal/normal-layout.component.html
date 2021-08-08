@@ -1,6 +1,7 @@
 <div id="page" (window:scroll)="onPageScrolled($event)">
     <app-top-nav></app-top-nav>
     <router-outlet (deactivate)="onPageDeactivated($event)"></router-outlet>
+    <app-footer></app-footer>
 </div>
 
 <div class="gototop js-top">

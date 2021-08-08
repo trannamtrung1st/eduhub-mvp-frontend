@@ -1,7 +1,5 @@
 #edh-video-detail {
-    .edh-video-player {
-        $width: 900px;
-        width: $width;
-        height: $width * 0.5625;
+    .edh-video-description {
+        white-space: pre-wrap;
     }
 }

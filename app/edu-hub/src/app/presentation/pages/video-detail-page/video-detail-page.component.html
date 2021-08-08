@@ -1,22 +1,113 @@
-<div id="edh-video-detail" class="pt-5 mt-5">
+<div id="edh-video-detail" class="pt-5 my-5">
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <div class="edh-video-container d-inline-block">
-                    <video class="edh-video-player" controls>
-                        <source [src]="video?.streamUrl" type="video/mp4">
+                <div class="edh-video-container">
+                    <video class="edh-video-player w-100" controls>
+                        <source [src]="video.streamUrl" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <div class="row mt-2">
-                        <div class="col-12">
-                            <h3 class="m-0 p-0">{{ videoFound ? video?.title : 'Video not found' }}</h3>
+                    <div nz-row class="mt-2">
+                        <div nz-col nzSpan="24" class="mb-2">
+                            <h3 class="m-0 p-0">{{ videoFound ? video.title : 'Video not found' }}</h3>
                         </div>
-                        <div class="col-12">
-                            <a href="#">{{ video?.author }}</a>
+                        <div nz-col nzSpan="2">
+                            <nz-avatar nzShape="square" [nzSize]="60" nzIcon="user"
+                                nzSrc="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg">
+                            </nz-avatar>
+                        </div>
+                        <div nz-col nzSpan="22">
+                            <div nz-row>
+                                <div nz-col nzSpan="17">
+                                    <a href="#"><b>{{ video.author }}</b></a><br />
+                                    <small>120 followers</small>
+                                </div>
+                                <div nz-col nzSpan="7" class="text-right">
+                                    <button nz-button nzType="default" class="mr-3">DONATE</button>
+                                    <button nz-button nzType="primary">SUBSCRIBE</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <hr />
+                    <app-half-collapsed-section colHeight="150">
+                        <p class="edh-video-description text-justify pb-3">{{ video.description }}</p>
+                    </app-half-collapsed-section>
+                    <div class="edh-comment mt-5">
+                        <div class="edh-comment__statistic">
+                            <h6>717 Comments</h6>
+                        </div>
+                        <nz-comment>
+                            <nz-avatar nz-comment-avatar nzIcon="user"
+                                nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                            <nz-comment-content>
+                                <nz-form-item class="mb-2">
+                                    <textarea nz-input rows="2" [(ngModel)]="currentComment"
+                                        placeholder="Leave your comment as YOUR ACCOUNT NAME"></textarea>
+                                </nz-form-item>
+                                <nz-form-item nzJustify="end" class="mb-0" *ngIf="currentComment">
+                                    <div nz-col nzSpan="17">
+                                        <small>Remember to follow our <a href="#">comment guideline</a></small>
+                                    </div>
+                                    <div nz-col nzSpan="7" class="text-right">
+                                        <button nz-button nzType="default" class="mr-3">
+                                            CANCEL
+                                        </button>
+                                        <button nz-button nzType="primary">
+                                            COMMENT
+                                        </button>
+                                    </div>
+                                </nz-form-item>
+                            </nz-comment-content>
+                        </nz-comment>
+                        <ng-template #commentTemplateRef let-comment="comment">
+                            <ng-template #authorName>
+                                <a><b>{{ comment.author }}</b></a>
+                            </ng-template>
+                            <nz-comment [nzAuthor]="authorName" [nzDatetime]="comment.datetime">
+                                <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
+                                <nz-comment-content>
+                                    <p class="text-justify">{{ comment.content }}</p>
+                                </nz-comment-content>
+                                <nz-comment-action>
+                                    <i nz-tooltip nzTitle="Like" nz-icon nzType="like"
+                                        [nzTheme]="comment.likes > 0 ? 'twotone' : 'outline'"></i>
+                                    <span class="count like">{{ comment.likes }}</span>
+                                </nz-comment-action>
+                                <nz-comment-action>
+                                    <i nz-tooltip nzTitle="Dislike" nz-icon nzType="dislike"
+                                        [nzTheme]="comment.dislikes > 0 ? 'twotone' : 'outline'"></i>
+                                    <span class="count dislike">{{ comment.dislikes }}</span>
+                                </nz-comment-action>
+                                <nz-comment-action>Reply to</nz-comment-action>
+                                <ng-container *ngIf="comment.children && comment.children.length">
+                                    <ng-template ngFor let-child [ngForOf]="comment.children">
+                                        <ng-template [ngTemplateOutlet]="commentTemplateRef"
+                                            [ngTemplateOutletContext]="{ comment: child }"></ng-template>
+                                    </ng-template>
+                                </ng-container>
+                            </nz-comment>
+                        </ng-template>
+                        <ng-template *ngFor="let comment of comments" [ngTemplateOutlet]="commentTemplateRef"
+                            [ngTemplateOutletContext]="{ comment }"></ng-template>
+                    </div>
                 </div>
+            </div>
+            <div class="col-4">
+                <ng-container *ngIf="recommendedVideos?.length;else noVideo">
+                    <div class="col-12" *ngFor="let video of recommendedVideos">
+                        <app-video-list-item [video]="video" tmbWidth="200" infoWidth="40%"></app-video-list-item>
+                        <hr />
+                    </div>
+                </ng-container>
+                <ng-template #noVideo>
+                    <div class="col-12">
+                        No related videos found
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
 </div>
+
+<app-banner></app-banner>

@@ -14,24 +14,25 @@ import { TransferableState } from '@core/cross/state-transferable/transferable-s
 
 import { MockDatabaseService } from '@persistence/storage/mock-database.service';
 
-class FilteredVideosStateModel {
+class VideoListStateModel {
 
-    constructor(public videos = new FilterResponseModel<VideoModel>()) {
+    constructor(public videos = new FilterResponseModel<VideoModel>(),
+        public recommendedVideos: VideoModel[] = []) {
     }
 
     static get default() {
-        return new FilteredVideosStateModel();
+        return new VideoListStateModel();
     }
 }
 
-@State<FilteredVideosStateModel>({
-    name: VIDEO_STATES.video.filteredVideos.name,
-    defaults: FilteredVideosStateModel.default
+@State<VideoListStateModel>({
+    name: VIDEO_STATES.video.videoList.name,
+    defaults: VideoListStateModel.default
 })
 @Injectable()
-export class FilteredVideosState extends TransferableState<FilteredVideosStateModel> implements NgxsOnInit {
+export class VideoListState extends TransferableState<VideoListStateModel> implements NgxsOnInit {
 
-    protected transferStateKeyName: string = FilteredVideosState.name;
+    protected transferStateKeyName: string = VideoListState.name;
 
     constructor(@Inject(PLATFORM_ID) platformId: object,
         transferState: TransferState,
@@ -42,7 +43,7 @@ export class FilteredVideosState extends TransferableState<FilteredVideosStateMo
 
     ngxsOnInit(ctx?: StateContext<any>) {
         super.ngxsOnInit(ctx);
-        const transferredState = FilteredVideosStateModel.default;
+        const transferredState = VideoListStateModel.default;
 
         if (this.needInitData) {
             this.isPlatformServer && this.setTransferredState(transferredState);
@@ -53,12 +54,17 @@ export class FilteredVideosState extends TransferableState<FilteredVideosStateMo
     }
 
     @Selector()
-    static videos(state: FilteredVideosStateModel) {
+    static videos(state: VideoListStateModel) {
         return state.videos;
     }
 
+    @Selector()
+    static recommendedVideos(state: VideoListStateModel) {
+        return state.recommendedVideos;
+    }
+
     @Action(VideoQueries.Filter)
-    filter(context: StateContext<FilteredVideosStateModel>, query: VideoQueries.Filter) {
+    filter(context: StateContext<VideoListStateModel>, query: VideoQueries.Filter) {
         const srcVideos = this._databaseService.database.videos;
         let videos = [...srcVideos];
 
@@ -89,7 +95,20 @@ export class FilteredVideosState extends TransferableState<FilteredVideosStateMo
 
         context.patchState(patch);
         this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), FilteredVideosStateModel.default);
+            && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
     }
 
+    @Action(VideoQueries.GetRecommended)
+    getRecommended(context: StateContext<VideoListStateModel>, query: VideoQueries.GetRecommended) {
+        const srcVideos = this._databaseService.database.videos;
+        let videos = [...srcVideos].splice(0, 10);
+
+        const patch = {
+            recommendedVideos: videos
+        };
+
+        context.patchState(patch);
+        this.needInitData && this.isPlatformServer
+            && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
+    }
 }

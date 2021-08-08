@@ -17,10 +17,10 @@
 
 body {
     font-family: $font-primary;
-    font-weight: 400;
-    font-size: 16px;
+    font-size: $font-size;
     line-height: 1.7;
     color: #828282;
+    font-weight: 400;
     background: $brand-bg-color;
 }
 
@@ -97,15 +97,15 @@ figure {
     }
 }
 
-#fh5co-header,
-#fh5co-counter,
-.fh5co-bg {
+#edh-header,
+#edh-counter,
+.edh-bg {
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
     position: relative;
 }
-.fh5co-bg {
+.edh-bg {
     background-size: cover;
     background-position: center center;
     position: relative;
@@ -113,7 +113,7 @@ figure {
     float: left;
 }
 
-.fh5co-video {
+.edh-video {
     // height: 450px;
     overflow: hidden;
     @media screen and (max-width: media-breakpoint-only(md)) {
@@ -141,7 +141,6 @@ figure {
             text-align: center;
             display: table-cell;
             vertical-align: middle;
-            font-size: 40px;
         }
     }
     .overlay {
@@ -167,7 +166,7 @@ figure {
         }
     }
 }
-.fh5co-cover {
+.edh-cover {
     height: 800px;
 
     background-size: cover;
@@ -185,7 +184,7 @@ figure {
         right: 0;
         background: rgba($brand-black, 0.4);
     }
-    > .fh5co-container {
+    > .edh-container {
         position: relative;
         z-index: 10;
     }
@@ -204,7 +203,7 @@ figure {
         }
     }
 
-    &.fh5co-cover-sm {
+    &.edh-cover-sm {
         height: 600px;
         @media screen and (max-width: media-breakpoint-only(sm)) {
             height: 400px;
@@ -221,9 +220,9 @@ figure {
     }
 }
 
-#fh5co-header,
-#fh5co-counter,
-.fh5co-cover {
+#edh-header,
+#edh-counter,
+.edh-cover {
     .display-tc {
         display: table-cell !important;
         vertical-align: middle;
@@ -235,15 +234,10 @@ figure {
         }
         h1 {
             margin-bottom: 20px;
-            font-size: 54px;
             line-height: 1.3;
             font-weight: 300;
-            @media screen and (max-width: media-breakpoint-only(sm)) {
-                font-size: 30px;
-            }
         }
         h2 {
-            font-size: 20px;
             line-height: 1.5;
             margin-bottom: 30px;
         }
@@ -252,7 +246,6 @@ figure {
             // background: $brand-primary!important;
             color: $brand-white;
             border: none !important;
-            font-size: 18px;
             &.btn-video {
                 background: rgba($brand-secondary, 0.8);
                 border: none;
@@ -296,14 +289,13 @@ figure {
     }
 }
 
-.fh5co-bg-section {
+.edh-bg-section {
     background: rgba($brand-black, 0.05);
 }
 
-#fh5co-explore,
-#fh5co-pricing,
-#fh5co-testimonial,
-#edh-started,
+#edh-explore,
+#edh-pricing,
+#edh-testimonial,
 #edh-blog,
 #edh-footer {
     padding: 7em 0;
@@ -318,18 +310,18 @@ figure {
     clear: both;
 }
 
-#fh5co-counter {
+#edh-counter {
     padding: 3em 0;
     clear: both;
 }
 
-#fh5co-steps {
+#edh-steps {
     clear: both;
     padding-bottom: 7em;
 }
 
 // Counters
-.fh5co-counters {
+.edh-counters {
     padding: 3em 0;
     background-size: cover;
     background-attachment: fixed;
@@ -337,8 +329,7 @@ figure {
     .counter-wrap {
         border: 1px solid red !important;
     }
-    .fh5co-counter {
-        font-size: 44px;
+    .edh-counter {
         display: block;
         color: rgba($brand-black, 0.7);
         font-family: $font-primary;
@@ -346,18 +337,17 @@ figure {
         font-weight: 400;
         margin-bottom: 0.3em;
     }
-    .fh5co-counter-label {
+    .edh-counter-label {
         color: rgba($brand-black, 0.5);
         text-transform: uppercase;
-        font-size: 14px;
         letter-spacing: 5px;
         margin-bottom: 2em;
         display: block;
     }
 }
 
-#fh5co-explore {
-    .fh5co-explore1 {
+#edh-explore {
+    .edh-explore1 {
         margin-bottom: 7em;
     }
 }
@@ -368,7 +358,6 @@ figure {
     h4 {
         position: relative;
         padding-left: 40px;
-        font-size: 20px;
         i {
             position: absolute;
             left: 0;
@@ -388,7 +377,6 @@ figure {
             list-style: none;
             margin: 0;
             padding: 0;
-            font-size: 16px;
             padding-left: 30px;
             margin-bottom: 10px;
             position: relative;
@@ -397,14 +385,13 @@ figure {
                 position: absolute;
                 left: 0;
                 top: 0;
-                font-size: 18px;
                 color: $brand-primary;
             }
         }
     }
 }
 
-.fh5co-social-icons {
+.edh-social-icons {
     margin: 0;
     padding: 0;
     li {
@@ -417,9 +404,6 @@ figure {
             color: $brand-primary;
             padding-left: 10px;
             padding-right: 10px;
-            i {
-                font-size: 20px;
-            }
         }
     }
 }
@@ -442,25 +426,21 @@ figure {
             }
             &.address {
                 &:before {
-                    font-size: 30px;
                     content: "\e9d1";
                 }
             }
             &.phone {
                 &:before {
-                    font-size: 23px;
                     content: "\e9f4";
                 }
             }
             &.email {
                 &:before {
-                    font-size: 23px;
                     content: "\e9da";
                 }
             }
             &.url {
                 &:before {
-                    font-size: 23px;
                     content: "\e9af";
                 }
             }
@@ -481,13 +461,11 @@ figure {
         border-bottom: 5px solid $brand-secondary;
     }
     h2 {
-        font-size: 32px;
         margin-bottom: 20px;
         line-height: 1.5;
         color: $brand-black;
     }
     p {
-        font-size: 18px;
         line-height: 1.5;
         color: #828282;
     }
@@ -495,18 +473,16 @@ figure {
         display: block;
         margin-bottom: 10px;
         text-transform: uppercase;
-        font-size: 12px;
         letter-spacing: 2px;
     }
 }
 
-#fh5co-testimonial {
+#edh-testimonial {
     background: #efefef;
     .testimony-slide {
         // display: none;
         text-align: center;
         span {
-            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 700;
@@ -542,7 +518,6 @@ figure {
         width: 100%;
 
         a {
-            font-size: 32px;
             color: #dadada;
 
             &:hover,
@@ -569,12 +544,10 @@ figure {
     position: relative;
 }
 .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
-    font-size: 16px;
     margin-bottom: 10px;
 }
 .bs-wizard > .bs-wizard-step .bs-wizard-info {
     color: #999;
-    font-size: 14px;
     padding: 20px;
 }
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot {
@@ -640,83 +613,6 @@ figure {
     pointer-events: none;
 }
 
-#edh-started {
-    background-size: cover;
-    background-position: top center;
-    background-repeat: no-repeat;
-    position: relative;
-    float: left;
-    width: 100%;
-    .overlay {
-        z-index: 0;
-        position: absolute;
-        bottom: 0;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: rgba($brand-black, 0.4);
-    }
-
-    .edh-heading {
-        h2 {
-            color: $brand-white;
-            margin-bottom: 20px !important;
-        }
-        p {
-            color: rgba($brand-white, 0.8);
-        }
-    }
-
-    .form-control {
-        background: rgba(255, 255, 255, 0.2);
-        border: none !important;
-        color: $brand-white;
-        font-size: 16px !important;
-        width: 100%;
-
-        &::-webkit-input-placeholder {
-            color: $brand-white;
-        }
-
-        &:-moz-placeholder {
-            /* Firefox 18- */
-            color: $brand-white;
-        }
-
-        &::-moz-placeholder {
-            /* Firefox 19+ */
-            color: $brand-white;
-        }
-
-        &:-ms-input-placeholder {
-            color: $brand-white;
-        }
-        @include transition(0.5s);
-        &:focus {
-            background: rgba(255, 255, 255, 0.3);
-        }
-    }
-    .btn {
-        border: none !important;
-        background: $brand-primary;
-        color: $brand-white;
-        font-size: 16px;
-        text-transform: uppercase;
-        font-weight: 400;
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-    .form-inline {
-        .form-group {
-            width: 100% !important;
-            margin-bottom: 10px;
-            .form-control {
-                width: 100%;
-            }
-        }
-    }
-}
-
 .pricing {
     display: block;
     float: left;
@@ -753,7 +649,6 @@ figure {
             width: 100%;
             list-style: none;
             margin: 0;
-            font-size: 16px;
             padding: 8px 10px;
 
             &.color {
@@ -765,7 +660,6 @@ figure {
 .pricing-plan {
     margin: 0 0 50px 0;
     padding: 0;
-    font-size: 13px;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
@@ -783,58 +677,16 @@ figure {
     }
 }
 .price {
-    font-size: 72px;
     color: $brand-black;
     line-height: 50px;
     .currency {
-        font-size: 30px;
         top: -0.9em;
         padding-right: 10px;
     }
     small {
-        font-size: 13px;
         display: block;
         text-transform: uppercase;
         color: #888f94;
-    }
-}
-
-#edh-footer {
-    background: #efefef;
-    .edh-footer-links {
-        padding: 0;
-        margin: 0;
-        li {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            a {
-                color: rgba($brand-black, 0.5);
-                text-decoration: none;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-    }
-    .fh5co-widget {
-        margin-bottom: 30px;
-        @media screen and (max-width: media-breakpoint-only(sm)) {
-            text-align: left;
-        }
-        h3 {
-            margin-bottom: 15px;
-            font-weight: bold;
-            font-size: 15px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-    }
-
-    .copyright {
-        .block {
-            display: block;
-        }
     }
 }
 
@@ -849,7 +701,7 @@ figure {
 }
 
 // off canvas
-#fh5co-offcanvas {
+#edh-offcanvas {
     position: absolute;
     z-index: 1901;
     width: 270px;
@@ -891,7 +743,6 @@ figure {
 }
 
 .uppercase {
-    font-size: 14px;
     color: $brand-black;
     margin-bottom: 10px;
     font-weight: 700;
@@ -1036,7 +887,6 @@ figure {
 // Buttons
 .btn {
     font-family: $font-primary;
-    font-size: 16px;
     font-weight: 400;
     border-radius: unset;
     @include transition(0.5s);
@@ -1185,7 +1035,6 @@ figure {
 .btn-outline {
     background: none;
     border: 2px solid lighten($brand-black, 50%);
-    font-size: 16px;
     @include transition(0.3s);
     &:hover,
     &:focus,
@@ -1216,13 +1065,13 @@ figure {
         }
     }
 }
+
 // Form Input Field
 .form-control {
     box-shadow: none;
     background: transparent;
     border: 2px solid rgba(0, 0, 0, 0.1);
     height: 54px;
-    font-size: 18px;
     font-weight: 300;
     border-radius: unset;
     &:active,

@@ -21,4 +21,11 @@ export namespace VideoQueries {
         constructor(public id: string) {
         }
     }
+
+    export class GetRecommended {
+        static readonly type = '[EduHub] Get Recommended Videos';
+
+        constructor(public relatedToVideoId: string) {
+        }
+    }
 }

@@ -1,0 +1,37 @@
+@import "variables";
+
+.edh-collapsed-section {
+    position: relative;
+
+    &__content-wrapper {
+        overflow-y: hidden;
+        overflow-wrap: break-word;
+        transition: max-height 0.25s ease-out;
+    }
+
+    &__expander {
+        position: absolute;
+        width: 100%;
+        button {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            i {
+                font-size: smaller;
+            }
+        }
+    }
+
+    .edh-content-overlay {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, $brand-white);
+        display: none;
+
+        &--show {
+            display: block;
+        }
+    }
+}

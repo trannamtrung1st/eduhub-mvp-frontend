@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { PersistenceModule } from '@persistence/persistence.module';
 
 import { DEFAULT_POST_THUMB } from '@domains/post/constants';
-import { DEFAULT_STREAM_URL, DEFAULT_VIDEO_THUMB } from '@domains/video/constants';
+import { DEFAULT_STREAM_URL, DEFAULT_VIDEO_DESCRIPTION, DEFAULT_VIDEO_THUMB } from '@domains/video/constants';
 
 import { MockPost } from '@domains/post/mock-post.model';
 import { MockSubject } from '@domains/subject/mock-subject.model';
@@ -56,7 +56,8 @@ export class MockDatabase {
         author: `Author ${idx}`,
         thumbnailUrl: DEFAULT_VIDEO_THUMB,
         streamUrl: DEFAULT_STREAM_URL,
-        subjectId: currentSubjectId
+        subjectId: currentSubjectId,
+        description: DEFAULT_VIDEO_DESCRIPTION
       });
 
       this._posts.push({
@@ -65,7 +66,9 @@ export class MockDatabase {
         thumbnailUrl: DEFAULT_POST_THUMB,
         createdTime: new Date(),
         commentCount: Math.round(Math.random() * 1000),
-        description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
+        description: `Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
+        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
+        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.`,
         subjectId: currentSubjectId
       });
     });
