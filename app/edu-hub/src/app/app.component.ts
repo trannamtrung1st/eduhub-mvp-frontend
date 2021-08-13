@@ -12,10 +12,10 @@ import { UNSUPPORTED_WIDTH } from './constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 
-import { BaseComponent } from '@presentation/components/cross/base-component/base-component';
-
 import { APP_STATUS_STATES, GlobalState } from '@core/global/states/global.state';
 import { LoaderState } from '@core/global/states/loader.state';
+
+import { BaseComponent } from '@presentation/cross/base-component/base-component';
 
 @Component({
   selector: 'app-root',

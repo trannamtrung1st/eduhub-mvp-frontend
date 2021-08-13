@@ -5,7 +5,7 @@ import { NgxsOnInit, State, StateContext } from '@ngxs/store';
 
 import { VIDEO_STATES } from '../constants';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 
 class VideoStateModel {
     static get default() {

@@ -8,9 +8,9 @@ import { SUBJECT_STATES } from '../constants';
 import { SubjectModel } from '../models/subject.model';
 import { SubjectQueries } from '../queries/subject.queries';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 
-import { MockDatabaseService } from '@persistence/storage/mock-database.service';
+import { MockDatabaseService } from '@persistence/database/mock-database.service';
 
 class AllSubjectsStateModel {
 

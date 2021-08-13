@@ -10,9 +10,9 @@ import { FilterResponseModel } from '@cross/filter/models/filter-response.model'
 import { VideoModel } from '../models/video.model';
 import { VideoQueries } from '../queries/video.queries';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 
-import { MockDatabaseService } from '@persistence/storage/mock-database.service';
+import { MockDatabaseService } from '@persistence/database/mock-database.service';
 
 class VideoListStateModel {
 

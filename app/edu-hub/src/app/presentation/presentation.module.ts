@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SmoothScrollModule } from 'ngx-scrollbar/smooth-scroll';
+import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -16,26 +17,31 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NgxsModule } from '@ngxs/store';
-import { AppRoutingModule } from '@app/app-routing.module';
+import { SwiperModule } from 'swiper/angular';
+import { PresentationRoutingModule } from '@presentation/presentation-routing.module';
+import { CrossModule } from '@cross/cross.module';
 
 import { APP_NZ_ICONS, STATES } from './constants';
 
-import { TopNavComponent } from './layouts/normal/top-nav/top-nav.component';
-import { NormalLayoutComponent } from './layouts/normal/normal-layout.component';
-import { LogoComponent } from './components/cross/logo/logo.component';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { VideoListItemComponent } from './components/video/video-list-item/video-list-item.component';
-import { PostListItemComponent } from './components/post/post-list-item/post-list-item.component';
-import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import { VideoDetailPageComponent } from './pages/video-detail-page/video-detail-page.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { FooterComponent } from './layouts/normal/footer/footer.component';
-import { BannerComponent } from './components/cross/banner/banner.component';
-import { HalfCollapsedSectionComponent } from './components/cross/half-collapsed-section/half-collapsed-section.component';
+import { TopNavComponent } from './cross/top-nav/top-nav.component';
+import { NormalLayoutComponent } from './platform/layouts/normal/normal-layout.component';
+import { LogoComponent } from './cross/logo/logo.component';
+import { VideoListItemComponent } from './platform/video/video-list-item/video-list-item.component';
+import { BlogListItemComponent } from './platform/blog/blog-list-item/blog-list-item.component';
+import { HomePageComponent } from './platform/pages/home-page/home-page.component';
+import { LoginPageComponent } from './platform/pages/login-page/login-page.component';
+import { RegisterPageComponent } from './platform/pages/register-page/register-page.component';
+import { VideoDetailPageComponent } from './platform/video/video-detail-page/video-detail-page.component';
+import { PageNotFoundComponent } from './cross/pages/page-not-found/page-not-found.component';
+import { FooterComponent } from './cross/footer/footer.component';
+import { BannerComponent } from './cross/banner/banner.component';
+import { HalfCollapsedSectionComponent } from './cross/half-collapsed-section/half-collapsed-section.component';
+import { BlogDetailPageComponent } from './platform/blog/blog-detail-page/blog-detail-page.component';
 
-import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-dropdown.directive';
+import { NavDropdownDirective } from './cross/top-nav/nav-dropdown/nav-dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -44,7 +50,7 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     NavDropdownDirective,
     LogoComponent,
     VideoListItemComponent,
-    PostListItemComponent,
+    BlogListItemComponent,
     HomePageComponent,
     LoginPageComponent,
     RegisterPageComponent,
@@ -52,14 +58,17 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     PageNotFoundComponent,
     FooterComponent,
     BannerComponent,
-    HalfCollapsedSectionComponent
+    HalfCollapsedSectionComponent,
+    BlogDetailPageComponent
   ],
   imports: [
     CommonModule,
+    CrossModule,
     NgxsModule.forFeature(STATES),
     NgScrollbarModule,
     SmoothScrollModule,
-    AppRoutingModule,
+    PresentationRoutingModule,
+    NzNoAnimationModule,
     NzPaginationModule,
     NzFormModule,
     NzCheckboxModule,
@@ -70,6 +79,9 @@ import { NavDropdownDirective } from './layouts/normal/top-nav/nav-dropdown/nav-
     NzTagModule,
     NzAvatarModule,
     NzCommentModule,
+    NzCardModule,
+    NzDropDownModule,
+    SwiperModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

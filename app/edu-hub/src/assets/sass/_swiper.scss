@@ -1,0 +1,10 @@
+.swiper-button-prev,
+.swiper-button-next {
+    color: $brand-primary;
+    background-color: rgba($brand-black, 0.5);
+    padding: 20px;
+
+    &:after {
+        font-size: 17px !important;
+    }
+}

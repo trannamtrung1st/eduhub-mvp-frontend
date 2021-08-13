@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
   declarations: [],
   imports: [
     CommonModule
+  ],
+  providers: [
+    { provide: Storage, useValue: sessionStorage }
   ]
 })
 export class PersistenceModule { }

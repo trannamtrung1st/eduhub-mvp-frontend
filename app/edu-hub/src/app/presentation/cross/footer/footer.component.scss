@@ -1,0 +1,40 @@
+@import "variables";
+
+#edh-footer {
+    background: $brand-lighter;
+    .edh-footer-links {
+        padding: 0;
+        margin: 0;
+        li {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            a {
+                color: rgba($brand-black, 0.5);
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    .edh-widget {
+        margin-bottom: 30px;
+        @media screen and (max-width: media-breakpoint-only(sm)) {
+            text-align: left;
+        }
+        h3 {
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    }
+
+    .copyright {
+        .block {
+            display: block;
+        }
+    }
+}

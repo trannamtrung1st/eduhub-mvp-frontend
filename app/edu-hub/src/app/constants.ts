@@ -6,13 +6,19 @@ interface AppRouting {
     login: string;
     registration: string;
     videoDetail: string;
+    blogDetail: string;
+    notFound: string;
+    accessDenied: string;
 }
 
 export const ROUTING: AppRouting = {
     home: '',
     login: 'login',
     registration: 'registration',
-    videoDetail: 'video/:id'
+    videoDetail: 'video/:id',
+    blogDetail: 'blog/:id',
+    notFound: 'not-found',
+    accessDenied: 'access-denied'
 };
 
 let copyRoutes: any = {
