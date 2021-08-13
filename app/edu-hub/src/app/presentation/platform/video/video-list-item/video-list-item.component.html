@@ -1,0 +1,14 @@
+<a [routerLink]="video.detailUrl">
+    <div nz-row class="edh-blog" data-animate-effect="fadeIn">
+        <div nz-col class="edh-img-container mr-3">
+            <img [src]="video.thumbnailUrl" alt="Free HTML5 Website Template by FreeHTML5.co"
+                class="edh-blog__thumbnail" [ngStyle]="tmbStyle">
+        </div>
+        <div nz-col class="edh-blog__info" [ngStyle]="infoStyle">
+            <div class="edh-blog__heading">
+                <div class="edh-blog__title">{{ video.title }}</div>
+                <span class="text-secondary">by </span><span>{{ video.author }}</span>
+            </div>
+        </div>
+    </div>
+</a>

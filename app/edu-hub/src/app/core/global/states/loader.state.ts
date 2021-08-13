@@ -9,7 +9,7 @@ import { GLOBAL_STATES } from '../constants';
 
 import { LoaderCommands } from '../commands/loader.commands';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 
 class LoaderStateModel {
 

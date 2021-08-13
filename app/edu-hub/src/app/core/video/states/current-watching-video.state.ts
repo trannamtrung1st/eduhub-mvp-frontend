@@ -9,9 +9,9 @@ import { VIDEO_STATES } from '../constants';
 import { VideoDetailModel } from '../models/video-detail.model';
 import { VideoQueries } from '../queries/video.queries';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 
-import { MockDatabaseService } from '@persistence/storage/mock-database.service';
+import { MockDatabaseService } from '@persistence/database/mock-database.service';
 
 export const CURRENT_WATCHING_VIDEO_STATES = VIDEO_STATES.video.currentWatchingVideo;
 export const GET_VIDEO_DETAIL_STATES = CURRENT_WATCHING_VIDEO_STATES.states.getDetail;

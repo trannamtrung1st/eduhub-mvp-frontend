@@ -1,0 +1,54 @@
+<nav class="edh-nav" role="navigation">
+    <div class="top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <app-logo></app-logo>
+                </div>
+                <div class="col-10 text-right menu-1 my-auto">
+                    <ul class="my-auto">
+                        <li class="active"><a [routerLink]="A_ROUTING.home">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li class="has-dropdown" appNavDropdown>
+                            <a href="blog.html">Blog</a>
+                            <ul class="dropdown">
+                                <li><a href="#">Web Design</a></li>
+                                <li><a href="#">eCommerce</a></li>
+                                <li><a href="#">Branding</a></li>
+                                <li><a href="#">API</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <ng-container *ngIf="currentUser$ | async as currentUser; else notLoggedIn">
+                            <li class="edh-user-nav">
+                                <a nz-dropdown [nzDropdownMenu]="userNavDropdown" nzPlacement="bottomRight">
+                                    Hi, <b>{{ currentUser.username }}</b>
+                                </a>
+                                <nz-dropdown-menu nzNoAnimation #userNavDropdown="nzDropdownMenu">
+                                    <ul nz-menu>
+                                        <li nz-menu-item>
+                                            <i nz-icon nzType="user" nzTheme="outline" class="mr-3"></i>
+                                            Profile
+                                        </li>
+                                        <li nz-menu-item>
+                                            <i nz-icon nzType="laptop" nzTheme="outline" class="mr-3"></i>
+                                            My place
+                                        </li>
+                                        <li nz-menu-item (click)="onLogoutClicked($event)">
+                                            <i nz-icon nzType="logout" nzTheme="outline" class="mr-3"></i>
+                                            Log out
+                                        </li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </li>
+                        </ng-container>
+                        <ng-template #notLoggedIn>
+                            <li class="btn-cta"><a [href]="A_ROUTING.login"><span>Login</span></a></li>
+                        </ng-template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

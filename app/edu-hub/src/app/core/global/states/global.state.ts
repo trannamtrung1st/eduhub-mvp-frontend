@@ -7,7 +7,7 @@ import { GLOBAL_STATES } from '../constants';
 
 import { GlobalCommands } from '../commands/global.commands';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 import { LoaderState } from './loader.state';
 
 export const APP_STATUS_STATES = GLOBAL_STATES.global.states.appStatus;

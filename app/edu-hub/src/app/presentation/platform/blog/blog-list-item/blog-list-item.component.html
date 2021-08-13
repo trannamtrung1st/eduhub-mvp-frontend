@@ -1,0 +1,25 @@
+<div nz-row class="edh-blog">
+    <div nz-col class="edh-img-container" [class.mr-3]="!tmbFullWidth" [class.mb-3]="tmbFullWidth">
+        <a [routerLink]="blog.detailUrl">
+            <ng-container *ngIf="tmbFullWidth; else notFullWidth">
+                <img class="edh-blog__thumbnail img-fluid" [src]="blog.thumbnailUrl" alt="">
+            </ng-container>
+            <ng-template #notFullWidth>
+                <img [ngStyle]="tmbStyle" class="edh-blog__thumbnail" [src]="blog.thumbnailUrl" alt="">
+            </ng-template>
+        </a>
+    </div>
+    <div nz-col class="edh-blog__info" [ngStyle]="infoStyle">
+        <div class="edh-blog__heading">
+            <div class="edh-blog__title"><a class="text-dark" [routerLink]="blog.detailUrl">{{ blog.title }}</a></div>
+            <span class="text-secondary">{{ blog.createdTime | date: 'medium' }}</span>
+            &nbsp;
+            <span class="comment">
+                <a [routerLink]="blog.detailUrl">{{ blog.commentCount }}<i class="icon-speech-bubble"></i></a>
+            </span>
+        </div>
+        <p class="edh-blog__description" [class.mb-0]="tmbFullWidth">
+            {{ blog.description }}
+        </p>
+    </div>
+</div>

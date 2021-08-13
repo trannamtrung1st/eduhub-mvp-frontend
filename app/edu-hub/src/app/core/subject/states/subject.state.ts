@@ -5,7 +5,7 @@ import { NgxsOnInit, State, StateContext } from '@ngxs/store';
 
 import { SUBJECT_STATES } from '../constants';
 
-import { TransferableState } from '@core/cross/state-transferable/transferable-state';
+import { TransferableState } from '@cross/state/transferable-state';
 import { AllSubjectsState } from './all-subjects.state';
 
 class SubjectStateModel {

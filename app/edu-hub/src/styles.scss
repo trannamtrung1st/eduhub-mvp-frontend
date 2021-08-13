@@ -1,13 +1,17 @@
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins/breakpoints";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~swiper/swiper";
+@import "~swiper/components/pagination/pagination";
+@import "~swiper/components/navigation/navigation";
 
 @import "variables";
 @import "mixin";
 @import "sizing";
 @import "scrolling";
 @import "form";
+@import "swiper";
 
 /* =======================================================
 *
@@ -296,7 +300,6 @@ figure {
 #edh-explore,
 #edh-pricing,
 #edh-testimonial,
-#edh-blog,
 #edh-footer {
     padding: 7em 0;
     clear: both;
@@ -305,7 +308,8 @@ figure {
     }
 }
 
-#edh-post,
+#edh-blog,
+#edh-video,
 #edh-browsing {
     clear: both;
 }
@@ -1096,7 +1100,7 @@ label {
 
 // Customize ng-zorro antd icon
 .anticon {
-    vertical-align: 0.1em;
+    vertical-align: 0.07em;
 }
 
 // Customize ng-zorro antd tag

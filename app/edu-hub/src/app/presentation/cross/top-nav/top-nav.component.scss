@@ -1,0 +1,174 @@
+@import "variables";
+
+.edh-nav {
+    background-color: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding: 0;
+    z-index: 1001;
+    // @media screen and (max-width: media-breakpoint-only(sm)) {
+    // 	padding: 20px 0;
+    // }
+    .top-menu {
+        padding: 10px 0;
+    }
+    .top {
+        padding: 7px 0;
+        margin-bottom: 0;
+        .num,
+        .edh-social {
+            display: inline-block;
+            margin: 0;
+        }
+        .num {
+            color: rgba($brand-white, 0.6);
+            font-size: 13px;
+            padding-right: 10px;
+            margin-right: 5px;
+            border-right: 1px solid rgba($brand-white, 0.2);
+            letter-spacing: 0px;
+        }
+        .edh-social {
+            li {
+                font-size: 14px;
+                a {
+                    padding: 0 7px;
+                    i {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    a {
+        padding: 5px 10px;
+        color: $brand-white;
+    }
+    .menu-1 {
+        @media screen and (max-width: media-breakpoint-only(sm)) {
+            display: none;
+        }
+    }
+    ul {
+        padding: 0;
+        li {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: inline;
+            a {
+                font-size: 15px;
+                padding: 30px 15px;
+                color: rgba(255, 255, 255, 0.5);
+                @include transition(0.5s);
+                &:hover,
+                &:focus,
+                &:active {
+                    color: rgba(255, 255, 255, 1);
+                }
+            }
+            &.has-dropdown {
+                position: relative;
+                .dropdown {
+                    width: 140px;
+                    -webkit-box-shadow: 0px 14px 33px -9px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow: 0px 14px 33px -9px rgba(0, 0, 0, 0.75);
+                    box-shadow: 0px 14px 33px -9px rgba(0, 0, 0, 0.75);
+                    z-index: 1002;
+                    visibility: hidden;
+                    opacity: 0;
+                    position: absolute;
+                    top: 40px;
+                    left: 0;
+                    text-align: left;
+                    background: $brand-black;
+                    padding: 20px;
+                    border-radius: unset;
+                    @include transition(0s);
+                    &:before {
+                        bottom: 100%;
+                        left: 40px;
+                        border: solid transparent;
+                        content: " ";
+                        height: 0;
+                        width: 0;
+                        position: absolute;
+                        pointer-events: none;
+                        border-bottom-color: #000;
+                        border-width: 8px;
+                        margin-left: -8px;
+                    }
+
+                    li {
+                        display: block;
+                        margin-bottom: 7px;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        a {
+                            padding: 2px 0;
+                            display: block;
+                            color: lighten($brand-black, 60%);
+                            line-height: 1.2;
+                            text-transform: none;
+                            font-size: 13px;
+                            letter-spacing: 0;
+                            &:hover {
+                                color: $brand-white;
+                            }
+                        }
+                    }
+                }
+                &:hover,
+                &:focus {
+                    a {
+                        color: $brand-white;
+                    }
+                    .dropdown {
+                        // visibility: visible;
+                        // opacity: 1;
+                    }
+                }
+            }
+            &.btn-cta {
+                a {
+                    padding: 30px 0px !important;
+                    color: $brand-white;
+                    span {
+                        background: rgba($brand-white, 0.2);
+                        padding: 4px 10px;
+                        @include inline-block;
+                        @include transition(0.3s);
+                        border-radius: unset;
+                        transition: outline 0s;
+                    }
+                    &:hover {
+                        span {
+                            outline: 1px solid rgba($brand-white, 0.5);
+                        }
+                    }
+                }
+            }
+            &.active {
+                > a {
+                    color: $brand-white !important;
+                }
+            }
+        }
+
+        .edh-user-nav {
+            a {
+                color: $brand-white;
+                @include transition(0.5s);
+                &:hover,
+                &:focus,
+                &:active {
+                    color: $brand-primary;
+                }
+            }
+        }
+    }
+}
