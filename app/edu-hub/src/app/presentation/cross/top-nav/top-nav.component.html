@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-10 text-right menu-1 my-auto">
                     <ul class="my-auto">
-                        <li class="active"><a [routerLink]="A_ROUTING.home">Home</a></li>
+                        <li class="active"><a [routerLink]="A_ROUTING.platform.home">Home</a></li>
                         <li><a href="courses.html">Courses</a></li>
                         <li><a href="pricing.html">Pricing</a></li>
                         <li class="has-dropdown" appNavDropdown>
@@ -26,11 +26,13 @@
                                     Hi, <b>{{ currentUser.username }}</b>
                                 </a>
                                 <nz-dropdown-menu nzNoAnimation #userNavDropdown="nzDropdownMenu">
-                                    <ul nz-menu>
-                                        <li nz-menu-item>
-                                            <i nz-icon nzType="user" nzTheme="outline" class="mr-3"></i>
-                                            Profile
-                                        </li>
+                                    <ul nz-menu class="edh-user-nav__dropdown">
+                                        <a [routerLink]="A_ROUTING.management.profile">
+                                            <li nz-menu-item>
+                                                <i nz-icon nzType="user" nzTheme="outline" class="mr-3"></i>
+                                                Profile
+                                            </li>
+                                        </a>
                                         <li nz-menu-item>
                                             <i nz-icon nzType="laptop" nzTheme="outline" class="mr-3"></i>
                                             My place
@@ -44,7 +46,7 @@
                             </li>
                         </ng-container>
                         <ng-template #notLoggedIn>
-                            <li class="btn-cta"><a [href]="A_ROUTING.login"><span>Login</span></a></li>
+                            <li class="btn-cta"><a [href]="A_ROUTING.platform.login"><span>Login</span></a></li>
                         </ng-template>
                     </ul>
                 </div>

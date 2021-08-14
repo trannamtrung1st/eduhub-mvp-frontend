@@ -26,7 +26,7 @@ export class VideoListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.video.detailUrl = A_ROUTING.videoDetail.replace(':id', this.video.id);
+    this.video.detailUrl = A_ROUTING.platform.videoDetail.replace(':id', this.video.id);
     this.tmbStyle = {
       width: `${this.tmbWidth}px`,
       height: `${+this.tmbWidth / this.aspectRatio}px`

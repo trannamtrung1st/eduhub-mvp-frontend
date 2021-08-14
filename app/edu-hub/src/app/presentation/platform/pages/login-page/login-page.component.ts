@@ -84,7 +84,7 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
     this._store.dispatch(new IdentityCommands.Login(loginModel.userName, loginModel.password))
       .pipe(withLatestFrom(this._currentUser$))
       .subscribe(([_, user]) => {
-        if (user) this._store.dispatch(new Navigate([A_ROUTING.home]));
+        if (user) this._store.dispatch(new Navigate([A_ROUTING.platform.home]));
         else alert('[TODO] Handle login');
       });
   }

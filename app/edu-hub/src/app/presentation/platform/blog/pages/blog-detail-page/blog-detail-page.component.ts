@@ -13,7 +13,7 @@ import { COMMENTS } from '@domains/comment/constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { BlogQueries } from '@core/blog/queries/blog.queries';
-import { BlogViewModel } from '../blog-list-item/view-models/blog-view.model';
+import { BlogViewModel } from '../../components/blog-list-item/view-models/blog-view.model';
 import { BlogModel } from '@core/blog/models/blog.model';
 
 import { BlogListState } from '@core/blog/states/blog-list.state';

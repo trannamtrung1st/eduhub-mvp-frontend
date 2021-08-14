@@ -1,3 +1,25 @@
+import { CommonModule } from '@angular/common';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { SmoothScrollModule } from 'ngx-scrollbar/smooth-scroll';
+import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NgxsModule } from '@ngxs/store';
+import { SwiperModule } from 'swiper/angular';
+import { CrossModule } from '@cross/cross.module';
+
 import {
     InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline,
     UpOutline, DownOutline, LikeOutline, LikeTwoTone, DislikeOutline, DislikeTwoTone,
@@ -19,7 +41,7 @@ import { CurrentWatchingVideoState } from '@core/video/states/current-watching-v
 import { VideoListState } from "@core/video/states/video-list.state";
 import { VideoState } from "@core/video/states/video.state";
 
-import { RoutingData } from './auth/models/routing-data.model';
+import { RoutingData } from './auth/routing/models/routing-data.model';
 
 export const STATES = [
     // Global
@@ -54,6 +76,31 @@ export const APP_NZ_ICONS = [
 export const ROUTING_DATA = {
     common: {
         accessDeniedPath: A_ROUTING.accessDenied,
-        loginPath: A_ROUTING.login
+        loginPath: A_ROUTING.platform.login
     } as RoutingData
 };
+
+export const SHARED_PRESENTATION_MODULES = [
+    CommonModule,
+    BrowserTransferStateModule,
+    CrossModule,
+    NgxsModule.forFeature(STATES),
+    NgScrollbarModule,
+    SmoothScrollModule,
+    NzNoAnimationModule,
+    NzPaginationModule,
+    NzFormModule,
+    NzCheckboxModule,
+    NzButtonModule,
+    NzIconModule.forChild(APP_NZ_ICONS),
+    NzInputModule,
+    NzSelectModule,
+    NzTagModule,
+    NzAvatarModule,
+    NzCommentModule,
+    NzCardModule,
+    NzDropDownModule,
+    SwiperModule,
+    FormsModule,
+    ReactiveFormsModule
+];

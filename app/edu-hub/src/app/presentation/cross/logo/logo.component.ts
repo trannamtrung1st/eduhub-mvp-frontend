@@ -17,7 +17,7 @@ export class LogoComponent implements OnInit {
   LogoSize = LogoSize;
 
   constructor() {
-    this.logoUrl = A_ROUTING.home;
+    this.logoUrl = A_ROUTING.platform.home;
     this.size = LogoSize.default;
     this.useHref = false;
   }

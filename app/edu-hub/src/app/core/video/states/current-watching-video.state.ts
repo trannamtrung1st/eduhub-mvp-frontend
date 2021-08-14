@@ -72,6 +72,7 @@ export class CurrentWatchingVideoState extends TransferableState<CurrentWatching
 
         if (!videoDetail) {
             context.patchState({
+                video: undefined,
                 getVideoDetailState: GET_VIDEO_DETAIL_STATES.notFound
             });
             return;

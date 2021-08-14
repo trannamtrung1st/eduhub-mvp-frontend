@@ -2,18 +2,22 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
+import { AuthModule } from '../auth.module';
+
 import { Store } from '@ngxs/store';
+
+import { PolicyInjector } from '../policies/policy-injector';
 
 import { A_ROUTING } from '@app/constants';
 
+import { AuthContext } from '../models/auth-context.model';
 import { RoutingData } from './models/routing-data.model';
-import { AuthContext } from './models/auth-context.model';
 
 import { CurrentUserState } from '@core/identity/states/current-user.state';
 
-import { PolicyInjector } from './policies/policy-injector';
-
-@Injectable()
+@Injectable({
+  providedIn: AuthModule
+})
 export class RoutingAuthService implements CanActivate {
 
   constructor(@Inject(PLATFORM_ID) private _platformId: object,

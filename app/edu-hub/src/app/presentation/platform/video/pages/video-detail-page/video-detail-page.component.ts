@@ -16,7 +16,7 @@ import { VideoDetailViewModel } from './view-model/video-detail-view.model';
 import { VideoQueries } from '@core/video/queries/video.queries';
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { VideoModel } from '@core/video/models/video.model';
-import { VideoViewModel } from '../video-list-item/view-models/video-view.model';
+import { VideoViewModel } from '../../components/video-list-item/view-models/video-view.model';
 
 import { CurrentWatchingVideoState, GET_VIDEO_DETAIL_STATES } from '@core/video/states/current-watching-video.state';
 import { VideoListState } from '@core/video/states/video-list.state';

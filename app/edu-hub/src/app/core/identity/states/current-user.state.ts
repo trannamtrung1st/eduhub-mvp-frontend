@@ -2,8 +2,10 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
+import { Navigate } from '@ngxs/router-plugin';
 
 import { IDENTITY_LOCAL_STORAGE, IDENTITY_STATES } from '../constants';
+import { A_ROUTING } from '@app/constants';
 
 import { IdentityCommands } from '../commands/identity.commands';
 import { UserModel } from '../models/user-model';
@@ -84,6 +86,8 @@ export class CurrentUserState extends TransferableState<CurrentUserStateModel> i
         context.patchState(patch);
         this.needInitData && this.isPlatformServer
             && this.updateTransferredState((state) => Object.assign(state, patch), CurrentUserStateModel.default);
+
+        context.dispatch(new Navigate([A_ROUTING.platform.home]));
     }
 
     @Action(IdentityCommands.LoadCurrentUser)
