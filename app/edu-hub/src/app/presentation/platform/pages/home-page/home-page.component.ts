@@ -25,8 +25,8 @@ import { VideoQueries } from '@core/video/queries/video.queries';
 import { VideoModel } from '@core/video/models/video.model';
 import { BlogQueries } from '@core/blog/queries/blog.queries';
 import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { VideoViewModel } from '@presentation/platform/video/video-list-item/view-models/video-view.model';
-import { BlogViewModel } from '@presentation/platform/blog/blog-list-item/view-models/blog-view.model';
+import { VideoViewModel } from '@presentation/platform/video/components/video-list-item/view-models/video-view.model';
+import { BlogViewModel } from '@presentation/platform/blog/components/blog-list-item/view-models/blog-view.model';
 import { BlogModel } from '@core/blog/models/blog.model';
 
 import { AllSubjectsState } from '@core/subject/states/all-subjects.state';

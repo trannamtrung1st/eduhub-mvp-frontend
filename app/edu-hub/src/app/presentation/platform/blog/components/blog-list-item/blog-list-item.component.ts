@@ -30,7 +30,7 @@ export class BlogListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.blog.detailUrl = A_ROUTING.blogDetail.replace(':id', this.blog.id);
+    this.blog.detailUrl = A_ROUTING.platform.blogDetail.replace(':id', this.blog.id);
     this.tmbStyle = {
       width: `${this.tmbWidth}px`,
       height: `${+this.tmbWidth / +this.aspectRatio}px`

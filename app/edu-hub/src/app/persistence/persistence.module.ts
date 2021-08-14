@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { browserStorageFactory, BROWSER_STORAGE } from './browser/constants';
 
 @NgModule({
   declarations: [],
@@ -7,7 +9,7 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   providers: [
-    { provide: Storage, useValue: sessionStorage }
+    { provide: BROWSER_STORAGE, useFactory: browserStorageFactory, deps: [PLATFORM_ID] }
   ]
 })
 export class PersistenceModule { }
