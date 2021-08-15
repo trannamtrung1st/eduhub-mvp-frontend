@@ -10,13 +10,13 @@ export abstract class TransferableState<StateType> implements NgxsOnInit {
     protected abstract transferStateKeyName: string;
     protected transferStateKey?: StateKey<StateType>;
     protected isPlatformServer: boolean;
-    protected needInitData: boolean;
+    protected shouldLoad: boolean;
 
     constructor(@Inject(PLATFORM_ID) platformId: object,
         protected transferState: TransferState
     ) {
         this.isPlatformServer = isPlatformServer(platformId);
-        this.needInitData = true;
+        this.shouldLoad = true;
     }
 
     ngxsOnInit(ctx?: StateContext<any>) {
@@ -44,7 +44,7 @@ export abstract class TransferableState<StateType> implements NgxsOnInit {
 
     initStateFlags() {
         this.transferStateKey = makeStateKey<StateType>(this.transferStateKeyName);
-        this.needInitData = !this.transferState.hasKey(this.transferStateKey)
+        this.shouldLoad = !this.transferState.hasKey(this.transferStateKey)
             || this.isPlatformServer;
     }
 
@@ -58,5 +58,6 @@ export abstract class TransferableState<StateType> implements NgxsOnInit {
         if (!this.transferStateKey)
             throw new Error("Transfer state key has not been initialized yet");
         this.transferState.remove(this.transferStateKey);
+        this.shouldLoad = true;
     }
 }

@@ -1,11 +1,16 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+
+import { MENU_ITEMS } from './constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 
 import { BaseComponent } from '@presentation/cross/base-component/base-component';
+
+import { ManagementMenuState } from '@core/global/states/management-menu.state';
 
 import { ScrollingService } from '@infras/scrolling/scrolling.service';
 
@@ -17,6 +22,12 @@ import { ScrollingService } from '@infras/scrolling/scrolling.service';
 export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> implements OnInit, OnDestroy {
 
   protected transferStateKeyName: string = NormalLayoutComponent.name;
+
+  MENU_ITEMS = MENU_ITEMS;
+
+  @Select(ManagementMenuState.currentMenuId) currentMenuId$!: Observable<string>;
+
+  @ViewChild("menu") private _menuRef!: ElementRef<HTMLElement>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -30,7 +41,7 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
   ngOnInit(): void {
     super.ngOnInit();
 
-    if (this.needInitData) {
+    if (this.shouldLoad) {
       this.isPlatformServer && this.setTransferredState(new NormalLayoutState());
     } else {
       this.patchTransferredState(this);
@@ -65,6 +76,13 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
     }
   }
 
+  onSiderCollapsedChanged(collapsed: boolean) {
+    if (collapsed) {
+      this._menuRef.nativeElement.classList.add('edh-menu--collapsed');
+    } else {
+      this._menuRef.nativeElement.classList.remove('edh-menu--collapsed');
+    }
+  }
 }
 
 class NormalLayoutState {

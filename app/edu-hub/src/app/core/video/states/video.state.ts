@@ -31,7 +31,7 @@ export class VideoState extends TransferableState<VideoStateModel> implements Ng
         super.ngxsOnInit(ctx);
         const transferredState = VideoStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);

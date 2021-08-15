@@ -1,4 +1,4 @@
-<div id="edh-video-detail" class="pt-5 my-5">
+<div id="edh-video-detail" class="pt-3 my-4" *ngIf="video">
     <div class="container">
         <div class="row">
             <div class="col-8">
@@ -9,7 +9,7 @@
                     </video>
                     <div nz-row class="mt-2">
                         <div nz-col nzSpan="24" class="mb-2">
-                            <h3 class="m-0 p-0">{{ videoFound ? video.title : 'Video not found' }}</h3>
+                            <h4 class="m-0 p-0">{{ videoFound ? video.title : 'Video not found' }}</h4>
                         </div>
                         <div nz-col nzSpan="2">
                             <nz-avatar nzShape="square" [nzSize]="60" nzIcon="user"

@@ -33,7 +33,7 @@ export class BlogState extends TransferableState<BlogStateModel> implements Ngxs
         super.ngxsOnInit(ctx);
         const transferredState = BlogStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);

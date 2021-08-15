@@ -1,0 +1,13 @@
+@import "variables";
+
+$menu-width: 200px;
+$menu-collapsed-width: 80px;
+
+#edh-page {
+    .edh-menu {
+        width: $menu-width;
+        &--collapsed {
+            width: $menu-collapsed-width;
+        }
+    }
+}

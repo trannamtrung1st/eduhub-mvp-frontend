@@ -47,7 +47,7 @@ export class CurrentWatchingVideoState extends TransferableState<CurrentWatching
         super.ngxsOnInit(ctx);
         const transferredState = CurrentWatchingVideoStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -67,24 +67,26 @@ export class CurrentWatchingVideoState extends TransferableState<CurrentWatching
 
     @Action(VideoQueries.GetDetail)
     filter(context: StateContext<CurrentWatchingVideoStateModel>, query: VideoQueries.GetDetail) {
-        const srcVideos = this._databaseService.database.videos;
-        const videoDetail = srcVideos.find(video => video.id == query.id);
+        return Promise.resolve().then(() => {
+            const srcVideos = this._databaseService.database.videos;
+            const videoDetail = srcVideos.find(video => video.id == query.id);
 
-        if (!videoDetail) {
-            context.patchState({
-                video: undefined,
-                getVideoDetailState: GET_VIDEO_DETAIL_STATES.notFound
-            });
-            return;
-        }
+            if (!videoDetail) {
+                context.patchState({
+                    video: undefined,
+                    getVideoDetailState: GET_VIDEO_DETAIL_STATES.notFound
+                });
+                return;
+            }
 
-        const videoDetailModel = cloneDeep(videoDetail) as VideoDetailModel;
-        const patch = {
-            video: videoDetailModel
-        };
+            const videoDetailModel = cloneDeep(videoDetail) as VideoDetailModel;
+            const patch = {
+                video: videoDetailModel
+            };
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), CurrentWatchingVideoStateModel.default);
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), CurrentWatchingVideoStateModel.default);
+        });
     }
 }

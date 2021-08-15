@@ -1,28 +1,21 @@
-<nav class="edh-nav" role="navigation">
-    <div class="top-menu">
+<nav role="navigation">
+    <div class="edh-nav w-100">
         <div class="container">
-            <div class="row">
-                <div class="col-2">
+            <div class="row edh-nav__row">
+                <div class="col-2 my-auto">
                     <app-logo></app-logo>
                 </div>
-                <div class="col-10 text-right menu-1 my-auto">
+                <div class="col-10 text-right my-auto">
                     <ul class="my-auto">
                         <li class="active"><a [routerLink]="A_ROUTING.platform.home">Home</a></li>
                         <li><a href="courses.html">Courses</a></li>
                         <li><a href="pricing.html">Pricing</a></li>
-                        <li class="has-dropdown" appNavDropdown>
-                            <a href="blog.html">Blog</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Web Design</a></li>
-                                <li><a href="#">eCommerce</a></li>
-                                <li><a href="#">Branding</a></li>
-                                <li><a href="#">API</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="blog.html">Blog</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <ng-container *ngIf="currentUser$ | async as currentUser; else notLoggedIn">
                             <li class="edh-user-nav">
-                                <a nz-dropdown [nzDropdownMenu]="userNavDropdown" nzPlacement="bottomRight">
+                                <a nz-dropdown [nzDropdownMenu]="userNavDropdown" nzPlacement="bottomRight"
+                                    class="d-inline-block">
                                     Hi, <b>{{ currentUser.username }}</b>
                                 </a>
                                 <nz-dropdown-menu nzNoAnimation #userNavDropdown="nzDropdownMenu">
@@ -46,7 +39,9 @@
                             </li>
                         </ng-container>
                         <ng-template #notLoggedIn>
-                            <li class="btn-cta"><a [href]="A_ROUTING.platform.login"><span>Login</span></a></li>
+                            <li class="edh-btn-login">
+                                <a [href]="A_ROUTING.platform.login"><span class="d-inline-block">Login</span></a>
+                            </li>
                         </ng-template>
                     </ul>
                 </div>

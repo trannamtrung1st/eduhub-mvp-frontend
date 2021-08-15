@@ -9,6 +9,7 @@ import { GlobalCommands } from '../commands/global.commands';
 
 import { TransferableState } from '@cross/state/transferable-state';
 import { LoaderState } from './loader.state';
+import { ManagementMenuState } from './management-menu.state';
 
 export const APP_STATUS_STATES = GLOBAL_STATES.global.states.appStatus;
 
@@ -25,7 +26,8 @@ class GlobalStateModel {
     name: GLOBAL_STATES.global.name,
     defaults: GlobalStateModel.default,
     children: [
-        LoaderState
+        LoaderState,
+        ManagementMenuState
     ]
 })
 @Injectable()
@@ -43,7 +45,7 @@ export class GlobalState extends TransferableState<GlobalStateModel> implements 
         super.ngxsOnInit(ctx);
         const transferredState = GlobalStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -58,21 +60,13 @@ export class GlobalState extends TransferableState<GlobalStateModel> implements 
 
     @Action(GlobalCommands.ChangeAppStatus)
     changeAppStatus(context: StateContext<GlobalStateModel>, cmd: GlobalCommands.ChangeAppStatus) {
-        const changeStatus = () => {
-            const patch = {
-                appStatus: cmd.appStatus
-            };
-
-            context.patchState(patch);
-            this.needInitData && this.isPlatformServer &&
-                this.updateTransferredState((state) => Object.assign(state, patch), GlobalStateModel.default);
+        const patch = {
+            appStatus: cmd.appStatus
         };
 
-        if (this.isPlatformServer) {
-            changeStatus();
-        } else {
-            setTimeout(changeStatus);
-        }
+        context.patchState(patch);
+        this.shouldLoad && this.isPlatformServer &&
+            this.updateTransferredState((state) => Object.assign(state, patch), GlobalStateModel.default);
     }
 
 }

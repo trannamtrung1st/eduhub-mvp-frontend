@@ -86,19 +86,22 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
     this._blogsReloaded = false;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    if (this.needInitData) {
-      this._getAllSubjects();
-      this._getVideos();
-      this._getBlogs();
+    if (this.shouldLoad) {
+      const getAllSubjects$ = this._getAllSubjects();
+      const getVideos$ = this._getVideos();
+      const getBlogs$ = this._getBlogs();
 
-      this.isPlatformServer && this.setTransferredState(new HomePageState(
-        this.videos,
-        this.blogs,
-        this.subjects));
+      if (this.isPlatformServer) {
+        await Promise.all([getAllSubjects$, getVideos$, getBlogs$]);
+        this.setTransferredState(new HomePageState(
+          this.videos,
+          this.blogs,
+          this.subjects));
+      }
     } else {
       this.patchTransferredState(this);
     }
@@ -169,9 +172,10 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
 
   private _getAllSubjects() {
     const query = new SubjectQueries.GetAll();
-    this._store.dispatch(query)
+    return this._store.dispatch(query)
       .pipe(withLatestFrom(this._subjects$))
-      .subscribe(([_, subjects]) => {
+      .toPromise()
+      .then(([_, subjects]) => {
         this.subjects = subjects.map(subject => {
           const clonedSubject = cloneDeep(subject) as SubjectViewModel;
           clonedSubject.selected = false;
@@ -194,9 +198,10 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
       query.isDesc = isDesc;
     }
 
-    this._store.dispatch(query)
+    return this._store.dispatch(query)
       .pipe(withLatestFrom(this._videos$))
-      .subscribe(([_, videos]) => {
+      .toPromise()
+      .then(([_, videos]) => {
         this.videos = videos.records.map(video => cloneDeep(video));
         this.videoPaging.totalRecords = videos.totalRecords;
       });
@@ -215,9 +220,10 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
       query.isDesc = isDesc;
     }
 
-    this._store.dispatch(query)
+    return this._store.dispatch(query)
       .pipe(withLatestFrom(this._blogs$))
-      .subscribe(([_, blogs]) => {
+      .toPromise()
+      .then(([_, blogs]) => {
         this.blogs = blogs.records.map(blog => cloneDeep(blog));
         this.blogPaging.totalRecords = blogs.totalRecords;
         this._blogsReloaded = true;

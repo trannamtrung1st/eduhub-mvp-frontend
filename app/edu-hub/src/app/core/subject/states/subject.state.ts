@@ -36,7 +36,7 @@ export class SubjectState extends TransferableState<SubjectStateModel> implement
         super.ngxsOnInit(ctx);
         const transferredState = SubjectStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);

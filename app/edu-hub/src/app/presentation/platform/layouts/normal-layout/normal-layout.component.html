@@ -1,7 +1,15 @@
-<div id="page" (window:scroll)="onPageScrolled($event)">
-    <app-top-nav></app-top-nav>
-    <router-outlet (deactivate)="onPageDeactivated($event)"></router-outlet>
-    <app-footer></app-footer>
+<div id="edh-page" (window:scroll)="onPageScrolled($event)">
+    <nz-layout>
+        <nz-header>
+            <app-top-nav></app-top-nav>
+        </nz-header>
+        <nz-content>
+            <router-outlet (deactivate)="onPageDeactivated($event)"></router-outlet>
+        </nz-content>
+        <nz-footer>
+            <app-footer></app-footer>
+        </nz-footer>
+    </nz-layout>
 </div>
 
 <div class="gototop js-top">

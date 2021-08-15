@@ -1,7 +1,29 @@
-<div id="page" (window:scroll)="onPageScrolled($event)">
-    <app-top-nav></app-top-nav>
-    <router-outlet (deactivate)="onPageDeactivated($event)"></router-outlet>
-    <app-footer></app-footer>
+<div id="edh-page" (window:scroll)="onPageScrolled($event)">
+    <nz-layout>
+        <nz-header>
+            <app-top-nav></app-top-nav>
+        </nz-header>
+        <nz-layout>
+            <nz-sider nzCollapsible nzWidth="200px" nzTheme="light"
+                (nzCollapsedChange)="onSiderCollapsedChanged($event)">
+                <ul #menu nz-menu nzMode="inline" class="edh-menu position-fixed vh-100 py-2"
+                    *ngIf="currentMenuId$ | async as currentMenuId">
+                    <li class="my-0" nz-menu-item [nzSelected]="menuItem.id === currentMenuId"
+                        *ngFor="let menuItem of MENU_ITEMS">
+                        <a [routerLink]="menuItem.url">
+                            <i nz-icon [nzType]="menuItem.icon"></i>
+                            <span>{{ menuItem.title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nz-sider>
+            <nz-layout>
+                <nz-content class="edh-main-content">
+                    <router-outlet (deactivate)="onPageDeactivated($event)"></router-outlet>
+                </nz-content>
+            </nz-layout>
+        </nz-layout>
+    </nz-layout>
 </div>
 
 <div class="gototop js-top">

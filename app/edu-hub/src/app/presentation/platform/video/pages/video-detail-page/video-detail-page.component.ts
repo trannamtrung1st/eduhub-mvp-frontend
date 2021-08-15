@@ -32,7 +32,7 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
 
   protected transferStateKeyName: string = VideoDetailPageComponent.name;
 
-  video: VideoDetailViewModel;
+  video?: VideoDetailViewModel;
   comments = COMMENTS;
   recommendedVideos: VideoViewModel[];
   videoFound: boolean;
@@ -47,7 +47,6 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
     private _store: Store,
     private _route: ActivatedRoute) {
     super(platformId, transferState);
-    this.video = new VideoDetailViewModel();
     this.recommendedVideos = [];
     this.videoFound = true;
     this.currentComment = '';
@@ -57,63 +56,70 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    this._route.params.subscribe(params => {
+    this._route.params.subscribe(async params => {
       const id = params['id'];
 
       if (isBrowser) {
         const pageEl = document.querySelector('html') as HTMLElement;
         pageEl.scrollTop = 0;
+        this.video = undefined;
         this._store.dispatch(new LoaderCommands.Reset());
       }
 
-      this._getVideoDetail(id);
-      this._getRecommendedVideos(id);
-    });
+      if (this.shouldLoad) {
+        const getVideoDetail$ = this._getVideoDetail(id);
+        const getRecommendedVideos$ = this._getRecommendedVideos(id);
 
-    if (this.needInitData) {
-      this.isPlatformServer && this.setTransferredState(new VideoDetailState(
-        this.video, this.videoFound, this.recommendedVideos
-      ));
-    } else {
-      this.patchTransferredState(this);
-      isBrowser && this._store.dispatch(new LoaderCommands.Hide());
-    }
+        if (this.isPlatformServer) {
+          await Promise.all([getVideoDetail$, getRecommendedVideos$]);
+          this.setTransferredState(new VideoDetailState(
+            this.video, this.videoFound, this.recommendedVideos
+          ));
+        } else {
+          getVideoDetail$.then(success => success && this._store.dispatch(new LoaderCommands.Hide()));
+        }
+      } else {
+        this.patchTransferredState(this);
+        isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+      }
+    });
   }
 
   private _getVideoDetail(id: string) {
-    this._store.dispatch(new VideoQueries.GetDetail(id))
+    return this._store.dispatch(new VideoQueries.GetDetail(id))
       .pipe(withLatestFrom(this._video$))
-      .subscribe(([_, video]) => {
-        const isBrowser = !this.isPlatformServer;
-
+      .toPromise()
+      .then(([_, video]) => {
         if (video) {
           this.video = cloneDeep(video);
-          isBrowser && this._store.dispatch(new LoaderCommands.Hide());
-        } else {
-          const getVideoDetailState = this._store.selectSnapshot(CurrentWatchingVideoState.getVideoDetailState);
-
-          // [TODO] Handle errors
-          switch (getVideoDetailState) {
-            case GET_VIDEO_DETAIL_STATES.notFound: {
-              !isBrowser && console.log('Video not found');
-              this.videoFound = false;
-              this._store.dispatch(new GlobalCommands.ChangeAppStatus(APP_STATUS_STATES.pageNotFound));
-            } break;
-            default: {
-              isBrowser && alert('Unknown error') ||
-                console.log('Unknown error');
-            } break;
-          }
+          return true;
         }
+
+        const isBrowser = !this.isPlatformServer;
+        const getVideoDetailState = this._store.selectSnapshot(CurrentWatchingVideoState.getVideoDetailState);
+
+        // [TODO] Handle errors
+        switch (getVideoDetailState) {
+          case GET_VIDEO_DETAIL_STATES.notFound: {
+            !isBrowser && console.log('Video not found');
+            this.videoFound = false;
+            this._store.dispatch(new GlobalCommands.ChangeAppStatus(APP_STATUS_STATES.pageNotFound));
+          } break;
+          default: {
+            isBrowser && alert('Unknown error') ||
+              console.log('Unknown error');
+          } break;
+        }
+        return false;
       });
   }
 
   private _getRecommendedVideos(id: string) {
     const query = new VideoQueries.GetRecommended(id);
-
-    this._store.dispatch(query)
+    return this._store.dispatch(query)
       .pipe(withLatestFrom(this._recommendedVideos$))
-      .subscribe(([_, videos]) => {
+      .toPromise()
+      .then(([_, videos]) => {
         this.recommendedVideos = videos.map(video => cloneDeep(video));
       });
   }
