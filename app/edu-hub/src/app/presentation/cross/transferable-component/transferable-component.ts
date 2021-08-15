@@ -8,13 +8,13 @@ export abstract class TransferableComponent<StateType> implements OnInit {
     protected abstract transferStateKeyName: string;
     protected transferStateKey?: StateKey<StateType>;
     protected isPlatformServer: boolean;
-    protected needInitData: boolean;
+    protected shouldLoad: boolean;
 
     constructor(@Inject(PLATFORM_ID) platformId: object,
         protected transferState: TransferState
     ) {
         this.isPlatformServer = isPlatformServer(platformId);
-        this.needInitData = true;
+        this.shouldLoad = true;
     }
 
     ngOnInit(): void {
@@ -35,7 +35,7 @@ export abstract class TransferableComponent<StateType> implements OnInit {
 
     initStateFlags() {
         this.transferStateKey = makeStateKey<StateType>(this.transferStateKeyName);
-        this.needInitData = !this.transferState.hasKey(this.transferStateKey)
+        this.shouldLoad = !this.transferState.hasKey(this.transferStateKey)
             || this.isPlatformServer;
     }
 
@@ -49,5 +49,6 @@ export abstract class TransferableComponent<StateType> implements OnInit {
         if (!this.transferStateKey)
             throw new Error("Transfer state key has not been initialized yet");
         this.transferState.remove(this.transferStateKey);
+        this.shouldLoad = true;
     }
 }

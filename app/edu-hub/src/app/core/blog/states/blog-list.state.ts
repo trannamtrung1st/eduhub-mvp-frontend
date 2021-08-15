@@ -45,7 +45,7 @@ export class BlogListState extends TransferableState<BlogListStateModel> impleme
         super.ngxsOnInit(ctx);
         const transferredState = BlogListStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -65,49 +65,53 @@ export class BlogListState extends TransferableState<BlogListStateModel> impleme
 
     @Action(BlogQueries.Filter)
     filter(context: StateContext<BlogListStateModel>, query: BlogQueries.Filter) {
-        const srcBlogs = this._databaseService.database.blogs;
-        let blogs = [...srcBlogs];
+        return Promise.resolve().then(() => {
+            const srcBlogs = this._databaseService.database.blogs;
+            let blogs = [...srcBlogs];
 
-        if (query.searchTerm) {
-            const searchTerm = query.searchTerm?.toLowerCase();
-            blogs = blogs.filter(blog => blog.title.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.subjects?.length) {
-            blogs = blogs.filter(blog => query.subjects.includes(blog.subjectId));
-        }
-
-        switch (query.sortBy) {
-            case BlogFilterSortBy.Title:
-                blogs = orderBy(blogs, blog => blog.title, query.isDesc ? 'desc' : 'asc');
-                break;
-        }
-
-        const totalRecords = blogs.length;
-        blogs = blogs.slice(query.skip, query.skip + query.take);
-        const patch = {
-            blogs: {
-                records: blogs,
-                totalRecords
+            if (query.searchTerm) {
+                const searchTerm = query.searchTerm?.toLowerCase();
+                blogs = blogs.filter(blog => blog.title.toLowerCase().includes(searchTerm));
             }
-        };
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), BlogListStateModel.default);
+            if (query.subjects?.length) {
+                blogs = blogs.filter(blog => query.subjects.includes(blog.subjectId));
+            }
+
+            switch (query.sortBy) {
+                case BlogFilterSortBy.Title:
+                    blogs = orderBy(blogs, blog => blog.title, query.isDesc ? 'desc' : 'asc');
+                    break;
+            }
+
+            const totalRecords = blogs.length;
+            blogs = blogs.slice(query.skip, query.skip + query.take);
+            const patch = {
+                blogs: {
+                    records: blogs,
+                    totalRecords
+                }
+            };
+
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), BlogListStateModel.default);
+        });
     }
 
     @Action(BlogQueries.GetRecommended)
     getRecommended(context: StateContext<BlogListStateModel>, query: BlogQueries.GetRecommended) {
-        const srcBlogs = this._databaseService.database.blogs;
-        let blogs = [...srcBlogs].splice(0, 10);
+        return Promise.resolve().then(() => {
+            const srcBlogs = this._databaseService.database.blogs;
+            let blogs = [...srcBlogs].splice(0, 10);
 
-        const patch = {
-            recommendedBlogs: blogs
-        };
+            const patch = {
+                recommendedBlogs: blogs
+            };
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), BlogListStateModel.default);
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), BlogListStateModel.default);
+        });
     }
 }

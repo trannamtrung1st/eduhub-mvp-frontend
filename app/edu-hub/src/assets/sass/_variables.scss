@@ -27,6 +27,8 @@ $input-border-focus: $brand-primary !default;
 $form-group-margin-bottom: 30px !default;
 $custom-checkbox-lg-size: 27px !default;
 
+$nav-height: 50px;
+
 // Mixin
 @mixin translateX($translatex) {
     -moz-transform: translateX($translatex);

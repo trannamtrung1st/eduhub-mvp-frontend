@@ -45,7 +45,7 @@ export class VideoListState extends TransferableState<VideoListStateModel> imple
         super.ngxsOnInit(ctx);
         const transferredState = VideoListStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -65,50 +65,54 @@ export class VideoListState extends TransferableState<VideoListStateModel> imple
 
     @Action(VideoQueries.Filter)
     filter(context: StateContext<VideoListStateModel>, query: VideoQueries.Filter) {
-        const srcVideos = this._databaseService.database.videos;
-        let videos = [...srcVideos];
+        return Promise.resolve().then(() => {
+            const srcVideos = this._databaseService.database.videos;
+            let videos = [...srcVideos];
 
-        if (query.searchTerm) {
-            const searchTerm = query.searchTerm?.toLowerCase();
-            videos = videos.filter(video => video.title.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.subjects?.length) {
-            videos = videos.filter(video => query.subjects.includes(video.subjectId));
-        }
-
-        switch (query.sortBy) {
-            case VideoFilterSortBy.Title:
-                videos = orderBy(videos, video => video.title, query.isDesc ? 'desc' : 'asc');
-                break;
-        }
-
-        const totalRecords = videos.length;
-        videos = videos.slice(query.skip, query.skip + query.take);
-
-        const patch = {
-            videos: {
-                records: videos,
-                totalRecords
+            if (query.searchTerm) {
+                const searchTerm = query.searchTerm?.toLowerCase();
+                videos = videos.filter(video => video.title.toLowerCase().includes(searchTerm));
             }
-        };
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
+            if (query.subjects?.length) {
+                videos = videos.filter(video => query.subjects.includes(video.subjectId));
+            }
+
+            switch (query.sortBy) {
+                case VideoFilterSortBy.Title:
+                    videos = orderBy(videos, video => video.title, query.isDesc ? 'desc' : 'asc');
+                    break;
+            }
+
+            const totalRecords = videos.length;
+            videos = videos.slice(query.skip, query.skip + query.take);
+
+            const patch = {
+                videos: {
+                    records: videos,
+                    totalRecords
+                }
+            };
+
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
+        });
     }
 
     @Action(VideoQueries.GetRecommended)
     getRecommended(context: StateContext<VideoListStateModel>, query: VideoQueries.GetRecommended) {
-        const srcVideos = this._databaseService.database.videos;
-        let videos = [...srcVideos].splice(0, 10);
+        return Promise.resolve().then(() => {
+            const srcVideos = this._databaseService.database.videos;
+            let videos = [...srcVideos].splice(0, 10);
 
-        const patch = {
-            recommendedVideos: videos
-        };
+            const patch = {
+                recommendedVideos: videos
+            };
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
+        });
     }
 }

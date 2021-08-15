@@ -35,7 +35,7 @@ export class IdentityState extends TransferableState<IdentityStateModel> impleme
         super.ngxsOnInit(ctx);
         const transferredState = IdentityStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);

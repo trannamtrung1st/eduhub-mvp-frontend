@@ -3,7 +3,10 @@ import { TransferState } from '@angular/platform-browser';
 
 import { Store } from '@ngxs/store';
 
+import { MENU } from '@presentation/management/layouts/normal-layout/constants';
+
 import { LoaderCommands } from '@core/global/commands/loader.commands';
+import { ManagementMenuCommands } from '@core/global/commands/management-menu.commands';
 
 import { BaseComponent } from '@presentation/cross/base-component/base-component';
 
@@ -22,13 +25,17 @@ export class ProfilePageComponent extends BaseComponent<ProfileState> implements
     private _store: Store
   ) {
     super(platformId, transferState);
+
+    if (this.shouldLoad) {
+      this._store.dispatch(new ManagementMenuCommands.SetCurrent(MENU.profile.id));
+    }
   }
 
   ngOnInit(): void {
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    if (this.needInitData) {
+    if (this.shouldLoad) {
       this.isPlatformServer && this.setTransferredState(new ProfileState());
     } else {
       this.patchTransferredState(this);

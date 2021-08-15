@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
 import { TransferState } from '@angular/platform-browser';
 
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 import { fading } from '@cross/animation/animation-helper';
 
@@ -31,29 +30,24 @@ export class AppComponent extends BaseComponent<AppState> implements OnInit, OnD
 
   APP_STATUS_STATES = APP_STATUS_STATES;
 
+  @Select(GlobalState.appStatus) appStatus$!: Observable<string>;
   @Select(LoaderState.visibilityState) loaderVisibilityState$!: Observable<string>;
   @Select(LoaderState.visible) loaderVisible$!: Observable<boolean>;
   uiSupported: boolean;
-  appStatus: string;
-
-  @Select(GlobalState.appStatus) private _appStatus$!: Observable<string>;
 
   constructor(@Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
-    private _store: Store,
-    private _changeDetectorRef: ChangeDetectorRef) {
+    private _store: Store) {
     super(platformId, transferState);
     this.uiSupported = true;
-    this.appStatus = APP_STATUS_STATES.unset;
   }
 
   ngOnInit(): void {
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    if (this.needInitData) {
+    if (this.shouldLoad) {
       this.isPlatformServer && this.setTransferredState(new AppState(
-        this.appStatus
       ));
     } else {
       this.patchTransferredState(this);
@@ -67,19 +61,6 @@ export class AppComponent extends BaseComponent<AppState> implements OnInit, OnD
         this._checkWindowSizeSupport();
       });
     }
-
-    this.subscriptions.push(this._appStatus$
-      .pipe(filter(appStatus => appStatus !== APP_STATUS_STATES.unset))
-      .subscribe(appStatus => {
-        this.appStatus = appStatus;
-
-        if (this.isPlatformServer) {
-          this.setTransferredState(new AppState(
-            this.appStatus
-          ));
-          this._changeDetectorRef.detectChanges();
-        }
-      }));
   }
 
   onPageDeactivated(_: any) {
@@ -100,7 +81,4 @@ export class AppComponent extends BaseComponent<AppState> implements OnInit, OnD
 }
 
 class AppState {
-
-  constructor(public appStatus: string) {
-  }
 }

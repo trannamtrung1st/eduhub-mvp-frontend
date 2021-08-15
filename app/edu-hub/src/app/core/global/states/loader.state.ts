@@ -39,7 +39,7 @@ export class LoaderState extends TransferableState<LoaderStateModel> implements 
         super.ngxsOnInit(ctx);
         const transferredState = LoaderStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -59,32 +59,20 @@ export class LoaderState extends TransferableState<LoaderStateModel> implements 
 
     @Action(LoaderCommands.Show)
     show(context: StateContext<LoaderStateModel>, cmd: LoaderCommands.Show) {
-        const show = () => {
+        return Promise.resolve().then(() => {
             context.patchState({
                 visibilityState: cmd.visibleState
-            })
-        };
-
-        if (this.isPlatformServer) {
-            show();
-        } else {
-            setTimeout(show);
-        }
+            });
+        });
     }
 
     @Action(LoaderCommands.Hide)
     hide(context: StateContext<LoaderStateModel>, cmd: LoaderCommands.Hide) {
-        const hide = () => {
+        return Promise.resolve().then(() => {
             context.patchState({
                 visibilityState: cmd.hiddenState
             });
-        };
-
-        if (this.isPlatformServer) {
-            hide();
-        } else {
-            setTimeout(hide);
-        }
+        });
     }
 
     @Action(LoaderCommands.AnimationDone)

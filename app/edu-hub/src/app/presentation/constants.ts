@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SmoothScrollModule } from 'ngx-scrollbar/smooth-scroll';
@@ -16,6 +15,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NgxsModule } from '@ngxs/store';
 import { SwiperModule } from 'swiper/angular';
 import { CrossModule } from '@cross/cross.module';
@@ -31,6 +31,7 @@ import { A_ROUTING } from '@app/constants';
 
 import { GlobalState } from '@core/global/states/global.state';
 import { LoaderState } from '@core/global/states/loader.state';
+import { ManagementMenuState } from '@core/global/states/management-menu.state';
 import { CurrentUserState } from '@core/identity/states/current-user.state';
 import { IdentityState } from '@core/identity/states/identity.state';
 import { BlogListState } from "@core/blog/states/blog-list.state";
@@ -47,6 +48,7 @@ export const STATES = [
     // Global
     GlobalState,
     LoaderState,
+    ManagementMenuState,
 
     // Subject
     SubjectState,
@@ -82,7 +84,6 @@ export const ROUTING_DATA = {
 
 export const SHARED_PRESENTATION_MODULES = [
     CommonModule,
-    BrowserTransferStateModule,
     CrossModule,
     NgxsModule.forFeature(STATES),
     NgScrollbarModule,
@@ -100,6 +101,7 @@ export const SHARED_PRESENTATION_MODULES = [
     NzCommentModule,
     NzCardModule,
     NzDropDownModule,
+    NzLayoutModule,
     SwiperModule,
     FormsModule,
     ReactiveFormsModule

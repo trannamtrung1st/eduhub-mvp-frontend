@@ -9,6 +9,9 @@ export const GLOBAL_STATES = {
         },
         loader: {
             name: 'loader'
+        },
+        managementMenu: {
+            name: 'managementMenu'
         }
     }
 };

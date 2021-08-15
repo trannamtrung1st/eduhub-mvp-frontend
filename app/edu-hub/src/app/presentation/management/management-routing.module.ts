@@ -10,7 +10,7 @@ import { RoutingData } from '@presentation/auth/routing/models/routing-data.mode
 
 import { AuthenticatedUserPolicy } from '@presentation/auth/policies/authenticated-user.policy';
 
-import { NormalLayoutComponent } from '@presentation/platform/layouts/normal-layout/normal-layout.component';
+import { NormalLayoutComponent } from './layouts/normal-layout/normal-layout.component';
 import { ProfilePageComponent } from './user/pages/profile-page/profile-page.component';
 
 import { RoutingAuthService } from '@presentation/auth/routing/routing-auth.service';

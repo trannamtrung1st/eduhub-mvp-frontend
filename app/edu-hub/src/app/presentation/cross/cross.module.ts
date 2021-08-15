@@ -10,8 +10,6 @@ import { BannerComponent } from './banner/banner.component';
 import { FooterComponent } from './footer/footer.component';
 import { HalfCollapsedSectionComponent } from './half-collapsed-section/half-collapsed-section.component';
 
-import { NavDropdownDirective } from './top-nav/nav-dropdown/nav-dropdown.directive';
-
 @NgModule({
   declarations: [
     TopNavComponent,
@@ -19,8 +17,7 @@ import { NavDropdownDirective } from './top-nav/nav-dropdown/nav-dropdown.direct
     PageNotFoundComponent,
     BannerComponent,
     FooterComponent,
-    HalfCollapsedSectionComponent,
-    NavDropdownDirective
+    HalfCollapsedSectionComponent
   ],
   imports: [
     ...SHARED_PRESENTATION_MODULES,

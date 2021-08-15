@@ -48,7 +48,7 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    if (this.needInitData) {
+    if (this.shouldLoad) {
       this.isPlatformServer && this.setTransferredState(new LoginPageState());
     } else {
       this.patchTransferredState(this);

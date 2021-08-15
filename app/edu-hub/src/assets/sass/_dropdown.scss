@@ -1,0 +1,11 @@
+.edh-user-nav__dropdown {
+    li {
+        color: $brand-black;
+        @include transition(0.5s);
+        &:hover,
+        &:focus,
+        &:active {
+            color: $brand-primary;
+        }
+    }
+}

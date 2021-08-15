@@ -42,8 +42,8 @@ Steps to create a new page component (common case):
   ngOnInit(): void {
     super.ngOnInit();
 
-    if (this.needInitData) {
-      // Init your data
+    if (this.shouldLoad) {
+      // Load your data
       // - Call API
       // - Set states
 

@@ -41,7 +41,7 @@ export class RegisterPageComponent extends BaseComponent<RegisterPageState> impl
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    if (this.needInitData) {
+    if (this.shouldLoad) {
       this.isPlatformServer && this.setTransferredState(new RegisterPageState());
     } else {
       this.patchTransferredState(this);

@@ -12,6 +12,8 @@
 @import "scrolling";
 @import "form";
 @import "swiper";
+@import "dropdown";
+@import "layout";
 
 /* =======================================================
 *
@@ -32,7 +34,7 @@ body {
     max-width: 95vw;
 }
 
-#page {
+#edh-page {
     position: relative;
     width: 100%;
     height: 100%;
@@ -171,8 +173,6 @@ figure {
     }
 }
 .edh-cover {
-    height: 800px;
-
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
@@ -198,10 +198,8 @@ figure {
     .display-t,
     .display-tc {
         z-index: 9;
-        height: 700px;
         display: table;
         width: 100%;
-        margin-top: 100px;
         @media screen and (max-width: media-breakpoint-only(sm)) {
             height: 600px;
         }

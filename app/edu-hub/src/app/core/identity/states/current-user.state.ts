@@ -45,7 +45,7 @@ export class CurrentUserState extends TransferableState<CurrentUserStateModel> i
         const transferredState = CurrentUserStateModel.default;
         const isBrowser = !this.isPlatformServer;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -62,17 +62,19 @@ export class CurrentUserState extends TransferableState<CurrentUserStateModel> i
 
     @Action(IdentityCommands.Login)
     login(context: StateContext<CurrentUserStateModel>, cmd: IdentityCommands.Login) {
-        const defaultUser = this._databaseService.database.users[0];
+        return Promise.resolve().then(() => {
+            const defaultUser = this._databaseService.database.users[0];
 
-        const patch = {
-            currentUser: defaultUser
-        };
+            const patch = {
+                currentUser: defaultUser
+            };
 
-        this._browserStorageService.setJson(IDENTITY_LOCAL_STORAGE.currentUser.key, defaultUser);
+            this._browserStorageService.setJson(IDENTITY_LOCAL_STORAGE.currentUser.key, defaultUser);
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), CurrentUserStateModel.default);
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), CurrentUserStateModel.default);
+        });
     }
 
     @Action(IdentityCommands.Logout)
@@ -84,7 +86,7 @@ export class CurrentUserState extends TransferableState<CurrentUserStateModel> i
         this._browserStorageService.removeItem(IDENTITY_LOCAL_STORAGE.currentUser.key);
 
         context.patchState(patch);
-        this.needInitData && this.isPlatformServer
+        this.shouldLoad && this.isPlatformServer
             && this.updateTransferredState((state) => Object.assign(state, patch), CurrentUserStateModel.default);
 
         context.dispatch(new Navigate([A_ROUTING.platform.home]));
@@ -99,7 +101,7 @@ export class CurrentUserState extends TransferableState<CurrentUserStateModel> i
         };
 
         context.patchState(patch);
-        this.needInitData && this.isPlatformServer
+        this.shouldLoad && this.isPlatformServer
             && this.updateTransferredState((state) => Object.assign(state, patch), CurrentUserStateModel.default);
     }
 }

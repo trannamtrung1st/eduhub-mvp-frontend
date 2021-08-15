@@ -42,7 +42,7 @@ export class AllSubjectsState extends TransferableState<AllSubjectsStateModel> i
         super.ngxsOnInit(ctx);
         const transferredState = AllSubjectsStateModel.default;
 
-        if (this.needInitData) {
+        if (this.shouldLoad) {
             this.isPlatformServer && this.setTransferredState(transferredState);
         } else {
             this.patchTransferredState(transferredState);
@@ -63,14 +63,16 @@ export class AllSubjectsState extends TransferableState<AllSubjectsStateModel> i
 
     @Action(SubjectQueries.GetAll)
     getAll(context: StateContext<AllSubjectsStateModel>) {
-        let subjects = [...this._databaseService.database.subjects];
-        const patch = {
-            subjects
-        };
+        return Promise.resolve().then(() => {
+            let subjects = [...this._databaseService.database.subjects];
+            const patch = {
+                subjects
+            };
 
-        context.patchState(patch);
-        this.needInitData && this.isPlatformServer
-            && this.updateTransferredState((state) => Object.assign(state, patch), AllSubjectsStateModel.default);
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), AllSubjectsStateModel.default);
+        });
     }
 
 }

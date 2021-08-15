@@ -1,13 +1,13 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-half-collapsed-section',
   templateUrl: './half-collapsed-section.component.html',
   styleUrls: ['./half-collapsed-section.component.scss']
 })
-export class HalfCollapsedSectionComponent implements OnInit, AfterViewInit {
+export class HalfCollapsedSectionComponent implements OnInit, AfterViewChecked {
 
-  @ViewChild('content', { static: true }) sectionContentRef!: ElementRef<HTMLElement>;
+  @ViewChild('content', { static: true }) private _sectionContentRef!: ElementRef<HTMLElement>;
 
   @Input() colHeight!: string;
   @Input() overlayHeight: string;
@@ -30,12 +30,13 @@ export class HalfCollapsedSectionComponent implements OnInit, AfterViewInit {
     this._contentHeight = 0;
   }
 
-  ngAfterViewInit(): void {
-    const contentEl = this.sectionContentRef.nativeElement;
+  ngAfterViewChecked(): void {
+    const contentEl = this._sectionContentRef.nativeElement;
     this._contentHeight = contentEl.offsetHeight;
+    const lastOverflow = this.overflow;
     this.overflow = this._contentHeight >= +this.colHeight;
 
-    if (this.overflow) {
+    if (this.overflow && !lastOverflow) {
       this.overlayClass['edh-content-overlay--show'] = true;
       this._changeDetectorRef.detectChanges();
     }

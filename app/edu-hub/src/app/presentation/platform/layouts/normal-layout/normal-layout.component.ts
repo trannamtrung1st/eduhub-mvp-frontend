@@ -30,7 +30,7 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
   ngOnInit(): void {
     super.ngOnInit();
 
-    if (this.needInitData) {
+    if (this.shouldLoad) {
       this.isPlatformServer && this.setTransferredState(new NormalLayoutState());
     } else {
       this.patchTransferredState(this);

@@ -29,12 +29,13 @@ SwiperCore.use([Navigation]);
 })
 export class BlogDetailPageComponent extends BaseComponent<BlogDetailState> implements OnInit, OnDestroy {
 
-  @ViewChild('recommendedBlog') _recommendedBlogSwiper?: SwiperComponent;
+  @ViewChild('recommendedBlog') private _recommendedBlogSwiper?: SwiperComponent;
 
   protected transferStateKeyName: string = BlogDetailPageComponent.name;
 
   DEMO_BLOG_CONTENT = DEMO_BLOG_CONTENT;
 
+  blog?: BlogViewModel;
   recommendedBlogs: BlogViewModel[];
   comments = COMMENTS;
   currentComment: string;
@@ -55,38 +56,45 @@ export class BlogDetailPageComponent extends BaseComponent<BlogDetailState> impl
     super.ngOnInit();
     const isBrowser = !this.isPlatformServer;
 
-    this._route.params.subscribe(params => {
+    this._route.params.subscribe(async params => {
       const id = params['id'];
 
       if (isBrowser) {
         const pageEl = document.querySelector('html') as HTMLElement;
         pageEl.scrollTop = 0;
+        this.blog = undefined;
         this._store.dispatch(new LoaderCommands.Reset());
+        this._recommendedBlogSwiper?.swiperRef.slideTo(0, 0);
       }
 
-      // [TODO] Get blog detail
-      this._recommendedBlogSwiper?.swiperRef.slideTo(0, 0);
-      isBrowser && this._store.dispatch(new LoaderCommands.Hide());
-      this._getRecommendedBlogs(id);
-    });
+      if (this.shouldLoad) {
+        const getRecommendedBlogs$ = this._getRecommendedBlogs(id);
 
-    if (this.needInitData) {
-      this.isPlatformServer && this.setTransferredState(new BlogDetailState(
-        this.recommendedBlogs
-      ));
-    } else {
-      this.patchTransferredState(this);
-      isBrowser && this._store.dispatch(new LoaderCommands.Hide());
-    }
+        if (this.isPlatformServer) {
+          await getRecommendedBlogs$;
+          this.setTransferredState(new BlogDetailState(
+            this.recommendedBlogs
+          ));
+        } else {
+          // [TODO] Get blog detail
+          this.blog = {} as BlogViewModel;
+          getRecommendedBlogs$.then(success => success && this._store.dispatch(new LoaderCommands.Hide()));
+        }
+      } else {
+        this.patchTransferredState(this);
+        isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+      }
+    });
   }
 
   private _getRecommendedBlogs(id: string) {
     const query = new BlogQueries.GetRecommended(id);
-
-    this._store.dispatch(query)
+    return this._store.dispatch(query)
       .pipe(withLatestFrom(this._recommendedBlogs$))
-      .subscribe(([_, blogs]) => {
+      .toPromise()
+      .then(([_, blogs]) => {
         this.recommendedBlogs = blogs.map(blog => cloneDeep(blog));
+        return true;
       });
   }
 }
