@@ -26,7 +26,15 @@ const routes: Routes = [
     canActivate: [RoutingAuthService],
     children: [
       { path: '', redirectTo: ROUTING.management.profile },
-      { path: ROUTING.management.profile, component: ProfilePageComponent }
+      {
+        path: ROUTING.management.profile,
+        component: ProfilePageComponent,
+        data: {
+          breadcrumb: 'Profile',
+          title: 'Profile',
+          subTitle: 'This is your personal profile'
+        } as RoutingData
+      }
     ]
   },
 ];

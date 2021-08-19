@@ -43,10 +43,8 @@ nav {
                         }
                     }
                 }
-                &.active {
-                    > a {
-                        color: $brand-white !important;
-                    }
+                > a.active {
+                    color: $brand-white !important;
                 }
             }
 

@@ -16,6 +16,12 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { NgxsModule } from '@ngxs/store';
 import { SwiperModule } from 'swiper/angular';
 import { CrossModule } from '@cross/cross.module';
@@ -31,7 +37,6 @@ import { A_ROUTING } from '@app/constants';
 
 import { GlobalState } from '@core/global/states/global.state';
 import { LoaderState } from '@core/global/states/loader.state';
-import { ManagementMenuState } from '@core/global/states/management-menu.state';
 import { CurrentUserState } from '@core/identity/states/current-user.state';
 import { IdentityState } from '@core/identity/states/identity.state';
 import { BlogListState } from "@core/blog/states/blog-list.state";
@@ -48,7 +53,6 @@ export const STATES = [
     // Global
     GlobalState,
     LoaderState,
-    ManagementMenuState,
 
     // Subject
     SubjectState,
@@ -102,6 +106,12 @@ export const SHARED_PRESENTATION_MODULES = [
     NzCardModule,
     NzDropDownModule,
     NzLayoutModule,
+    NzBreadCrumbModule,
+    NzPageHeaderModule,
+    NzDividerModule,
+    NzImageModule,
+    NzTypographyModule,
+    NzTableModule,
     SwiperModule,
     FormsModule,
     ReactiveFormsModule

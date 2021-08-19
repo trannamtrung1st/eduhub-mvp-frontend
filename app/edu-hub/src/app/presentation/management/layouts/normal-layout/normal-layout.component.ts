@@ -1,18 +1,18 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
 
-import { MENU_ITEMS } from './constants';
+import { MENU_ITEMS } from '../constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
+import { MenuItemViewModel } from '../view-models/menu-item-view.model';
 
 import { BaseComponent } from '@presentation/cross/base-component/base-component';
 
-import { ManagementMenuState } from '@core/global/states/management-menu.state';
 
 import { ScrollingService } from '@infras/scrolling/scrolling.service';
+import { RoutingService } from '@cross/routing/routing.service';
 
 @Component({
   selector: 'app-normal-layout',
@@ -23,29 +23,25 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
 
   protected transferStateKeyName: string = NormalLayoutComponent.name;
 
-  MENU_ITEMS = MENU_ITEMS;
-
-  @Select(ManagementMenuState.currentMenuId) currentMenuId$!: Observable<string>;
+  menuItems: MenuItemViewModel[];
 
   @ViewChild("menu") private _menuRef!: ElementRef<HTMLElement>;
+  private _lastActiveMenu?: MenuItemViewModel;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
     private _store: Store,
+    private _routingService: RoutingService,
     private _scrollingService: ScrollingService,
   ) {
     super(platformId, transferState);
+    this.menuItems = MENU_ITEMS.map(menuItem => new MenuItemViewModel(menuItem));
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-
-    if (this.shouldLoad) {
-      this.isPlatformServer && this.setTransferredState(new NormalLayoutState());
-    } else {
-      this.patchTransferredState(this);
-    }
+    if (this.isPlatformServer) return;
   }
 
   onGoToTopClicked(event: MouseEvent) {
@@ -59,7 +55,13 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
     return false;
   }
 
+  onPageActivated(_: any) {
+    this._lastActiveMenu = this.menuItems.find(menuItem => this._routingService.isActive(menuItem.url, false));
+    if (this._lastActiveMenu) this._lastActiveMenu.active = true;
+  }
+
   onPageDeactivated(_: any) {
+    if (this._lastActiveMenu) this._lastActiveMenu.active = false;
     const pageEl = document.querySelector('html') as HTMLElement;
     pageEl.scrollTop = 0;
     this._store.dispatch(new LoaderCommands.Reset());

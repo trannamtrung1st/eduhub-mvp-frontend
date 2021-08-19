@@ -6,4 +6,7 @@ export interface RoutingData {
     loginPath?: string;
     accessDeniedPath?: string;
     policies?: Type<Policy>[];
+    breadcrumb?: string;
+    title: string;
+    subTitle: string;
 }

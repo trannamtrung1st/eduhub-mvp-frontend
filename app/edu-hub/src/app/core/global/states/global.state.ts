@@ -9,7 +9,6 @@ import { GlobalCommands } from '../commands/global.commands';
 
 import { TransferableState } from '@cross/state/transferable-state';
 import { LoaderState } from './loader.state';
-import { ManagementMenuState } from './management-menu.state';
 
 export const APP_STATUS_STATES = GLOBAL_STATES.global.states.appStatus;
 
@@ -26,8 +25,7 @@ class GlobalStateModel {
     name: GLOBAL_STATES.global.name,
     defaults: GlobalStateModel.default,
     children: [
-        LoaderState,
-        ManagementMenuState
+        LoaderState
     ]
 })
 @Injectable()

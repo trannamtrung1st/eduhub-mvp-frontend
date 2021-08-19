@@ -5,9 +5,10 @@ import { makeStateKey, StateKey, TransferState } from "@angular/platform-browser
 @Directive()
 export abstract class TransferableComponent<StateType> implements OnInit {
 
+    isPlatformServer: boolean;
+
     protected abstract transferStateKeyName: string;
     protected transferStateKey?: StateKey<StateType>;
-    protected isPlatformServer: boolean;
     protected shouldLoad: boolean;
 
     constructor(@Inject(PLATFORM_ID) platformId: object,

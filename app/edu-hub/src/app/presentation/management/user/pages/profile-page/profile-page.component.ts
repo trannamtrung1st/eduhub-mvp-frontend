@@ -1,12 +1,19 @@
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { cloneDeep } from 'lodash';
 
-import { MENU } from '@presentation/management/layouts/normal-layout/constants';
+import { FormHelper } from '@cross/form/form-helper';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { ManagementMenuCommands } from '@core/global/commands/management-menu.commands';
+import { UserModel } from '@core/identity/models/user-model';
+import { UserViewModel } from './view-models/user-view.model';
+
+import { CurrentUserState } from '@core/identity/states/current-user.state';
 
 import { BaseComponent } from '@presentation/cross/base-component/base-component';
 
@@ -19,32 +26,63 @@ export class ProfilePageComponent extends BaseComponent<ProfileState> implements
 
   protected transferStateKeyName: string = ProfilePageComponent.name;
 
+  profileFormGroup!: FormGroup;
+  currentUser$!: Observable<UserViewModel>;
+  incomes = INCOME_MOCK_DATA;
+
+  @Select(CurrentUserState.currentUser) private _currentUser$!: Observable<UserModel>;
+
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
-    private _store: Store
+    private _store: Store,
+    private _formBuilder: FormBuilder
   ) {
     super(platformId, transferState);
-
-    if (this.shouldLoad) {
-      this._store.dispatch(new ManagementMenuCommands.SetCurrent(MENU.profile.id));
-    }
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    const isBrowser = !this.isPlatformServer;
+    if (this.isPlatformServer) return;
 
-    if (this.shouldLoad) {
-      this.isPlatformServer && this.setTransferredState(new ProfileState());
-    } else {
-      this.patchTransferredState(this);
-    }
+    this.profileFormGroup = this._formBuilder.group({
+      emailAddress: ['', [Validators.email, Validators.required]],
+      username: ['', [Validators.required]],
+      fullName: ['', [Validators.required]],
+      phoneNumberPrefix: ['+86'],
+      phoneNumber: ['', [Validators.required]],
+      website: ['', [Validators.required]]
+    });
 
-    isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+    this.currentUser$ = this._currentUser$.pipe(map(user => cloneDeep(user)));
+
+    this.subscriptions.push(this.currentUser$.subscribe(user => {
+      this._patchFormValue(user);
+    }));
+
+    this._store.dispatch(new LoaderCommands.Hide());
+  }
+
+  onFormSubmitted(): void {
+    const isValid = FormHelper.validateFormGroup(this.profileFormGroup);
+    if (!isValid) return;
+  }
+
+  private _patchFormValue(user: UserViewModel) {
+    this.profileFormGroup.patchValue({
+      ...user
+    });
   }
 
 }
 
 class ProfileState {
+}
+
+const INCOME_MOCK_DATA: any[] = [];
+
+for (let i = 0; i < 50; i++) {
+  INCOME_MOCK_DATA.push(
+    { fromUserName: `User ${i}`, amount: Math.random() * 100000, date: new Date(), resource: `Web master ${i}` }
+  );
 }

@@ -1,7 +1,97 @@
-<div class="container vh-100">
-    <div class="row h-100">
-        <div class="col-12 my-auto text-center">
-            Profile works!
+<div class="container py-3 px-4">
+    <app-page-header [extraTemplate]="pageHeaderExtra">
+        <ng-template #pageHeaderExtra>
+            <button nz-button nzType="primary">Export CV</button>
+        </ng-template>
+    </app-page-header>
+    <div class="row mb-5" *ngIf="currentUser$ | async as user">
+        <div class="col-6">
+            <h6 class="text-uppercase">Personal Information</h6>
+            <hr />
+            <form nz-form [formGroup]="profileFormGroup" (ngSubmit)="onFormSubmitted()">
+                <nz-form-item nzJustify="space-around">
+                    <nz-form-label nzNoColon class="text-left" [nzSm]="7" [nzXs]="24" nzRequired nzFor="email">E-mail
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+                        <input nz-input formControlName="emailAddress" id="email" />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nzJustify="space-around">
+                    <nz-form-label nzNoColon class="text-left" [nzSm]="7" [nzXs]="24" nzFor="username" nzRequired>
+                        <span>Username</span>
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input id="username" formControlName="username" readonly />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nzJustify="space-around">
+                    <nz-form-label nzNoColon class="text-left" [nzSm]="7" [nzXs]="24" nzFor="fullName" nzRequired
+                        nzTooltipTitle="What do you want other to call you">
+                        <span>Full name</span>
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your full name!">
+                        <input nz-input id="fullName" formControlName="fullName" />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nzJustify="space-around">
+                    <nz-form-label nzNoColon class="text-left" [nzSm]="7" [nzXs]="24" nzFor="phoneNumber" nzRequired>
+                        Phone Number
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24"
+                        [nzValidateStatus]="profileFormGroup.controls['phoneNumber']"
+                        nzErrorTip="Please input your phone number!">
+                        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                            <ng-template #addOnBeforeTemplate>
+                                <nz-select formControlName="phoneNumberPrefix" class="phone-select">
+                                    <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+                                    <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+                                </nz-select>
+                            </ng-template>
+                            <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nzJustify="space-around">
+                    <nz-form-label nzNoColon class="text-left" [nzSm]="7" [nzXs]="24" nzFor="website" nzRequired>Website
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input website!">
+                        <input nz-input id="website" formControlName="website" placeholder="Website" />
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </div>
+        <div class="col-6 text-right">
+            <nz-card class="d-inline-block text-center">
+                <p><img nz-image width="200px" height="200px" [nzSrc]="user.avatar" alt="" /></p>
+                <p>
+                    <span>100 followers</span>
+                </p>
+            </nz-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h6 class="text-uppercase">Income Table</h6>
+            <hr />
+            <nz-table #tblIncome [nzData]="incomes">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Resource</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [class.edh-table-row--even]="idx % 2 != 0"
+                        *ngFor="let income of tblIncome.data; let idx = index;">
+                        <td>{{ income.fromUserName }}</td>
+                        <td>{{ income.amount | currency : 'VND' }}</td>
+                        <td>{{ income.date | date: 'medium' }}</td>
+                        <td>{{ income.resource }}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
         </div>
     </div>
 </div>

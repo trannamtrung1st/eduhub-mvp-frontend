@@ -5,4 +5,5 @@ export interface UserModel {
     address: string;
     phoneNumber: string;
     emailAddress: string;
+    avatar: string;
 }

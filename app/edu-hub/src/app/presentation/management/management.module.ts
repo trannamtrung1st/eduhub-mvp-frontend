@@ -7,11 +7,13 @@ import { SHARED_PRESENTATION_MODULES } from '@presentation/constants';
 
 import { NormalLayoutComponent } from './layouts/normal-layout/normal-layout.component';
 import { ProfilePageComponent } from './user/pages/profile-page/profile-page.component';
+import { PageHeaderComponent } from './cross/page-header/page-header.component';
 
 @NgModule({
   declarations: [
     NormalLayoutComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    PageHeaderComponent
   ],
   imports: [
     ...SHARED_PRESENTATION_MODULES,

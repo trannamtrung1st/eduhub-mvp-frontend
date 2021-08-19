@@ -81,6 +81,8 @@ export class BlogDetailPageComponent extends BaseComponent<BlogDetailState> impl
           getRecommendedBlogs$.then(success => success && this._store.dispatch(new LoaderCommands.Hide()));
         }
       } else {
+        // [TODO] Get blog detail
+        this.blog = {} as BlogViewModel;
         this.patchTransferredState(this);
         isBrowser && this._store.dispatch(new LoaderCommands.Hide());
       }
