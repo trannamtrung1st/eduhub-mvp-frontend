@@ -7,6 +7,8 @@ import { Navigate } from '@ngxs/router-plugin';
 import { Observable } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 
+import { FormHelper } from '@cross/form/form-helper';
+
 import { A_ROUTING } from '@app/constants';
 import { LogoSize } from '@presentation/cross/logo/constants';
 
@@ -64,21 +66,8 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
   }
 
   onFormSubmitted(): void {
-    let hasError = false;
-
-    for (const key in this.loginFormGroup.controls) {
-      if (this.loginFormGroup.controls.hasOwnProperty(key)) {
-        const formControl = this.loginFormGroup.controls[key];
-        formControl.markAsDirty();
-        formControl.updateValueAndValidity();
-
-        if (formControl.errors) {
-          hasError = true;
-        }
-      }
-    }
-
-    if (hasError) return;
+    const isValid = FormHelper.validateFormGroup(this.loginFormGroup);
+    if (!isValid) return;
 
     const loginModel = this.loginFormGroup.value as LoginViewModel;
     this._store.dispatch(new IdentityCommands.Login(loginModel.userName, loginModel.password))

@@ -5,4 +5,5 @@ export interface MockUser {
     address: string;
     phoneNumber: string;
     emailAddress: string;
+    avatar: string;
 }

@@ -31,7 +31,7 @@
                                 <ng-template #errorTpl let-control>
                                     <ng-container *ngIf="control.hasError('required')">Please confirm your password!
                                     </ng-container>
-                                    <ng-container *ngIf="control.hasError('confirm')">
+                                    <ng-container *ngIf="control.hasError('compareValue')">
                                         Two passwords that you enter is inconsistent!
                                     </ng-container>
                                 </ng-template>

@@ -7,11 +7,16 @@
                 </div>
                 <div class="col-10 text-right my-auto">
                     <ul class="my-auto">
-                        <li class="active"><a [routerLink]="A_ROUTING.platform.home">Home</a></li>
-                        <li><a href="courses.html">Courses</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li>
+                            <a [routerLink]="A_ROUTING.platform.home" [routerLinkActiveOptions]="{ exact: true }"
+                                routerLinkActive="active">
+                                Home
+                            </a>
+                        </li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
                         <ng-container *ngIf="currentUser$ | async as currentUser; else notLoggedIn">
                             <li class="edh-user-nav">
                                 <a nz-dropdown [nzDropdownMenu]="userNavDropdown" nzPlacement="bottomRight"

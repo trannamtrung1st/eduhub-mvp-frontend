@@ -4,6 +4,7 @@ import { PersistenceModule } from '@persistence/persistence.module';
 
 import { DEFAULT_BLOG_THUMB } from '@domains/blog/constants';
 import { DEFAULT_STREAM_URL, DEFAULT_VIDEO_DESCRIPTION, DEFAULT_VIDEO_THUMB } from '@domains/video/constants';
+import { DEFAULT_AVATAR } from '@domains/identity/constants';
 
 import { MockBlog } from '@domains/blog/mock-blog.model';
 import { MockSubject } from '@domains/subject/mock-subject.model';
@@ -40,7 +41,8 @@ export class MockDatabase {
       emailAddress: 'trannamtrung1st@gmail.com',
       fullName: 'Trung Tran',
       phoneNumber: '0765441077',
-      username: 'trung.tran'
+      username: 'trung.tran',
+      avatar: DEFAULT_AVATAR
     }];
     this._subjects = [
       "Aec",
