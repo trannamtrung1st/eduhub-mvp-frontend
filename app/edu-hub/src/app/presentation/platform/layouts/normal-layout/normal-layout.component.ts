@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 import { ScrollingService } from '@infras/scrolling/scrolling.service';
 

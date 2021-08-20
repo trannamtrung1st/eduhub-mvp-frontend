@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
-import { orderBy } from 'lodash';
+import { orderBy, random } from 'lodash';
 
 import { BlogFilterSortBy, BLOG_STATES } from '../constants';
 
@@ -17,7 +17,8 @@ import { MockDatabaseService } from '@persistence/database/mock-database.service
 class BlogListStateModel {
 
     constructor(public blogs = new FilterResponseModel<BlogModel>(),
-        public recommendedBlogs: BlogModel[] = []) {
+        public recommendedBlogs: BlogModel[] = [],
+        public randomBlogs: BlogModel[] = []) {
     }
 
     static get default() {
@@ -61,6 +62,11 @@ export class BlogListState extends TransferableState<BlogListStateModel> impleme
     @Selector()
     static recommendedBlogs(state: BlogListStateModel) {
         return state.recommendedBlogs;
+    }
+
+    @Selector()
+    static randomBlogs(state: BlogListStateModel) {
+        return state.randomBlogs;
     }
 
     @Action(BlogQueries.Filter)
@@ -107,6 +113,22 @@ export class BlogListState extends TransferableState<BlogListStateModel> impleme
 
             const patch = {
                 recommendedBlogs: blogs
+            };
+
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), BlogListStateModel.default);
+        });
+    }
+
+    @Action(BlogQueries.GetRandomList)
+    getRandomList(context: StateContext<BlogListStateModel>, query: BlogQueries.GetRandomList) {
+        return Promise.resolve().then(() => {
+            const srcBlogs = this._databaseService.database.blogs;
+            let blogs = [...srcBlogs].splice(0, random(srcBlogs.length));
+
+            const patch = {
+                randomBlogs: blogs
             };
 
             context.patchState(patch);

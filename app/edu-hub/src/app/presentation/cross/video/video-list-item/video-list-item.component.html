@@ -1,0 +1,29 @@
+<a [routerLink]="video.detailUrl">
+    <ng-container *ngIf="horizontal; else vertical">
+        <div nz-row class="edh-blog" data-animate-effect="fadeIn">
+            <div nz-col class="edh-img-container mr-3">
+                <img [src]="video.thumbnailUrl" alt="Free HTML5 Website Template by FreeHTML5.co"
+                    class="edh-blog__thumbnail" [ngStyle]="tmbStyle">
+            </div>
+            <div nz-col class="edh-blog__info" [ngStyle]="infoStyle">
+                <div class="edh-blog__heading">
+                    <div class="edh-blog__title">{{ video.title }}</div>
+                    <span class="text-secondary">by </span><span>{{ video.author }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #vertical>
+        <div class="edh-blog pb-3" data-animate-effect="fadeIn">
+            <div class="edh-img-container">
+                <img [src]="video.thumbnailUrl" class="edh-blog__thumbnail w-100" />
+            </div>
+            <div class="edh-blog__info py-2">
+                <div class="edh-blog__heading">
+                    <div class="edh-blog__title">{{ video.title }}</div>
+                    <span class="text-secondary">by </span><span>{{ video.author }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</a>

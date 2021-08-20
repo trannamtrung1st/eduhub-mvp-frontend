@@ -21,4 +21,8 @@ export namespace BlogQueries {
         constructor(public relatedToBlogId: string) {
         }
     }
+
+    export class GetRandomList {
+        static readonly type = '[EduHub] Get Random Blogs';
+    }
 }

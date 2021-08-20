@@ -16,6 +16,11 @@ interface AppRouting {
     management: {
         [BASE_KEYWORD]: string,
         profile: string
+        medias: {
+            [BASE_KEYWORD]: string,
+            videoDetail: string,
+            blogDetail: string
+        }
     },
     [BASE_KEYWORD]: string,
     notFound: string;
@@ -33,7 +38,12 @@ export const ROUTING: AppRouting = {
     },
     management: {
         [BASE_KEYWORD]: 'management',
-        profile: 'profile'
+        profile: 'profile',
+        medias: {
+            base: 'medias',
+            videoDetail: 'video/:id',
+            blogDetail: 'blog/:id'
+        }
     },
     [BASE_KEYWORD]: '',
     notFound: 'not-found',
@@ -41,17 +51,18 @@ export const ROUTING: AppRouting = {
 };
 
 const absRoutes: any = cloneDeep(ROUTING);
-function makeAbsolute(entry: any) {
-    const prefix = entry[BASE_KEYWORD] ? `/${entry[BASE_KEYWORD]}` : entry[BASE_KEYWORD];
+function makeAbsolute(entry: any, parent: string) {
+    const prefix = parent + (entry[BASE_KEYWORD] ? `/${entry[BASE_KEYWORD]}` : entry[BASE_KEYWORD]);
     Object.keys(entry).forEach(key => {
-        if (key === BASE_KEYWORD) return;
-        if (typeof entry[key] === 'string') {
+        if (key === BASE_KEYWORD) {
+            entry[key] = prefix;
+        } else if (typeof entry[key] === 'string') {
             entry[key] = `${prefix}/${entry[key]}`;
         } else {
-            makeAbsolute(entry[key]);
+            makeAbsolute(entry[key], prefix);
         }
     });
 }
-makeAbsolute(absRoutes);
+makeAbsolute(absRoutes, '');
 
 export const A_ROUTING: AppRouting = absRoutes;

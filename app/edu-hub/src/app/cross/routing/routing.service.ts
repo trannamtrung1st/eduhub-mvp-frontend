@@ -12,7 +12,7 @@ export class RoutingService {
 
   isActive(url: string, exact: boolean = true) {
     return exact
-      ? this._router.isActive(url, { paths: 'subset', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored' })
-      : this._router.isActive(url, { paths: 'exact', queryParams: 'exact', fragment: 'exact', matrixParams: 'exact' });
+      ? this._router.isActive(url, { paths: 'exact', queryParams: 'exact', fragment: 'exact', matrixParams: 'exact' })
+      : this._router.isActive(url, { paths: 'subset', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored' });
   }
 }

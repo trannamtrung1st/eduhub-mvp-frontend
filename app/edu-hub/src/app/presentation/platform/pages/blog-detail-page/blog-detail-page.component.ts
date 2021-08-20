@@ -13,12 +13,12 @@ import { COMMENTS } from '@domains/comment/constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { BlogQueries } from '@core/blog/queries/blog.queries';
-import { BlogViewModel } from '../../components/blog-list-item/view-models/blog-view.model';
 import { BlogModel } from '@core/blog/models/blog.model';
+import { BlogViewModel } from '@presentation/cross/blog/blog-list-item/view-models/blog-view.model';
 
 import { BlogListState } from '@core/blog/states/blog-list.state';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 SwiperCore.use([Navigation]);
 

@@ -22,6 +22,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NgxsModule } from '@ngxs/store';
 import { SwiperModule } from 'swiper/angular';
 import { CrossModule } from '@cross/cross.module';
@@ -30,7 +31,7 @@ import {
     InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline,
     UpOutline, DownOutline, LikeOutline, LikeTwoTone, DislikeOutline, DislikeTwoTone,
     TwitterOutline, FacebookOutline, YoutubeOutline, LinkedinOutline,
-    LogoutOutline, LaptopOutline
+    LogoutOutline, LaptopOutline, PlaySquareOutline
 } from '@ant-design/icons-angular/icons';
 
 import { A_ROUTING } from '@app/constants';
@@ -76,7 +77,7 @@ export const APP_NZ_ICONS = [
     InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline,
     UpOutline, DownOutline, LikeOutline, LikeTwoTone, DislikeOutline, DislikeTwoTone,
     TwitterOutline, FacebookOutline, YoutubeOutline, LinkedinOutline,
-    LogoutOutline, LaptopOutline
+    LogoutOutline, LaptopOutline, PlaySquareOutline
 ];
 
 export const ROUTING_DATA = {
@@ -112,6 +113,7 @@ export const SHARED_PRESENTATION_MODULES = [
     NzImageModule,
     NzTypographyModule,
     NzTableModule,
+    NzTabsModule,
     SwiperModule,
     FormsModule,
     ReactiveFormsModule

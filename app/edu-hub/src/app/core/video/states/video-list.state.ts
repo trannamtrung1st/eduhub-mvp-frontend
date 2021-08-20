@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
-import { orderBy } from 'lodash';
+import { orderBy, random } from 'lodash';
 
 import { VideoFilterSortBy, VIDEO_STATES } from '../constants';
 
@@ -17,7 +17,8 @@ import { MockDatabaseService } from '@persistence/database/mock-database.service
 class VideoListStateModel {
 
     constructor(public videos = new FilterResponseModel<VideoModel>(),
-        public recommendedVideos: VideoModel[] = []) {
+        public recommendedVideos: VideoModel[] = [],
+        public randomVideos: VideoModel[] = []) {
     }
 
     static get default() {
@@ -61,6 +62,11 @@ export class VideoListState extends TransferableState<VideoListStateModel> imple
     @Selector()
     static recommendedVideos(state: VideoListStateModel) {
         return state.recommendedVideos;
+    }
+
+    @Selector()
+    static randomVideos(state: VideoListStateModel) {
+        return state.randomVideos;
     }
 
     @Action(VideoQueries.Filter)
@@ -108,6 +114,22 @@ export class VideoListState extends TransferableState<VideoListStateModel> imple
 
             const patch = {
                 recommendedVideos: videos
+            };
+
+            context.patchState(patch);
+            this.shouldLoad && this.isPlatformServer
+                && this.updateTransferredState((state) => Object.assign(state, patch), VideoListStateModel.default);
+        });
+    }
+
+    @Action(VideoQueries.GetRandomList)
+    getRandomList(context: StateContext<VideoListStateModel>, query: VideoQueries.GetRandomList) {
+        return Promise.resolve().then(() => {
+            const srcVideos = this._databaseService.database.videos;
+            let videos = [...srcVideos].splice(0, random(srcVideos.length));
+
+            const patch = {
+                randomVideos: videos
             };
 
             context.patchState(patch);

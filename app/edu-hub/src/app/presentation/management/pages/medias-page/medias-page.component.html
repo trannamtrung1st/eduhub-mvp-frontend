@@ -1,0 +1,50 @@
+<div class="container py-3 px-4">
+    <app-page-header [extraTemplate]="pageHeaderExtra">
+        <ng-template #pageHeaderExtra>
+        </ng-template>
+    </app-page-header>
+    <div class="row mb-5">
+        <div class="col-12">
+            <nz-tabset>
+                <nz-tab nzTitle="Videos">
+                    <ng-container *ngTemplateOutlet="tabVideo"></ng-container>
+                </nz-tab>
+                <nz-tab nzTitle="Blogs">
+                    <ng-container *ngTemplateOutlet="tabBlog"></ng-container>
+                </nz-tab>
+            </nz-tabset>
+        </div>
+    </div>
+</div>
+
+<ng-template #tabVideo>
+    <div class="row">
+        <ng-container *ngIf="videos?.length;else noVideo">
+            <div class="col-3" *ngFor="let video of videos">
+                <app-video-list-item [video]="video" [horizontal]="false">
+                </app-video-list-item>
+            </div>
+        </ng-container>
+        <ng-template #noVideo>
+            <div class="col-12">
+                You have no video yet!
+            </div>
+        </ng-template>
+    </div>
+</ng-template>
+
+<ng-template #tabBlog>
+    <div class="row">
+        <ng-container *ngIf="blogs?.length;else noBlog">
+            <div class="col-12" *ngFor="let blog of blogs">
+                <app-blog-list-item [blog]="blog" infoWidth="50%"></app-blog-list-item>
+                <hr />
+            </div>
+        </ng-container>
+        <ng-template #noBlog>
+            <div class="col-12">
+                You have no blog yet!
+            </div>
+        </ng-template>
+    </div>
+</ng-template>

@@ -15,6 +15,7 @@ export class VideoListItemComponent implements OnInit {
   @Input() tmbWidth: number | string;
   @Input() aspectRatio: number;
   @Input() infoWidth: string;
+  @Input() horizontal: boolean;
 
   tmbStyle: any;
   infoStyle: any;
@@ -23,17 +24,21 @@ export class VideoListItemComponent implements OnInit {
     this.tmbWidth = 300;
     this.aspectRatio = 16 / 9;
     this.infoWidth = '';
+    this.horizontal = true;
   }
 
   ngOnInit(): void {
-    this.video.detailUrl = A_ROUTING.platform.videoDetail.replace(':id', this.video.id);
-    this.tmbStyle = {
-      width: `${this.tmbWidth}px`,
-      height: `${+this.tmbWidth / this.aspectRatio}px`
-    };
-    this.infoStyle = {
-      width: this.infoWidth,
-    };
+    this.video.detailUrl = this.video.detailUrl || A_ROUTING.platform.videoDetail.replace(':id', this.video.id);
+
+    if (this.horizontal) {
+      this.tmbStyle = {
+        width: `${this.tmbWidth}px`,
+        height: `${+this.tmbWidth / this.aspectRatio}px`
+      };
+      this.infoStyle = {
+        width: this.infoWidth,
+      };
+    }
   }
 
 }

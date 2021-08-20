@@ -10,12 +10,12 @@ import { RoutingData } from '@presentation/auth/routing/models/routing-data.mode
 
 import { AnonymousOnlyPolicy } from '@presentation/auth/policies/anonymous-only.policy';
 
-import { BlogDetailPageComponent } from '@presentation/platform/blog/pages/blog-detail-page/blog-detail-page.component';
 import { NormalLayoutComponent } from '@presentation/platform/layouts/normal-layout/normal-layout.component';
 import { HomePageComponent } from '@presentation/platform/pages/home-page/home-page.component';
 import { LoginPageComponent } from '@presentation/platform/pages/login-page/login-page.component';
 import { RegisterPageComponent } from '@presentation/platform/pages/register-page/register-page.component';
-import { VideoDetailPageComponent } from '@presentation/platform/video/pages/video-detail-page/video-detail-page.component';
+import { VideoDetailPageComponent } from './pages/video-detail-page/video-detail-page.component';
+import { BlogDetailPageComponent } from './pages/blog-detail-page/blog-detail-page.component';
 
 import { RoutingAuthService } from '@presentation/auth/routing/routing-auth.service';
 

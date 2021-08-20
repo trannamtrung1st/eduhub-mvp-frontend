@@ -4,7 +4,7 @@ import { MenuItemModel } from "./models/menu-item.model";
 
 export const MENU = {
     profile: new MenuItemModel('profile', A_ROUTING.management.profile, 'Profile', 'user'),
-    others: new MenuItemModel('others', '#', 'Others', 'user')
+    medias: new MenuItemModel('medias', A_ROUTING.management.medias.base, 'Medias', 'play-square')
 };
 
 export const MENU_ITEMS = Object.values(MENU);

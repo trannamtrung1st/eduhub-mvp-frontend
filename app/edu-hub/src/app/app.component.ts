@@ -14,7 +14,7 @@ import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { APP_STATUS_STATES, GlobalState } from '@core/global/states/global.state';
 import { LoaderState } from '@core/global/states/loader.state';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 @Component({
   selector: 'app-root',

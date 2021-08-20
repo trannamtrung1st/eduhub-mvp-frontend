@@ -15,7 +15,7 @@ import { UserViewModel } from './view-models/user-view.model';
 
 import { CurrentUserState } from '@core/identity/states/current-user.state';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 @Component({
   selector: 'app-profile-page',
@@ -79,7 +79,7 @@ export class ProfilePageComponent extends BaseComponent<ProfileState> implements
 class ProfileState {
 }
 
-const INCOME_MOCK_DATA: any[] = [];
+const INCOME_MOCK_DATA: { fromUserName: string, amount: number, date: Date, resource: string }[] = [];
 
 for (let i = 0; i < 50; i++) {
   INCOME_MOCK_DATA.push(
