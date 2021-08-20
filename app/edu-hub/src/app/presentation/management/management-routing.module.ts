@@ -11,7 +11,8 @@ import { RoutingData } from '@presentation/auth/routing/models/routing-data.mode
 import { AuthenticatedUserPolicy } from '@presentation/auth/policies/authenticated-user.policy';
 
 import { NormalLayoutComponent } from './layouts/normal-layout/normal-layout.component';
-import { ProfilePageComponent } from './user/pages/profile-page/profile-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { MediasPageComponent } from './pages/medias-page/medias-page.component';
 
 import { RoutingAuthService } from '@presentation/auth/routing/routing-auth.service';
 
@@ -33,6 +34,15 @@ const routes: Routes = [
           breadcrumb: 'Profile',
           title: 'Profile',
           subTitle: 'This is your personal profile'
+        } as RoutingData
+      },
+      {
+        path: ROUTING.management.medias.base,
+        component: MediasPageComponent,
+        data: {
+          breadcrumb: 'Medias',
+          title: 'Medias',
+          subTitle: 'Manage your medias'
         } as RoutingData
       }
     ]

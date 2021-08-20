@@ -9,11 +9,11 @@ import { FormHelper } from '@cross/form/form-helper';
 import { AppValidators } from '@cross/form/app-validators';
 
 import { A_ROUTING } from '@app/constants';
-import { LogoSize } from '@presentation/cross/logo/constants';
+import { LogoSize } from '@presentation/cross/common/logo/constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 @Component({
   selector: 'app-register-page',

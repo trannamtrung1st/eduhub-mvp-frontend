@@ -10,14 +10,14 @@ import { withLatestFrom } from 'rxjs/operators';
 import { FormHelper } from '@cross/form/form-helper';
 
 import { A_ROUTING } from '@app/constants';
-import { LogoSize } from '@presentation/cross/logo/constants';
+import { LogoSize } from '@presentation/cross/common/logo/constants';
 
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { IdentityCommands } from '@core/identity/commands/identity.commands';
 import { LoginViewModel } from './view-models/login-view.model';
 import { UserModel } from '@core/identity/models/user-model';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 import { CurrentUserState } from '@core/identity/states/current-user.state';
 

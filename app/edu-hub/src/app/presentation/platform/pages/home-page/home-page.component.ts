@@ -8,8 +8,8 @@ import { Select, Store } from '@ngxs/store';
 
 import { CONTENT_SORT_BY } from './constants';
 import { VideoFilterSortBy } from '@core/video/constants';
-import { LogoSize } from '@presentation/cross/logo/constants';
 import { BlogFilterSortBy } from '@core/blog/constants';
+import { LogoSize } from '@presentation/cross/common/logo/constants';
 
 import { getEnumByKey } from '@cross/enum/enum-helper';
 
@@ -25,15 +25,15 @@ import { VideoQueries } from '@core/video/queries/video.queries';
 import { VideoModel } from '@core/video/models/video.model';
 import { BlogQueries } from '@core/blog/queries/blog.queries';
 import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { VideoViewModel } from '@presentation/platform/video/components/video-list-item/view-models/video-view.model';
-import { BlogViewModel } from '@presentation/platform/blog/components/blog-list-item/view-models/blog-view.model';
 import { BlogModel } from '@core/blog/models/blog.model';
+import { VideoViewModel } from '@presentation/cross/video/video-list-item/view-models/video-view.model';
+import { BlogViewModel } from '@presentation/cross/blog/blog-list-item/view-models/blog-view.model';
 
 import { AllSubjectsState } from '@core/subject/states/all-subjects.state';
 import { VideoListState } from '@core/video/states/video-list.state';
 import { BlogListState } from '@core/blog/states/blog-list.state';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 import { ScrollingService } from '@infras/scrolling/scrolling.service';
 import { MagnificService } from '@infras/magnific/magnific.service';

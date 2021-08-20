@@ -91,9 +91,9 @@
                         </div>
                         <div class="row">
                             <ng-container *ngIf="videos?.length;else noVideo">
-                                <div class="col-12" *ngFor="let video of videos">
-                                    <app-video-list-item [video]="video" infoWidth="50%"></app-video-list-item>
-                                    <hr />
+                                <div class="col-4" *ngFor="let video of videos">
+                                    <app-video-list-item [video]="video" [horizontal]="false">
+                                    </app-video-list-item>
                                 </div>
                             </ng-container>
                             <ng-template #noVideo>

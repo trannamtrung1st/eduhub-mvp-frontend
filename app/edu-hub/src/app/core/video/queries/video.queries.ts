@@ -28,4 +28,8 @@ export namespace VideoQueries {
         constructor(public relatedToVideoId: string) {
         }
     }
+
+    export class GetRandomList {
+        static readonly type = '[EduHub] Get Random Videos';
+    }
 }

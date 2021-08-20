@@ -16,12 +16,12 @@ import { VideoDetailViewModel } from './view-model/video-detail-view.model';
 import { VideoQueries } from '@core/video/queries/video.queries';
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { VideoModel } from '@core/video/models/video.model';
-import { VideoViewModel } from '../../components/video-list-item/view-models/video-view.model';
+import { VideoViewModel } from '@presentation/cross/video/video-list-item/view-models/video-view.model';
 
 import { CurrentWatchingVideoState, GET_VIDEO_DETAIL_STATES } from '@core/video/states/current-watching-video.state';
 import { VideoListState } from '@core/video/states/video-list.state';
 
-import { BaseComponent } from '@presentation/cross/base-component/base-component';
+import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 @Component({
   selector: 'app-video-detail-page',

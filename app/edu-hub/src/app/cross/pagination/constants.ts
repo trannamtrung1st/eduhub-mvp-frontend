@@ -1,3 +1,3 @@
 export const PAGINATION = {
-    defaultPageSize: 10
+    defaultPageSize: 12
 };
