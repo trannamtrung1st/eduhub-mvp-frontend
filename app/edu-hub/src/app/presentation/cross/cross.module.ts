@@ -1,5 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
+import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
+import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { SHARED_PRESENTATION_MODULES } from '@presentation/constants';
 
@@ -11,6 +15,12 @@ import { LogoComponent } from './common/logo/logo.component';
 import { BannerComponent } from './common/banner/banner.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { HalfCollapsedSectionComponent } from './common/half-collapsed-section/half-collapsed-section.component';
+import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
+import { BacktopComponent } from './common/backtop/backtop.component';
+import { MarkdownEditorComponent } from './common/markdown-editor/markdown-editor.component';
+
+const ngZorroConfig: NzConfig = {
+};
 
 @NgModule({
   declarations: [
@@ -21,11 +31,15 @@ import { HalfCollapsedSectionComponent } from './common/half-collapsed-section/h
     FooterComponent,
     HalfCollapsedSectionComponent,
     VideoListItemComponent,
-    BlogListItemComponent
+    BlogListItemComponent,
+    BreadcrumbComponent,
+    BacktopComponent,
+    MarkdownEditorComponent
   ],
   imports: [
     ...SHARED_PRESENTATION_MODULES,
-    RouterModule
+    RouterModule,
+    MarkdownModule.forChild()
   ],
   exports: [
     TopNavComponent,
@@ -35,7 +49,17 @@ import { HalfCollapsedSectionComponent } from './common/half-collapsed-section/h
     FooterComponent,
     HalfCollapsedSectionComponent,
     VideoListItemComponent,
-    BlogListItemComponent
+    BlogListItemComponent,
+    BreadcrumbComponent,
+    BacktopComponent,
+    MarkdownEditorComponent
+  ],
+  providers: [
+    { provide: NZ_CONFIG, useValue: ngZorroConfig },
+    { provide: NZ_I18N, useValue: en_US }
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class CrossModule { }

@@ -28,7 +28,7 @@ export class VideoListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.video.detailUrl = this.video.detailUrl || A_ROUTING.platform.videoDetail.replace(':id', this.video.id);
+    this.video.detailUrl = this.video.detailUrl || A_ROUTING.platform.video.detail.replace(':id', this.video.id);
 
     if (this.horizontal) {
       this.tmbStyle = {

@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 
+import { A_ROUTING } from '@app/constants';
+
 import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { VideoModel } from '@core/video/models/video.model';
 import { VideoViewModel } from '@presentation/cross/video/video-list-item/view-models/video-view.model';
@@ -18,7 +20,6 @@ import { VideoListState } from '@core/video/states/video-list.state';
 import { BlogListState } from '@core/blog/states/blog-list.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
-import { A_ROUTING } from '@app/constants';
 
 @Component({
   selector: 'app-medias-page',
@@ -28,6 +29,8 @@ import { A_ROUTING } from '@app/constants';
 export class MediasPageComponent extends BaseComponent<MediasState> implements OnInit, OnDestroy {
 
   protected transferStateKeyName: string = MediasPageComponent.name;
+
+  A_ROUTING = A_ROUTING;
 
   videos: VideoViewModel[];
   blogs: BlogViewModel[];
@@ -62,7 +65,7 @@ export class MediasPageComponent extends BaseComponent<MediasState> implements O
       .then(([_, videos]) => {
         this.videos = videos.map(video => {
           const videoModel = cloneDeep(video) as VideoViewModel;
-          videoModel.detailUrl = A_ROUTING.management.medias.videoDetail.replace(':id', videoModel.id);
+          videoModel.detailUrl = A_ROUTING.management.medias.video.detail.replace(':id', videoModel.id);
           return videoModel;
         });
       });
@@ -75,7 +78,7 @@ export class MediasPageComponent extends BaseComponent<MediasState> implements O
       .then(([_, blogs]) => {
         this.blogs = blogs.map(blog => {
           const blogModel = cloneDeep(blog) as BlogViewModel;
-          blogModel.detailUrl = A_ROUTING.management.medias.blogDetail.replace(':id', blogModel.id);
+          blogModel.detailUrl = A_ROUTING.management.medias.blog.detail.replace(':id', blogModel.id);
           return blogModel;
         });
       });

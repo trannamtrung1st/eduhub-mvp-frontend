@@ -7,8 +7,6 @@ import { LoaderCommands } from '@core/global/commands/loader.commands';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
-import { ScrollingService } from '@infras/scrolling/scrolling.service';
-
 @Component({
   selector: 'app-normal-layout',
   templateUrl: './normal-layout.component.html',
@@ -21,8 +19,7 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
-    private _store: Store,
-    private _scrollingService: ScrollingService,
+    private _store: Store
   ) {
     super(platformId, transferState);
   }
@@ -37,32 +34,10 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
     }
   }
 
-  onGoToTopClicked(event: MouseEvent) {
-    event.preventDefault();
-    const pageEl = document.querySelector('html') as HTMLElement;
-    const offsetTop = pageEl.offsetTop;
-    this._scrollingService.scrollManager.scrollTo(pageEl, {
-      top: offsetTop,
-      duration: 500
-    });
-    return false;
-  }
-
   onPageDeactivated(_: any) {
     const pageEl = document.querySelector('html') as HTMLElement;
     pageEl.scrollTop = 0;
     this._store.dispatch(new LoaderCommands.Reset());
-  }
-
-  onPageScrolled(_: any) {
-    const btnGoToTop = document.querySelector('.gototop.js-top');
-    const pageEl = document.querySelector('html') as HTMLElement;
-
-    if (pageEl.scrollTop > 200) {
-      btnGoToTop?.classList.add('active');
-    } else {
-      btnGoToTop?.classList.remove('active');
-    }
   }
 
 }

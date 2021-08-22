@@ -1,0 +1,97 @@
+<div class="edh-md-editor">
+    <markdown-toolbar [attr.for]="controlId" class="edh-md-editor__ops-container d-flex justify-content-between mb-2">
+        <md-bold>
+            <button #btnBold nz-button type="button" nz-tooltip nzTooltipTitle="Bold (Ctrl + B)">
+                <i nz-icon nzType="bold" nzTheme="outline"></i>
+            </button>
+        </md-bold>
+
+        <!-- <md-italic></md-italic> -->
+        <button data-md-button #btnItalic nz-button type="button" (click)="onItalicClicked($event)" nz-tooltip
+            nzTooltipTitle="Italic (Ctrl + I)">
+            <i nz-icon nzType="italic" nzTheme="outline"></i>
+        </button>
+
+        <button data-md-button #btnUnderline nz-button type="button" (click)="onUnderlineClicked($event)" nz-tooltip
+            nzTooltipTitle="Underline (Ctrl + U)">
+            <i nz-icon nzType="underline" nzTheme="outline"></i>
+        </button>
+
+        <!-- <md-header></md-header> -->
+        <button data-md-button #btnHeading nz-button type="button" (click)="onHeadingClicked($event)" nz-tooltip
+            nzTooltipTitle="Heading (Ctrl + H)">
+            <i nz-icon nzType="font-size" nzTheme="outline"></i>
+        </button>
+
+        <button data-md-button #btnTable nz-button type="button" (click)="onTableClicked($event)" nz-tooltip
+            nzTooltipTitle="Table (Alt + T)">
+            <i nz-icon nzType="table" nzTheme="outline"></i>
+        </button>
+
+        <md-quote>
+            <button #btnQuote nz-button type="button" nz-tooltip nzTooltipTitle="Blockquote (Ctrl + Q)">
+                <span style="font-size: larger;">̕̕̕̕&#787;</span>&nbsp;
+                <span style="font-size: larger;">̕̕̕̕&#787;</span>
+            </button>
+        </md-quote>
+
+        <md-code>
+            <button #btnCode nz-button type="button" nz-tooltip nzTooltipTitle="Code block">
+                <i nz-icon nzType="code" nzTheme="outline"></i>
+            </button>
+        </md-code>
+
+        <md-link>
+            <button #btnLink nz-button type="button" nz-tooltip nzTooltipTitle="Link (Ctrl + L)">
+                <i nz-icon nzType="link" nzTheme="outline"></i>
+            </button>
+        </md-link>
+
+        <!-- <md-image></md-image> -->
+        <button data-md-button #btnImage nz-button type="button" (click)="onImageClicked($event)" nz-tooltip
+            nzTooltipTitle="Image (Ctrl + G)">
+            <i nz-icon nzType="file-image" nzTheme="outline"></i>
+        </button>
+
+        <md-unordered-list>
+            <button data-md-button #btnUList nz-button type="button" nz-tooltip nzTooltipTitle="Insert unordered list">
+                <i nz-icon nzType="unordered-list" nzTheme="outline"></i>
+            </button>
+        </md-unordered-list>
+
+        <md-ordered-list>
+            <button data-md-button #btnOList nz-button type="button" nz-tooltip nzTooltipTitle="Insert ordered list">
+                <i nz-icon nzType="ordered-list" nzTheme="outline"></i>
+            </button>
+        </md-ordered-list>
+
+        <md-task-list>
+            <button data-md-button #btnTaskList nz-button type="button" nz-tooltip nzTooltipTitle="Insert task list">
+                <i nz-icon nzType="check-square" nzTheme="outline"></i>
+            </button>
+        </md-task-list>
+
+        <button data-md-button #btnStrike nz-button type="button" (click)="onStrikeClicked($event)" nz-tooltip
+            nzTooltipTitle="Strike (Alt + S)">
+            <i nz-icon nzType="strikethrough" nzTheme="outline"></i>
+        </button>
+        <button data-md-button #btnSpace nz-button type="button" (click)="onSpaceClicked($event)" nz-tooltip
+            nzTooltipTitle="Pre-Space (Ctrl + Space)">
+            <i nz-icon nzType="vertical-align-bottom" nzTheme="outline"></i>
+        </button>
+        <button data-md-button #btnLineBreak nz-button type="button" (click)="onHtmlBreakLineClicked($event)" nz-tooltip
+            nzTooltipTitle="HTML break-line (Ctrl + Enter)">
+            <span style="font-size: larger;">E</span>
+        </button>
+        <button data-md-button #btnHelp nz-button type="button" (click)="onHelpClicked($event)" nz-tooltip
+            nzTooltipTitle="Help (F1)">
+            <i nz-icon nzType="question" nzTheme="outline"></i>
+        </button>
+
+        <!-- <md-mention></md-mention> -->
+        <!-- <md-ref></md-ref> -->
+    </markdown-toolbar>
+    <textarea #editor nz-input (focus)="onFocus()" (blur)="onBlur()" (keydown)="onContentKeydown($event)"
+        (input)="onContentInput()" [placeholder]="placeholder" [id]="controlId" [maxLength]="MAXIMUM_BLOG_LENGTH"
+        [formControl]="control"></textarea>
+</div>

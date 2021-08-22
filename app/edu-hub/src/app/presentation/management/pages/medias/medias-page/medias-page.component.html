@@ -18,6 +18,14 @@
 </div>
 
 <ng-template #tabVideo>
+    <div class="row mb-3">
+        <div class="col-12 text-right">
+            <a [routerLink]="A_ROUTING.management.medias.video.create" nz-button nzType="primary">
+                <i nz-icon nzType="upload" nzTheme="outline"></i>
+                New Video
+            </a>
+        </div>
+    </div>
     <div class="row">
         <ng-container *ngIf="videos?.length;else noVideo">
             <div class="col-3" *ngFor="let video of videos">
@@ -34,6 +42,12 @@
 </ng-template>
 
 <ng-template #tabBlog>
+    <div class="col-12 text-right">
+        <a [routerLink]="A_ROUTING.management.medias.blog.create" nz-button nzType="primary">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+            Write a Blog
+        </a>
+    </div>
     <div class="row">
         <ng-container *ngIf="blogs?.length;else noBlog">
             <div class="col-12" *ngFor="let blog of blogs">

@@ -23,6 +23,11 @@ import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzBackTopModule } from 'ng-zorro-antd/back-top';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NgxsModule } from '@ngxs/store';
 import { SwiperModule } from 'swiper/angular';
 import { CrossModule } from '@cross/cross.module';
@@ -31,7 +36,11 @@ import {
     InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline,
     UpOutline, DownOutline, LikeOutline, LikeTwoTone, DislikeOutline, DislikeTwoTone,
     TwitterOutline, FacebookOutline, YoutubeOutline, LinkedinOutline,
-    LogoutOutline, LaptopOutline, PlaySquareOutline
+    LogoutOutline, LaptopOutline, PlaySquareOutline, EditOutline,
+    VerticalAlignTopOutline, VerticalAlignBottomOutline, BoldOutline, ItalicOutline, UnderlineOutline,
+    StrikethroughOutline, FontSizeOutline, UnorderedListOutline, OrderedListOutline,
+    CheckSquareOutline, QuestionOutline, CodeOutline, LinkOutline, FileImageOutline,
+    TableOutline
 } from '@ant-design/icons-angular/icons';
 
 import { A_ROUTING } from '@app/constants';
@@ -48,7 +57,7 @@ import { CurrentWatchingVideoState } from '@core/video/states/current-watching-v
 import { VideoListState } from "@core/video/states/video-list.state";
 import { VideoState } from "@core/video/states/video.state";
 
-import { RoutingData } from './auth/routing/models/routing-data.model';
+import { RoutingData } from './cross/routing/models/routing-data.model';
 
 export const STATES = [
     // Global
@@ -77,7 +86,11 @@ export const APP_NZ_ICONS = [
     InfoCircleTwoTone, LockOutline, UserOutline, SortDescendingOutline,
     UpOutline, DownOutline, LikeOutline, LikeTwoTone, DislikeOutline, DislikeTwoTone,
     TwitterOutline, FacebookOutline, YoutubeOutline, LinkedinOutline,
-    LogoutOutline, LaptopOutline, PlaySquareOutline
+    LogoutOutline, LaptopOutline, PlaySquareOutline, EditOutline,
+    VerticalAlignTopOutline, VerticalAlignBottomOutline, BoldOutline, ItalicOutline, UnderlineOutline,
+    StrikethroughOutline, FontSizeOutline, UnorderedListOutline, OrderedListOutline,
+    CheckSquareOutline, QuestionOutline, CodeOutline, LinkOutline, FileImageOutline,
+    TableOutline
 ];
 
 export const ROUTING_DATA = {
@@ -114,6 +127,11 @@ export const SHARED_PRESENTATION_MODULES = [
     NzTypographyModule,
     NzTableModule,
     NzTabsModule,
+    NzUploadModule,
+    NzMessageModule,
+    NzBackTopModule,
+    NzToolTipModule,
+    NzModalModule,
     SwiperModule,
     FormsModule,
     ReactiveFormsModule

@@ -1,0 +1,54 @@
+<form nz-form [formGroup]="uploadFormGroup" nzLayout="vertical" (ngSubmit)="onFormSubmitted()">
+    <div class="row">
+        <div class="col-6">
+            <div class="edh-video-upload-container mb-2" *ngIf="!videoUrl">
+                <nz-upload nzType="drag" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    (nzChange)="handleUploadChange($event)">
+                    <p class="ant-upload-drag-icon">
+                        <i nz-icon nzType="inbox"></i>
+                    </p>
+                    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+                </nz-upload>
+            </div>
+            <video class="edh-video-player w-100" controls *ngIf="videoUrl">
+                <source [src]="videoUrl" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <nz-form-item>
+                <nz-form-label nzNoColon nzFor="description" nzRequired>
+                    <span>Description</span>
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Description is required">
+                    <textarea nz-input id="description" formControlName="description"
+                        placeholder="Input your video description here"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label nzNoColon nzFor="title" nzRequired>
+                    <span>Title</span>
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Title is required">
+                    <input nz-input id="title" formControlName="title" placeholder="Input your video title here" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzNoColon nzFor="setting-1">
+                    <span>Setting 1</span>
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input id="setting-1" placeholder="Input your setting 1" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzNoColon nzFor="setting-2">
+                    <span>Setting 2</span>
+                </nz-form-label>
+                <nz-form-control>
+                    <input nz-input id="setting-2" placeholder="Input your setting 2" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+</form>

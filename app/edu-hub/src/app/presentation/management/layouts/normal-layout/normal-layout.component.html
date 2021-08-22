@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isPlatformServer">
-    <div id="edh-page" (window:scroll)="onPageScrolled($event)">
+    <div id="edh-page">
         <nz-layout>
             <nz-header>
                 <app-top-nav></app-top-nav>
@@ -25,8 +25,5 @@
             </nz-layout>
         </nz-layout>
     </div>
-
-    <div class="gototop js-top">
-        <a href="#" class="js-gotop" (click)="onGoToTopClicked($event)"><i class="icon-arrow-up"></i></a>
-    </div>
+    <app-backtop></app-backtop>
 </ng-container>

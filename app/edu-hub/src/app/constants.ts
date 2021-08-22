@@ -7,24 +7,38 @@ const BASE_KEYWORD = 'base';
 interface AppRouting {
     platform: {
         [BASE_KEYWORD]: '',
-        home: string;
-        login: string;
-        registration: string;
-        videoDetail: string;
-        blogDetail: string;
+        home: string,
+        login: string,
+        registration: string,
+        video: {
+            [BASE_KEYWORD]: string,
+            detail: string
+        },
+        blog: {
+            [BASE_KEYWORD]: string,
+            detail: string
+        }
     },
     management: {
         [BASE_KEYWORD]: string,
-        profile: string
+        profile: string,
         medias: {
             [BASE_KEYWORD]: string,
-            videoDetail: string,
-            blogDetail: string
+            video: {
+                [BASE_KEYWORD]: string,
+                detail: string,
+                create: string
+            },
+            blog: {
+                [BASE_KEYWORD]: string,
+                detail: string,
+                create: string
+            }
         }
     },
     [BASE_KEYWORD]: string,
-    notFound: string;
-    accessDenied: string;
+    notFound: string,
+    accessDenied: string,
 }
 
 export const ROUTING: AppRouting = {
@@ -33,16 +47,30 @@ export const ROUTING: AppRouting = {
         home: '',
         login: 'login',
         registration: 'registration',
-        videoDetail: 'video/:id',
-        blogDetail: 'blog/:id'
+        video: {
+            [BASE_KEYWORD]: 'video',
+            detail: ':id'
+        },
+        blog: {
+            [BASE_KEYWORD]: 'blog',
+            detail: ':id'
+        }
     },
     management: {
         [BASE_KEYWORD]: 'management',
         profile: 'profile',
         medias: {
-            base: 'medias',
-            videoDetail: 'video/:id',
-            blogDetail: 'blog/:id'
+            [BASE_KEYWORD]: 'medias',
+            video: {
+                [BASE_KEYWORD]: 'video',
+                detail: ':id',
+                create: 'create'
+            },
+            blog: {
+                [BASE_KEYWORD]: 'blog',
+                detail: ':id',
+                create: 'create'
+            }
         }
     },
     [BASE_KEYWORD]: '',

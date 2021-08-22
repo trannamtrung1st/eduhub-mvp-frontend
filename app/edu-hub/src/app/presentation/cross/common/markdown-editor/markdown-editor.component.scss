@@ -1,0 +1,17 @@
+$ops-btn-size: 30px;
+
+.edh-md-editor {
+    textarea {
+        max-height: 70vh;
+    }
+
+    &__ops-container {
+        button {
+            width: $ops-btn-size;
+            height: $ops-btn-size;
+            padding: 0 3px;
+            line-height: $ops-btn-size;
+            margin: 0;
+        }
+    }
+}

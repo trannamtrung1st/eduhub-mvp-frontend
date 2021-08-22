@@ -1,0 +1,12 @@
+<div class="container py-3 px-4">
+    <app-page-header [extraTemplate]="pageHeaderExtra">
+        <ng-template #pageHeaderExtra>
+            <button nz-button nzType="primary" [disabled]="true">Upload</button>
+        </ng-template>
+    </app-page-header>
+    <div class="row mb-5">
+        <div class="col-12">
+            <app-video-form></app-video-form>
+        </div>
+    </div>
+</div>
