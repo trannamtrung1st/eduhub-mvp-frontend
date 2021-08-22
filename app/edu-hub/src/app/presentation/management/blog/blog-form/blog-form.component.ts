@@ -50,7 +50,7 @@ export class BlogFormComponent extends BaseComponent<BlogFormState> implements O
     this._store.dispatch(new LoaderCommands.Hide());
   }
 
-  onFormSubmitted(): void {
+  onFormSubmit(): void {
     const isValid = FormHelper.validateFormGroup(this.blogFormGroup);
     if (!isValid) return;
   }

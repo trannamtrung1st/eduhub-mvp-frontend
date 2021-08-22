@@ -1,0 +1,9 @@
+@import "variables";
+
+.edh-feedback-container {
+    background-repeat: no-repeat;
+    background-size: cover;
+    nz-card {
+        background: $brand-white;
+    }
+}

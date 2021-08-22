@@ -9,7 +9,7 @@
             <div class="row h-100">
                 <div class="col-12 my-auto px-5">
                     <h1 class="text-center">Create an account</h1>
-                    <form nz-form [formGroup]="registerFormGroup" (ngSubmit)="onFormSubmitted()">
+                    <form nz-form [formGroup]="registerFormGroup" (ngSubmit)="onFormSubmit()">
                         <nz-form-item nzJustify="space-around">
                             <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
                             <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">

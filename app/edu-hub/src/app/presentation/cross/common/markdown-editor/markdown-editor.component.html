@@ -1,5 +1,6 @@
 <div class="edh-md-editor">
-    <markdown-toolbar [attr.for]="controlId" class="edh-md-editor__ops-container d-flex justify-content-between mb-2">
+    <markdown-toolbar *ngIf="toolbarLoaded" [attr.for]="controlId"
+        class="edh-md-editor__ops-container d-flex justify-content-between mb-2">
         <md-bold>
             <button #btnBold nz-button type="button" nz-tooltip nzTooltipTitle="Bold (Ctrl + B)">
                 <i nz-icon nzType="bold" nzTheme="outline"></i>

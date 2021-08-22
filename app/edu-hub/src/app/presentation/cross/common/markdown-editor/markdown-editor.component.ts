@@ -1,7 +1,6 @@
-import { Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, HostBinding, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
-import '@github/markdown-toolbar-element'
 
 import { DEFAULT_IMAGE, MARKDOWN_DOC_URL, MAXIMUM_BLOG_LENGTH } from './constants';
 
@@ -38,17 +37,23 @@ export class MarkdownEditorComponent implements OnInit {
 
   MAXIMUM_BLOG_LENGTH = MAXIMUM_BLOG_LENGTH;
 
-  constructor() {
+  toolbarLoaded: boolean;
+
+  constructor(@Inject(PLATFORM_ID) private _platformId: object) {
     this.controlId = `edh-md-editor-${Math.floor(100000 * Math.random())}`;
     this.control = new FormControl();
     this.fontSize = 14;
+    this.toolbarLoaded = false;
   }
 
   get content(): string {
     return this._editorRef?.nativeElement.value;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    if (isPlatformBrowser(this._platformId)) {
+      import('@github/markdown-toolbar-element').then(_ => this.toolbarLoaded = true);
+    }
   }
 
   onItalicClicked(_: any) {
@@ -189,7 +194,7 @@ export class MarkdownEditorComponent implements OnInit {
   }
 
   private _addHtmlBreakLine() {
-    this._insert(`<br />\n`);
+    this._insert(`<br />`);
   }
 
   private _openHelp() {
