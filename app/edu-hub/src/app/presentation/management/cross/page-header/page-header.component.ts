@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { RoutingData } from '@presentation/auth/routing/models/routing-data.model';
+import { RoutingData } from '@presentation/cross/routing/models/routing-data.model';
 
 @Component({
   selector: 'app-page-header',

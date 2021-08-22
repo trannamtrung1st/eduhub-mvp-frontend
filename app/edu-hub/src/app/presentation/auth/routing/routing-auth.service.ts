@@ -11,7 +11,7 @@ import { PolicyInjector } from '../policies/policy-injector';
 import { A_ROUTING } from '@app/constants';
 
 import { AuthContext } from '../models/auth-context.model';
-import { RoutingData } from './models/routing-data.model';
+import { RoutingData } from '@presentation/cross/routing/models/routing-data.model';
 
 import { CurrentUserState } from '@core/identity/states/current-user.state';
 

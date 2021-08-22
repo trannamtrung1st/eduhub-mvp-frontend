@@ -44,6 +44,9 @@
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "node_modules/magnific-popup/dist/magnific-popup.css",
+              "node_modules/prismjs/themes/prism-okaidia.css",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
               "src/assets/css/animate.css",
               "src/assets/css/icomoon.css",
               "src/styles.less",
@@ -52,7 +55,12 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/magnific-popup/dist/jquery.magnific-popup.min.js"
+              "node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
+              "node_modules/marked/lib/marked.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.js",
+              "node_modules/emoji-toolkit/lib/js/joypixels.min.js"
             ]
           },
           "configurations": {

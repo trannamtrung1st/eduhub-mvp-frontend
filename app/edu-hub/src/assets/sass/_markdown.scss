@@ -1,0 +1,34 @@
+.edh-markdown {
+    blockquote {
+        padding: 17px;
+        border-left: 7px solid $brand-gray;
+        background: $brand-less-white;
+        p {
+            margin: 0;
+        }
+    }
+
+    table {
+        border-color: $brand-gray;
+        border-style: solid;
+        border-width: thin;
+        td,
+        th {
+            border-color: $brand-gray;
+            border-style: solid;
+            border-width: thin;
+            padding: 10px;
+        }
+    }
+
+    &-checked,
+    &-unchecked {
+        font-size: x-large;
+        position: relative;
+        top: 3px;
+    }
+
+    &-checked {
+        color: $brand-success;
+    }
+}

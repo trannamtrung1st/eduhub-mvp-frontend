@@ -1,0 +1,62 @@
+<form nz-form [formGroup]="blogFormGroup" nzLayout="vertical" (ngSubmit)="onFormSubmitted()">
+    <div class="row">
+        <div class="col-12">
+            <nz-form-item>
+                <nz-form-label nzNoColon nzFor="title" nzRequired>
+                    <span>Title</span>
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Title is required">
+                    <input nz-input id="title" formControlName="title" placeholder="Input your blog title here" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzNoColon nzFor="description" nzRequired>
+                    <span>Description</span>
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Description is required">
+                    <textarea nz-input id="description" formControlName="description"
+                        placeholder="Input your blog description here"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label nzNoColon nzRequired>
+                    <span>Blog content</span>
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Blog content is required">
+                    <app-markdown-editor [control]="blogContentControl" placeholder="Input your content here">
+                    </app-markdown-editor>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-6">
+            <nz-form-item>
+                <nz-form-label nzNoColon>
+                    <span class="mr-1">Blog content (Preview)</span>
+                    <button type="button" nz-button nzType="text" (click)="onShowPreviewClicked()">
+                        <i nz-icon nzType="arrows-alt" nzTheme="outline"></i>
+                    </button>
+                </nz-form-label>
+                <nz-form-control>
+                    <ng-container *ngTemplateOutlet="blogPreview; context: { height: '70vh' }"></ng-container>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-modal [(nzVisible)]="showBlogPreview" nzWidth="90vw" nzTitle="Blog preview"
+                (nzOnCancel)="onBlogPreviewCanceled()">
+                <ng-container *nzModalContent>
+                    <ng-container *ngTemplateOutlet="blogPreview"></ng-container>
+                </ng-container>
+                <div *nzModalFooter>
+                    <button type="button" nz-button nzType="default" (click)="onBlogPreviewCanceled()">Close</button>
+                </div>
+            </nz-modal>
+        </div>
+    </div>
+</form>
+
+<ng-template #blogPreview let-height="height">
+    <div class="edh-markdown border overflow-auto text-break" [style.maxHeight]="height">
+        <markdown [data]="blogContentControl.value"></markdown>
+    </div>
+</ng-template>

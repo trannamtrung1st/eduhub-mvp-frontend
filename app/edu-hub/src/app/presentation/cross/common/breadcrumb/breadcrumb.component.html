@@ -1,0 +1,13 @@
+<nz-breadcrumb>
+    <nz-breadcrumb-item *ngFor="let breadcrumb of prefix">
+        {{ breadcrumb }}
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
+        <ng-container *ngIf="breadcrumb.active || !breadcrumb.url; else navBreadcrumb">
+            {{ breadcrumb.display }}
+        </ng-container>
+        <ng-template #navBreadcrumb>
+            <a [routerLink]="breadcrumb.url">{{ breadcrumb.display }}</a>
+        </ng-template>
+    </nz-breadcrumb-item>
+</nz-breadcrumb>

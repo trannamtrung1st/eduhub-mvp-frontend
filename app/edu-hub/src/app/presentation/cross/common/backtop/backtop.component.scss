@@ -1,0 +1,13 @@
+@import "variables";
+
+$back-top-size: 50px;
+
+.edh-back-top {
+    width: $back-top-size;
+    height: $back-top-size;
+    line-height: $back-top-size;
+    background: rgba($brand-black, 0.5);
+    color: $brand-white;
+    text-align: center;
+    font-size: x-large;
+}

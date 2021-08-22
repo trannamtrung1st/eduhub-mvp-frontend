@@ -16,6 +16,7 @@
 @import "layout";
 @import "text";
 @import "table";
+@import "markdown";
 
 /* =======================================================
 *
@@ -751,39 +752,6 @@ figure {
     margin-bottom: 10px;
     font-weight: 700;
     text-transform: uppercase;
-}
-.gototop {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    @include transition(0.5s);
-    &.active {
-        opacity: 1;
-        visibility: visible;
-    }
-    a {
-        width: 50px;
-        height: 50px;
-        display: table;
-        background: rgba(0, 0, 0, 0.5);
-        color: $brand-white;
-        text-align: center;
-        border-radius: unset;
-        i {
-            height: 50px;
-            display: table-cell;
-            vertical-align: middle;
-        }
-        &:hover,
-        &:active,
-        &:focus {
-            text-decoration: none;
-            outline: none;
-        }
-    }
 }
 
 // Burger Menu

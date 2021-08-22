@@ -6,7 +6,7 @@ import { AuthModule as PresentationAuthModule } from '@presentation/auth/auth.mo
 import { ROUTING_DATA } from '@presentation/constants';
 import { A_ROUTING, ROUTING } from '@app/constants';
 
-import { RoutingData } from '@presentation/auth/routing/models/routing-data.model';
+import { RoutingData } from '@presentation/cross/routing/models/routing-data.model';
 
 import { AnonymousOnlyPolicy } from '@presentation/auth/policies/anonymous-only.policy';
 
@@ -25,8 +25,20 @@ const routes: Routes = [
     component: NormalLayoutComponent,
     children: [
       { path: ROUTING.platform.home, component: HomePageComponent },
-      { path: ROUTING.platform.videoDetail, component: VideoDetailPageComponent },
-      { path: ROUTING.platform.blogDetail, component: BlogDetailPageComponent }
+      {
+        path: ROUTING.platform.video.base,
+        children: [
+          { path: ROUTING.platform.video.detail, component: VideoDetailPageComponent },
+          { path: '', redirectTo: A_ROUTING.platform.home }
+        ]
+      },
+      {
+        path: ROUTING.platform.blog.base,
+        children: [
+          { path: ROUTING.platform.blog.detail, component: BlogDetailPageComponent },
+          { path: '', redirectTo: A_ROUTING.platform.home }
+        ]
+      }
     ]
   },
   {
