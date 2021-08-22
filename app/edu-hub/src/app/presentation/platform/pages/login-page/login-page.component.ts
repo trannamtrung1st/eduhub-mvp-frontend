@@ -6,6 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { Navigate } from '@ngxs/router-plugin';
 import { Observable } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { FormHelper } from '@cross/form/form-helper';
 
@@ -41,6 +42,7 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
     @Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
     private _formBuilder: FormBuilder,
+    private _nzMessageService: NzMessageService,
     private _store: Store
   ) {
     super(platformId, transferState);
@@ -65,7 +67,7 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
     isBrowser && this._store.dispatch(new LoaderCommands.Hide());
   }
 
-  onFormSubmitted(): void {
+  onFormSubmit(): void {
     const isValid = FormHelper.validateFormGroup(this.loginFormGroup);
     if (!isValid) return;
 

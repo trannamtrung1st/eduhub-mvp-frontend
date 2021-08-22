@@ -16,6 +16,7 @@ import { LoginPageComponent } from '@presentation/platform/pages/login-page/logi
 import { RegisterPageComponent } from '@presentation/platform/pages/register-page/register-page.component';
 import { VideoDetailPageComponent } from './pages/video-detail-page/video-detail-page.component';
 import { BlogDetailPageComponent } from './pages/blog-detail-page/blog-detail-page.component';
+import { FeedbackPageComponent } from './pages/feedback-page/feedback-page.component';
 
 import { RoutingAuthService } from '@presentation/auth/routing/routing-auth.service';
 
@@ -38,7 +39,11 @@ const routes: Routes = [
           { path: ROUTING.platform.blog.detail, component: BlogDetailPageComponent },
           { path: '', redirectTo: A_ROUTING.platform.home }
         ]
-      }
+      },
+      {
+        path: ROUTING.platform.feedback,
+        component: FeedbackPageComponent
+      },
     ]
   },
   {

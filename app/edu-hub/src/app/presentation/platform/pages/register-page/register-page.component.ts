@@ -4,6 +4,7 @@ import { TransferState } from '@angular/platform-browser';
 
 import { Store } from '@ngxs/store';
 import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { FormHelper } from '@cross/form/form-helper';
 import { AppValidators } from '@cross/form/app-validators';
@@ -36,6 +37,7 @@ export class RegisterPageComponent extends BaseComponent<RegisterPageState> impl
   constructor(@Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
     private _store: Store,
+    private _nzMessageService: NzMessageService,
     private _formBuilder: FormBuilder) {
     super(platformId, transferState);
   }
@@ -66,11 +68,11 @@ export class RegisterPageComponent extends BaseComponent<RegisterPageState> impl
     isBrowser && this._store.dispatch(new LoaderCommands.Hide());
   }
 
-  onFormSubmitted(): void {
+  onFormSubmit(): void {
     const isValid = FormHelper.validateFormGroup(this.registerFormGroup);
     if (!isValid) return;
 
-    alert('Register done');
+    this._nzMessageService.success('[TODO] Register successfully');
   }
 
   updateConfirmValidator(): void {

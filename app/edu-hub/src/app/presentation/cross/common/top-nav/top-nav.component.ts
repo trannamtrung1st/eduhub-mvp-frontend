@@ -6,6 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { cloneDeep } from 'lodash';
 
 import { A_ROUTING } from '@app/constants';
+import { NAV_ITEMS } from './constants';
 
 import { UserModel } from '@core/identity/models/user-model';
 import { UserViewModel } from './view-models/user-view.model';
@@ -21,6 +22,7 @@ import { CurrentUserState } from '@core/identity/states/current-user.state';
 export class TopNavComponent implements OnInit {
 
   A_ROUTING = A_ROUTING;
+  NAV_ITEMS = NAV_ITEMS;
 
   currentUser$!: Observable<UserViewModel>;
 

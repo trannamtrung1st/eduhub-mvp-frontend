@@ -10,6 +10,7 @@ interface AppRouting {
         home: string,
         login: string,
         registration: string,
+        feedback: string,
         video: {
             [BASE_KEYWORD]: string,
             detail: string
@@ -47,6 +48,7 @@ export const ROUTING: AppRouting = {
         home: '',
         login: 'login',
         registration: 'registration',
+        feedback: 'feedback',
         video: {
             [BASE_KEYWORD]: 'video',
             detail: ':id'

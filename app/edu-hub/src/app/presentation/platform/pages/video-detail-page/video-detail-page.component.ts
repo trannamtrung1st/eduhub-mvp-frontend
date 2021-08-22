@@ -6,6 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { APP_STATUS_STATES } from '@core/global/states/global.state';
 import { COMMENTS } from '@domains/comment/constants';
@@ -45,6 +46,7 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
     @Inject(PLATFORM_ID) platformId: object,
     transferState: TransferState,
     private _store: Store,
+    private _nzMessageService: NzMessageService,
     private _route: ActivatedRoute) {
     super(platformId, transferState);
     this.recommendedVideos = [];
@@ -106,8 +108,8 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
             this._store.dispatch(new GlobalCommands.ChangeAppStatus(APP_STATUS_STATES.pageNotFound));
           } break;
           default: {
-            isBrowser && alert('Unknown error') ||
-              console.log('Unknown error');
+            if (isBrowser) this._nzMessageService.error('[TODO] Unknown error');
+            else console.log('[TODO] Unknown error');
           } break;
         }
         return false;

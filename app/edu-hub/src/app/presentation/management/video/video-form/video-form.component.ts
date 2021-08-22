@@ -48,7 +48,7 @@ export class VideoFormComponent extends BaseComponent<VideoFormState> implements
     this._store.dispatch(new LoaderCommands.Hide());
   }
 
-  onFormSubmitted(): void {
+  onFormSubmit(): void {
     const isValid = FormHelper.validateFormGroup(this.uploadFormGroup);
     if (!isValid) return;
   }

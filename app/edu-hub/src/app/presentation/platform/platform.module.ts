@@ -11,6 +11,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { VideoDetailPageComponent } from './pages/video-detail-page/video-detail-page.component';
 import { BlogDetailPageComponent } from './pages/blog-detail-page/blog-detail-page.component';
+import { FeedbackPageComponent } from './pages/feedback-page/feedback-page.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BlogDetailPageComponent } from './pages/blog-detail-page/blog-detail-pa
     LoginPageComponent,
     RegisterPageComponent,
     VideoDetailPageComponent,
-    BlogDetailPageComponent
+    BlogDetailPageComponent,
+    FeedbackPageComponent
   ],
   imports: [
     ...SHARED_PRESENTATION_MODULES,

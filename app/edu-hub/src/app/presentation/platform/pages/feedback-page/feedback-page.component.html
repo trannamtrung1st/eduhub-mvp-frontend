@@ -1,0 +1,41 @@
+<div class="edh-feedback-container" style="background-image:url(/assets/images/feedback-bg.jpg);">
+    <div class="container vh-100">
+        <div class="row h-100">
+            <div class="col-5 offset-6 h-100 bg-white">
+                <div class="row h-100">
+                    <div class="col-12 my-auto">
+                        <h1 class="text-center">Your feedback matters</h1>
+                        <form nz-form [formGroup]="feedbackFormGroup" (ngSubmit)="onFormSubmit()">
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="5" nzRequired nzFor="email">Email</nz-form-label>
+                                <nz-form-control [nzSpan]="10" nzErrorTip="Please input your email">
+                                    <input type="email" id="email" nz-input formControlName="email"
+                                        placeholder="Please input your email" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Name</nz-form-label>
+                                <nz-form-control [nzSpan]="10" nzErrorTip="Please input your name">
+                                    <input id="name" nz-input formControlName="name"
+                                        placeholder="Please input your name" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="5" nzRequired nzFor="feedback">Feedback</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="Must be at least 25 characters">
+                                    <textarea id="feedback" nz-input formControlName="feedback" rows="7"
+                                        placeholder="Please input your feedback (At least 25 characters)"></textarea>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control [nzSpan]="8" [nzOffset]="5">
+                                    <button nz-button nzType="primary" nzSize="large" class="px-5">Submit</button>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

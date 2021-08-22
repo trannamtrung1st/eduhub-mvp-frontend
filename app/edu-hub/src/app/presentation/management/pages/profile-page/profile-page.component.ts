@@ -63,7 +63,7 @@ export class ProfilePageComponent extends BaseComponent<ProfileState> implements
     this._store.dispatch(new LoaderCommands.Hide());
   }
 
-  onFormSubmitted(): void {
+  onFormSubmit(): void {
     const isValid = FormHelper.validateFormGroup(this.profileFormGroup);
     if (!isValid) return;
   }
