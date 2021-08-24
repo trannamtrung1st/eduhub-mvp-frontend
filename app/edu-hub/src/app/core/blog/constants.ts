@@ -1,9 +1,6 @@
 export const BLOG_STATES = {
     blog: {
-        name: 'blog',
-        blogList: {
-            name: 'blogList'
-        }
+        name: 'blog'
     }
 };
 

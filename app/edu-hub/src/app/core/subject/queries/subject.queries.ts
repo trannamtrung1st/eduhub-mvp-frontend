@@ -1,5 +1,8 @@
-export namespace SubjectQueries {
-    export class GetAll {
-        static readonly type = '[EduHub] Get All Subjects';
-    }
+import { GetAllSubjectsQuery } from "./get-all-subjects/get-all-subjects.query";
+
+const SubjectQueries = null;
+
+export {
+    GetAllSubjectsQuery as GetAll,
+    SubjectQueries
 }

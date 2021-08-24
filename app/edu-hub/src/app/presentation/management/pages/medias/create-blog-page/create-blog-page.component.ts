@@ -3,7 +3,7 @@ import { TransferState } from '@angular/platform-browser';
 
 import { Store } from '@ngxs/store';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -28,7 +28,7 @@ export class CreateBlogPageComponent extends BaseComponent<CreateBlogState> impl
     super.ngOnInit();
     if (this.isPlatformServer) return;
 
-    this._store.dispatch(new LoaderCommands.Hide());
+    this._store.dispatch(new CommonCommands.HideLoader());
   }
 }
 

@@ -1,28 +1,12 @@
-import { PAGINATION } from "@cross/pagination/constants";
-import { BlogFilterSortBy } from "../constants";
+import { FilterBlogQuery } from "./filter-blog/filter-blog.query";
+import { GetRandomBlogsQuery } from "./get-random-blogs/get-random-blogs.query";
+import { GetRecommendedBlogsQuery } from "./get-recommended-blogs/get-recommended-blogs.query";
 
-export namespace BlogQueries {
-    export class Filter {
-        static readonly type = '[EduHub] Filter Blogs';
+const BlogQueries = null;
 
-        searchTerm?: string;
-
-        constructor(public skip: number = 0,
-            public take: number = PAGINATION.defaultPageSize,
-            public subjects: number[] = [],
-            public sortBy: BlogFilterSortBy = BlogFilterSortBy.Rating,
-            public isDesc: boolean = true) {
-        }
-    }
-
-    export class GetRecommended {
-        static readonly type = '[EduHub] Get Recommended Blogs';
-
-        constructor(public relatedToBlogId: string) {
-        }
-    }
-
-    export class GetRandomList {
-        static readonly type = '[EduHub] Get Random Blogs';
-    }
+export {
+    FilterBlogQuery as Filter,
+    GetRandomBlogsQuery as GetRandom,
+    GetRecommendedBlogsQuery as GetRecommended,
+    BlogQueries
 }

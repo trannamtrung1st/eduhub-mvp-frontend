@@ -10,8 +10,6 @@ import { DEFAULT_STREAM_URL } from '@domains/video/constants';
 
 import { FormHelper } from '@cross/form/form-helper';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 @Component({
@@ -44,8 +42,6 @@ export class VideoFormComponent extends BaseComponent<VideoFormState> implements
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
     });
-
-    this._store.dispatch(new LoaderCommands.Hide());
   }
 
   onFormSubmit(): void {

@@ -8,19 +8,18 @@ import { withLatestFrom } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { APP_STATUS_STATES } from '@core/global/states/global.state';
+import { APP_STATUS_STATES } from '@core/common/states/common.state';
 import { COMMENTS } from '@domains/comment/constants';
 
-import { GlobalCommands } from '@core/global/commands/global.commands';
-import { VideoDetailModel } from '@core/video/models/video-detail.model';
+import { VideoDetailModel } from '@core/video/states/models/video-detail.model';
 import { VideoDetailViewModel } from './view-model/video-detail-view.model';
-import { VideoQueries } from '@core/video/queries/video.queries';
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { VideoModel } from '@core/video/models/video.model';
+import { VideoModel } from '@core/video/states/models/video.model';
 import { VideoViewModel } from '@presentation/cross/video/video-list-item/view-models/video-view.model';
+import { VideoDetailEvent } from '@core/video/states/models/video-detail-event.model';
+import * as CommonCommands from '@core/common/commands/common.commands';
+import * as VideoQueries from '@core/video/queries/video.queries';
 
-import { CurrentWatchingVideoState, GET_VIDEO_DETAIL_STATES } from '@core/video/states/current-watching-video.state';
-import { VideoListState } from '@core/video/states/video-list.state';
+import { VideoState } from '@core/video/states/video.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -36,11 +35,10 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
   video?: VideoDetailViewModel;
   comments = COMMENTS;
   recommendedVideos: VideoViewModel[];
-  videoFound: boolean;
   currentComment: string;
 
-  @Select(CurrentWatchingVideoState.video) private _video$!: Observable<VideoDetailModel>;
-  @Select(VideoListState.recommendedVideos) private _recommendedVideos$!: Observable<VideoModel[]>;
+  @Select(VideoState.videoDetailEvent) private _videoDetailEvent$!: Observable<VideoDetailEvent>;
+  @Select(VideoState.recommendedVideos) private _recommendedVideos$!: Observable<VideoModel[]>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -50,7 +48,6 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
     private _route: ActivatedRoute) {
     super(platformId, transferState);
     this.recommendedVideos = [];
-    this.videoFound = true;
     this.currentComment = '';
   }
 
@@ -65,7 +62,7 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
         const pageEl = document.querySelector('html') as HTMLElement;
         pageEl.scrollTop = 0;
         this.video = undefined;
-        this._store.dispatch(new LoaderCommands.Reset());
+        this._store.dispatch(new CommonCommands.ResetLoader());
       }
 
       if (this.shouldLoad) {
@@ -75,44 +72,30 @@ export class VideoDetailPageComponent extends BaseComponent<VideoDetailState> im
         if (this.isPlatformServer) {
           await Promise.all([getVideoDetail$, getRecommendedVideos$]);
           this.setTransferredState(new VideoDetailState(
-            this.video, this.videoFound, this.recommendedVideos
+            this.video, this.recommendedVideos
           ));
         } else {
-          getVideoDetail$.then(success => success && this._store.dispatch(new LoaderCommands.Hide()));
+          getVideoDetail$.then(() => this.video && this._store.dispatch(new CommonCommands.HideLoader()));
         }
       } else {
         this.patchTransferredState(this);
-        isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+        isBrowser && this._store.dispatch(new CommonCommands.HideLoader());
       }
     });
   }
 
   private _getVideoDetail(id: string) {
+    const isBrowser = !this.isPlatformServer;
     return this._store.dispatch(new VideoQueries.GetDetail(id))
-      .pipe(withLatestFrom(this._video$))
+      .pipe(withLatestFrom(this._videoDetailEvent$))
       .toPromise()
-      .then(([_, video]) => {
-        if (video) {
-          this.video = cloneDeep(video);
-          return true;
+      .then(([_, { success, notFound }]) => {
+        if (success) {
+          this.video = cloneDeep(success.videoDetail);
+        } else if (notFound) {
+          !isBrowser && console.log('Video not found');
+          this._store.dispatch(new CommonCommands.ChangeAppStatus(APP_STATUS_STATES.pageNotFound));
         }
-
-        const isBrowser = !this.isPlatformServer;
-        const getVideoDetailState = this._store.selectSnapshot(CurrentWatchingVideoState.getVideoDetailState);
-
-        // [TODO] Handle errors
-        switch (getVideoDetailState) {
-          case GET_VIDEO_DETAIL_STATES.notFound: {
-            !isBrowser && console.log('Video not found');
-            this.videoFound = false;
-            this._store.dispatch(new GlobalCommands.ChangeAppStatus(APP_STATUS_STATES.pageNotFound));
-          } break;
-          default: {
-            if (isBrowser) this._nzMessageService.error('[TODO] Unknown error');
-            else console.log('[TODO] Unknown error');
-          } break;
-        }
-        return false;
       });
   }
 
@@ -131,7 +114,6 @@ class VideoDetailState {
 
   constructor(
     public video?: VideoDetailModel,
-    public videoFound: boolean = true,
     public recommendedVideos: VideoViewModel[] = [],
   ) {
   }

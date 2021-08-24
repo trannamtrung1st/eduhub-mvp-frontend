@@ -9,11 +9,11 @@ import { cloneDeep } from 'lodash';
 
 import { FormHelper } from '@cross/form/form-helper';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { UserModel } from '@core/identity/models/user-model';
+import { UserModel } from '@core/identity/states/models/user-model';
 import { UserViewModel } from './view-models/user-view.model';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
-import { CurrentUserState } from '@core/identity/states/current-user.state';
+import { IdentityState } from '@core/identity/states/identity.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -30,7 +30,7 @@ export class ProfilePageComponent extends BaseComponent<ProfileState> implements
   currentUser$!: Observable<UserViewModel>;
   incomes = INCOME_MOCK_DATA;
 
-  @Select(CurrentUserState.currentUser) private _currentUser$!: Observable<UserModel>;
+  @Select(IdentityState.currentUser) private _currentUser$!: Observable<UserModel>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -60,7 +60,7 @@ export class ProfilePageComponent extends BaseComponent<ProfileState> implements
       this._patchFormValue(user);
     }));
 
-    this._store.dispatch(new LoaderCommands.Hide());
+    this._store.dispatch(new CommonCommands.HideLoader());
   }
 
   onFormSubmit(): void {

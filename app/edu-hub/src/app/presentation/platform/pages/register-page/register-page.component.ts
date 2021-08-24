@@ -12,7 +12,7 @@ import { AppValidators } from '@cross/form/app-validators';
 import { A_ROUTING } from '@app/constants';
 import { LogoSize } from '@presentation/cross/common/logo/constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -65,7 +65,7 @@ export class RegisterPageComponent extends BaseComponent<RegisterPageState> impl
       agree: [false]
     });
 
-    isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+    isBrowser && this._store.dispatch(new CommonCommands.HideLoader());
   }
 
   onFormSubmit(): void {

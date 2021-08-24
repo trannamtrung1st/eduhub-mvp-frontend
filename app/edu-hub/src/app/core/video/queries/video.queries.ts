@@ -1,35 +1,20 @@
-import { PAGINATION } from "@cross/pagination/constants";
-import { VideoFilterSortBy } from "../constants";
+import { FilterVideoQuery } from "./filter-video/filter-video.query";
+import { GetRandomVideosQuery } from "./get-random-videos/get-random-videos.query";
+import { GetRecommendedVideosQuery } from "./get-recommended-videos/get-recommended-videos.query";
+import { GetVideoDetailNotFound } from "./get-video-detail/get-video-detail-notfound.event";
+import { GetVideoDetailSuccess } from "./get-video-detail/get-video-detail-success.event";
+import { GetVideoDetailQuery } from "./get-video-detail/get-video-detail.query";
 
-export namespace VideoQueries {
-    export class Filter {
-        static readonly type = '[EduHub] Filter Videos';
+const VideoQueries = null;
 
-        searchTerm?: string;
+export {
+    FilterVideoQuery as Filter,
+    GetRandomVideosQuery as GetRandomList,
+    GetRecommendedVideosQuery as GetRecommended,
 
-        constructor(public skip: number = 0,
-            public take: number = PAGINATION.defaultPageSize,
-            public subjects: number[] = [],
-            public sortBy: VideoFilterSortBy = VideoFilterSortBy.Rating,
-            public isDesc: boolean = true) {
-        }
-    }
+    GetVideoDetailQuery as GetDetail,
+    GetVideoDetailSuccess as GetDetailSuccess,
+    GetVideoDetailNotFound as GetDetailNotFound,
 
-    export class GetDetail {
-        static readonly type = '[EduHub] Get Video Detail';
-
-        constructor(public id: string) {
-        }
-    }
-
-    export class GetRecommended {
-        static readonly type = '[EduHub] Get Recommended Videos';
-
-        constructor(public relatedToVideoId: string) {
-        }
-    }
-
-    export class GetRandomList {
-        static readonly type = '[EduHub] Get Random Videos';
-    }
+    VideoQueries
 }

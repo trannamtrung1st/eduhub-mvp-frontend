@@ -1,21 +1,6 @@
 export const VIDEO_STATES = {
     video: {
-        name: 'video',
-        videoList: {
-            name: 'videoList',
-            states: {}
-        },
-        currentWatchingVideo: {
-            name: 'currentWatching',
-            states: {
-                getDetail: {
-                    success: 'success',
-                    notFound: 'notFound',
-                    error: 'error',
-                    unset: 'unset'
-                }
-            }
-        }
+        name: 'video'
     }
 };
 

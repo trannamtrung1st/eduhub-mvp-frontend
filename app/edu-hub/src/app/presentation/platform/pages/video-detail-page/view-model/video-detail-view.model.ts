@@ -1,4 +1,4 @@
-import { VideoDetailModel } from "@core/video/models/video-detail.model";
+import { VideoDetailModel } from "@core/video/states/models/video-detail.model";
 
 export class VideoDetailViewModel implements VideoDetailModel {
     thumbnailUrl?: string | undefined;

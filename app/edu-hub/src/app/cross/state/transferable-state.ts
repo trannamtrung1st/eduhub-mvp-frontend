@@ -23,41 +23,55 @@ export abstract class TransferableState<StateType> implements NgxsOnInit {
         this.initStateFlags();
     }
 
-    getTransferredState(defaultValue: StateType): StateType {
+    protected getTransferredState(defaultValue: StateType): StateType {
         return this.transferStateKey
             ? this.transferState.get(this.transferStateKey, defaultValue)
             : defaultValue;
     }
 
-    setTransferredState(state: StateType): void {
+    protected setTransferredState(state: StateType): void {
         if (!this.transferStateKey)
             throw new Error("Transfer state key has not been initialized yet");
         this.transferState.set(this.transferStateKey, state);
     }
 
-    updateTransferredState(patcher: (state: StateType) => void, defaultValue: StateType): void {
+    protected updateTransferredState(patcher: (state: StateType) => void, defaultValue: StateType): void {
         if (!this.transferStateKey)
             throw new Error("Transfer state key has not been initialized yet");
         const currentState = this.transferState.get(this.transferStateKey, defaultValue);
         patcher(currentState);
     }
 
-    initStateFlags() {
+    protected initStateFlags() {
         this.transferStateKey = makeStateKey<StateType>(this.transferStateKeyName);
         this.shouldLoad = !this.transferState.hasKey(this.transferStateKey)
             || this.isPlatformServer;
     }
 
-    patchTransferredState(dest: StateType, defaultValue?: StateType) {
+    protected patchTransferredState(dest: StateType, defaultValue?: StateType) {
         const transferredState = this.getTransferredState(defaultValue || dest);
         Object.assign(dest, transferredState);
         this.removeTransferredState();
     }
 
-    removeTransferredState() {
+    protected removeTransferredState() {
         if (!this.transferStateKey)
             throw new Error("Transfer state key has not been initialized yet");
         this.transferState.remove(this.transferStateKey);
         this.shouldLoad = true;
+    }
+
+    protected initOrPatchState(transferredState: StateType, ctx?: StateContext<StateType>) {
+        if (this.shouldLoad) {
+            this.isPlatformServer && this.setTransferredState(transferredState);
+        } else {
+            this.patchTransferredState(transferredState);
+            ctx?.setState(transferredState);
+        }
+    }
+
+    protected tryTransferState(patch: Partial<StateType>, defaultState: StateType) {
+        this.shouldLoad && this.isPlatformServer
+            && this.updateTransferredState((state) => Object.assign(state, patch), defaultState);
     }
 }

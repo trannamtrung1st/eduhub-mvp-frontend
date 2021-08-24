@@ -11,12 +11,12 @@ import { SwiperComponent } from 'swiper/angular';
 
 import { COMMENTS } from '@domains/comment/constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { BlogQueries } from '@core/blog/queries/blog.queries';
-import { BlogModel } from '@core/blog/models/blog.model';
+import * as CommonCommands from '@core/common/commands/common.commands';
+import * as BlogQueries from '@core/blog/queries/blog.queries';
+import { BlogModel } from '@core/blog/states/models/blog.model';
 import { BlogViewModel } from '@presentation/cross/blog/blog-list-item/view-models/blog-view.model';
 
-import { BlogListState } from '@core/blog/states/blog-list.state';
+import { BlogState } from '@core/blog/states/blog.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -40,7 +40,7 @@ export class BlogDetailPageComponent extends BaseComponent<BlogDetailState> impl
   comments = COMMENTS;
   currentComment: string;
 
-  @Select(BlogListState.recommendedBlogs) private _recommendedBlogs$!: Observable<BlogModel[]>;
+  @Select(BlogState.recommendedBlogs) private _recommendedBlogs$!: Observable<BlogModel[]>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -63,7 +63,7 @@ export class BlogDetailPageComponent extends BaseComponent<BlogDetailState> impl
         const pageEl = document.querySelector('html') as HTMLElement;
         pageEl.scrollTop = 0;
         this.blog = undefined;
-        this._store.dispatch(new LoaderCommands.Reset());
+        this._store.dispatch(new CommonCommands.ResetLoader());
         this._recommendedBlogSwiper?.swiperRef.slideTo(0, 0);
       }
 
@@ -78,13 +78,13 @@ export class BlogDetailPageComponent extends BaseComponent<BlogDetailState> impl
         } else {
           // [TODO] Get blog detail
           this.blog = {} as BlogViewModel;
-          getRecommendedBlogs$.then(success => success && this._store.dispatch(new LoaderCommands.Hide()));
+          getRecommendedBlogs$.then(success => success && this._store.dispatch(new CommonCommands.HideLoader()));
         }
       } else {
         // [TODO] Get blog detail
         this.blog = {} as BlogViewModel;
         this.patchTransferredState(this);
-        isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+        isBrowser && this._store.dispatch(new CommonCommands.HideLoader());
       }
     });
   }

@@ -13,7 +13,7 @@ import { A_ROUTING } from '@app/constants';
 import { AuthContext } from '../models/auth-context.model';
 import { RoutingData } from '@presentation/cross/routing/models/routing-data.model';
 
-import { CurrentUserState } from '@core/identity/states/current-user.state';
+import { IdentityState } from '@core/identity/states/identity.state';
 
 @Injectable({
   providedIn: AuthModule
@@ -28,7 +28,7 @@ export class RoutingAuthService implements CanActivate {
     const isBrowser = isPlatformBrowser(this._platformId);
 
     if (isBrowser) {
-      const user = this._store.selectSnapshot(CurrentUserState.currentUser);
+      const user = this._store.selectSnapshot(IdentityState.currentUser);
       const authContext = new AuthContext(!!user, user);
       const routeData = route.data as RoutingData | undefined;
       const policies = routeData?.policies;

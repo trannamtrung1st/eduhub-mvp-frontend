@@ -1,4 +1,4 @@
-import { UserModel } from "@core/identity/models/user-model";
+import { UserModel } from "@core/identity/states/models/user-model";
 import { AuthResult } from "./auth-result.model";
 
 export class AuthContext {

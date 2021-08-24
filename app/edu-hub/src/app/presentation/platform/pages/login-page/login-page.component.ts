@@ -13,14 +13,14 @@ import { FormHelper } from '@cross/form/form-helper';
 import { A_ROUTING } from '@app/constants';
 import { LogoSize } from '@presentation/cross/common/logo/constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { IdentityCommands } from '@core/identity/commands/identity.commands';
+import * as CommonCommands from '@core/common/commands/common.commands';
+import * as IdentityCommands from '@core/identity/commands/identity.commands';
 import { LoginViewModel } from './view-models/login-view.model';
-import { UserModel } from '@core/identity/models/user-model';
+import { UserModel } from '@core/identity/states/models/user-model';
+
+import { IdentityState } from '@core/identity/states/identity.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
-
-import { CurrentUserState } from '@core/identity/states/current-user.state';
 
 @Component({
   selector: 'app-login-page',
@@ -36,7 +36,7 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
   logoSize = LogoSize.large;
   loginFormGroup!: FormGroup;
 
-  @Select(CurrentUserState.currentUser) private _currentUser$!: Observable<UserModel>;
+  @Select(IdentityState.currentUser) private _currentUser$!: Observable<UserModel>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -64,7 +64,7 @@ export class LoginPageComponent extends BaseComponent<LoginPageState> implements
       remember: [true]
     });
 
-    isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+    isBrowser && this._store.dispatch(new CommonCommands.HideLoader());
   }
 
   onFormSubmit(): void {
