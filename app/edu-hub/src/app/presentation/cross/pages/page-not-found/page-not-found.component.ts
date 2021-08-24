@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 
 import { A_ROUTING } from '@app/constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
 @Component({
   selector: 'app-page-not-found',
@@ -21,7 +21,7 @@ export class PageNotFoundComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
-      this._store.dispatch(new LoaderCommands.Hide());
+      this._store.dispatch(new CommonCommands.HideLoader());
     }
   }
 

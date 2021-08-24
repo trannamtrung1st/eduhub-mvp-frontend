@@ -8,16 +8,16 @@ import { cloneDeep } from 'lodash';
 
 import { A_ROUTING } from '@app/constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { VideoModel } from '@core/video/models/video.model';
+import { VideoModel } from '@core/video/states/models/video.model';
 import { VideoViewModel } from '@presentation/cross/video/video-list-item/view-models/video-view.model';
-import { VideoQueries } from '@core/video/queries/video.queries';
-import { BlogModel } from '@core/blog/models/blog.model';
+import { BlogModel } from '@core/blog/states/models/blog.model';
 import { BlogViewModel } from '@presentation/cross/blog/blog-list-item/view-models/blog-view.model';
-import { BlogQueries } from '@core/blog/queries/blog.queries';
+import * as BlogQueries from '@core/blog/queries/blog.queries';
+import * as VideoQueries from '@core/video/queries/video.queries';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
-import { VideoListState } from '@core/video/states/video-list.state';
-import { BlogListState } from '@core/blog/states/blog-list.state';
+import { VideoState } from '@core/video/states/video.state';
+import { BlogState } from '@core/blog/states/blog.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -35,8 +35,8 @@ export class MediasPageComponent extends BaseComponent<MediasState> implements O
   videos: VideoViewModel[];
   blogs: BlogViewModel[];
 
-  @Select(VideoListState.randomVideos) private _videos$!: Observable<VideoModel[]>;
-  @Select(BlogListState.randomBlogs) private _blogs$!: Observable<BlogModel[]>;
+  @Select(VideoState.randomVideos) private _videos$!: Observable<VideoModel[]>;
+  @Select(BlogState.randomBlogs) private _blogs$!: Observable<BlogModel[]>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -55,7 +55,7 @@ export class MediasPageComponent extends BaseComponent<MediasState> implements O
     this._getVideos();
     this._getBlogs();
 
-    this._store.dispatch(new LoaderCommands.Hide());
+    this._store.dispatch(new CommonCommands.HideLoader());
   }
 
   private _getVideos() {
@@ -72,7 +72,7 @@ export class MediasPageComponent extends BaseComponent<MediasState> implements O
   }
 
   private _getBlogs() {
-    return this._store.dispatch(new BlogQueries.GetRandomList())
+    return this._store.dispatch(new BlogQueries.GetRandom())
       .pipe(withLatestFrom(this._blogs$))
       .toPromise()
       .then(([_, blogs]) => {

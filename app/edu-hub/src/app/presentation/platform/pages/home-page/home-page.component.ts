@@ -19,19 +19,19 @@ import { FormInputViewModel } from './view-models/form-input-view.model';
 import { SortByViewModel } from './view-models/sort-by.model';
 import { PaginationModel } from '@cross/pagination/models/pagination.model';
 import { FilterResponseModel } from '@cross/filter/models/filter-response.model';
-import { SubjectModel } from '@core/subject/models/subject.model';
-import { SubjectQueries } from '@core/subject/queries/subject.queries';
-import { VideoQueries } from '@core/video/queries/video.queries';
-import { VideoModel } from '@core/video/models/video.model';
-import { BlogQueries } from '@core/blog/queries/blog.queries';
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-import { BlogModel } from '@core/blog/models/blog.model';
+import { SubjectModel } from '@core/subject/states/models/subject.model';
+import { VideoModel } from '@core/video/states/models/video.model';
+import { BlogModel } from '@core/blog/states/models/blog.model';
 import { VideoViewModel } from '@presentation/cross/video/video-list-item/view-models/video-view.model';
 import { BlogViewModel } from '@presentation/cross/blog/blog-list-item/view-models/blog-view.model';
+import * as SubjectQueries from '@core/subject/queries/subject.queries';
+import * as VideoQueries from '@core/video/queries/video.queries';
+import * as BlogQueries from '@core/blog/queries/blog.queries';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
-import { AllSubjectsState } from '@core/subject/states/all-subjects.state';
-import { VideoListState } from '@core/video/states/video-list.state';
-import { BlogListState } from '@core/blog/states/blog-list.state';
+import { BlogState } from '@core/blog/states/blog.state';
+import { VideoState } from '@core/video/states/video.state';
+import { SubjectState } from '@core/subject/states/subject.state';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -63,10 +63,10 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
   filterModel: FilterViewModel;
   formInputModel: FormInputViewModel;
 
-  @Select(AllSubjectsState.subjects) private _subjects$!: Observable<SubjectModel[]>;
-  @Select(AllSubjectsState.subjectNames) private _subjectNames$!: Observable<string>;
-  @Select(VideoListState.videos) private _videos$!: Observable<FilterResponseModel<VideoModel>>;
-  @Select(BlogListState.blogs) private _blogs$!: Observable<FilterResponseModel<BlogModel>>;
+  @Select(SubjectState.subjects) private _subjects$!: Observable<SubjectModel[]>;
+  @Select(SubjectState.subjectNames) private _subjectNames$!: Observable<string>;
+  @Select(VideoState.filteredVideos) private _videos$!: Observable<FilterResponseModel<VideoModel>>;
+  @Select(BlogState.filteredBlogs) private _blogs$!: Observable<FilterResponseModel<BlogModel>>;
   private _blogsReloaded: boolean;
 
   constructor(@Inject(PLATFORM_ID) platformId: object,
@@ -111,7 +111,7 @@ export class HomePageComponent extends BaseComponent<HomePageState> implements O
 
     if (isBrowser) {
       this._magnificService.initMagnificPopup();
-      this._store.dispatch(new LoaderCommands.Hide());
+      this._store.dispatch(new CommonCommands.HideLoader());
     }
   }
 

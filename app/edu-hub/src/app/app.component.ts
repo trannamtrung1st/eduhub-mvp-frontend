@@ -9,10 +9,10 @@ import { fading } from '@cross/animation/animation-helper';
 
 import { UNSUPPORTED_WIDTH } from './constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
+import { APP_STATUS_STATES, CommonState } from '@core/common/states/common.state';
 
-import { APP_STATUS_STATES, GlobalState } from '@core/global/states/global.state';
-import { LoaderState } from '@core/global/states/loader.state';
+import * as CommonCommands from '@core/common/commands/common.commands';
+import * as CommonEvents from '@core/common/events/common.events';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -30,9 +30,9 @@ export class AppComponent extends BaseComponent<AppState> implements OnInit, OnD
 
   APP_STATUS_STATES = APP_STATUS_STATES;
 
-  @Select(GlobalState.appStatus) appStatus$!: Observable<string>;
-  @Select(LoaderState.visibilityState) loaderVisibilityState$!: Observable<string>;
-  @Select(LoaderState.visible) loaderVisible$!: Observable<boolean>;
+  @Select(CommonState.appStatus) appStatus$!: Observable<string>;
+  @Select(CommonState.loaderVisibilityState) loaderVisibilityState$!: Observable<string>;
+  @Select(CommonState.loaderVisible) loaderVisible$!: Observable<boolean>;
   uiSupported: boolean;
 
   constructor(@Inject(PLATFORM_ID) platformId: object,
@@ -66,11 +66,11 @@ export class AppComponent extends BaseComponent<AppState> implements OnInit, OnD
   onPageDeactivated(_: any) {
     const pageEl = document.querySelector('html') as HTMLElement;
     pageEl.scrollTop = 0;
-    this._store.dispatch(new LoaderCommands.Reset());
+    this._store.dispatch(new CommonCommands.ResetLoader());
   }
 
   onLoaderAnimationDone(event: AnimationEvent) {
-    this._store.dispatch(new LoaderCommands.AnimationDone(event));
+    this._store.dispatch(new CommonEvents.LoaderAnimationDone(event));
   }
 
   private _checkWindowSizeSupport() {

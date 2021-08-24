@@ -1,19 +1,10 @@
-export namespace IdentityCommands {
-    export class Login {
-        static readonly type = '[EduHub] Log in User';
+import { LoginCommand } from "./log-in/log-in.command";
+import { LogoutCommand } from "./log-out/log-out.command";
 
-        constructor(public username: string, public password: string) {
-        }
-    }
+const IdentityCommands = null;
 
-    export class Logout {
-        static readonly type = '[EduHub] Log out User';
-
-        constructor() {
-        }
-    }
-
-    export class LoadCurrentUser {
-        static readonly type = '[EduHub] Load current user';
-    }
+export {
+    LoginCommand as Login,
+    LogoutCommand as Logout,
+    IdentityCommands
 }

@@ -5,8 +5,8 @@ import { Store } from '@ngxs/store';
 
 import { MENU_ITEMS } from '../constants';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
 import { MenuItemViewModel } from '../view-models/menu-item-view.model';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -50,7 +50,7 @@ export class NormalLayoutComponent extends BaseComponent<NormalLayoutState> impl
     if (this._lastActiveMenu) this._lastActiveMenu.active = false;
     const pageEl = document.querySelector('html') as HTMLElement;
     pageEl.scrollTop = 0;
-    this._store.dispatch(new LoaderCommands.Reset());
+    this._store.dispatch(new CommonCommands.ResetLoader());
   }
 
   onSiderCollapsedChanged(collapsed: boolean) {

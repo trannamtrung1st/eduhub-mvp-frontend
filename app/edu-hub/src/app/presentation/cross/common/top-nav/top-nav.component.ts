@@ -8,11 +8,11 @@ import { cloneDeep } from 'lodash';
 import { A_ROUTING } from '@app/constants';
 import { NAV_ITEMS } from './constants';
 
-import { UserModel } from '@core/identity/models/user-model';
+import { UserModel } from '@core/identity/states/models/user-model';
 import { UserViewModel } from './view-models/user-view.model';
-import { IdentityCommands } from '@core/identity/commands/identity.commands';
+import * as IdentityCommands from '@core/identity/commands/identity.commands';
 
-import { CurrentUserState } from '@core/identity/states/current-user.state';
+import { IdentityState } from '@core/identity/states/identity.state';
 
 @Component({
   selector: 'app-top-nav',
@@ -26,7 +26,7 @@ export class TopNavComponent implements OnInit {
 
   currentUser$!: Observable<UserViewModel>;
 
-  @Select(CurrentUserState.currentUser) private _currentUser$!: Observable<UserModel>;
+  @Select(IdentityState.currentUser) private _currentUser$!: Observable<UserModel>;
 
   constructor(private _store: Store) { }
 

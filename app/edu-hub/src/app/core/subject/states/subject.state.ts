@@ -1,25 +1,21 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
-import { NgxsOnInit, State, StateContext } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 
 import { SUBJECT_STATES } from '../constants';
 
-import { TransferableState } from '@cross/state/transferable-state';
-import { AllSubjectsState } from './all-subjects.state';
+import { SubjectModel } from './models/subject.model';
+import * as SubjectQueries from '../queries/subject.queries';
+import { SubjectStateModel } from './models/subject-state.model';
 
-class SubjectStateModel {
-    static get default() {
-        return new SubjectStateModel();
-    }
-}
+import { TransferableState } from '@cross/state/transferable-state';
+
+import { Mediator } from '@core/mediator';
 
 @State<SubjectStateModel>({
     name: SUBJECT_STATES.subject.name,
-    defaults: SubjectStateModel.default,
-    children: [
-        AllSubjectsState
-    ]
+    defaults: SubjectStateModel.default
 })
 @Injectable()
 export class SubjectState extends TransferableState<SubjectStateModel> implements NgxsOnInit {
@@ -27,20 +23,34 @@ export class SubjectState extends TransferableState<SubjectStateModel> implement
     protected transferStateKeyName: string = SubjectState.name;
 
     constructor(@Inject(PLATFORM_ID) platformId: object,
-        transferState: TransferState
+        transferState: TransferState,
+        private _mediator: Mediator
     ) {
         super(platformId, transferState);
     }
 
     ngxsOnInit(ctx?: StateContext<any>) {
         super.ngxsOnInit(ctx);
-        const transferredState = SubjectStateModel.default;
+        this.initOrPatchState(SubjectStateModel.default, ctx);
+    }
 
-        if (this.shouldLoad) {
-            this.isPlatformServer && this.setTransferredState(transferredState);
-        } else {
-            this.patchTransferredState(transferredState);
-            ctx?.setState(transferredState);
-        }
+    @Selector()
+    static subjects(state: SubjectStateModel) {
+        return state.subjects;
+    }
+
+    // [TODO]: demo only
+    @Selector([SubjectState.subjects])
+    static subjectNames(_: SubjectStateModel, subjects: SubjectModel[]) {
+        return subjects.map(subject => subject.name);
+    }
+
+    @Action(SubjectQueries.GetAll)
+    getAll(context: StateContext<SubjectStateModel>, query: SubjectQueries.GetAll) {
+        return this._mediator.handlers[SubjectQueries.GetAll.type](query).then((subjects) => {
+            const patch = { subjects };
+            context.patchState(patch);
+            this.tryTransferState(patch, SubjectStateModel.default);
+        });
     }
 }

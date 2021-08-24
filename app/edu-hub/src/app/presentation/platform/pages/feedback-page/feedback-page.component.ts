@@ -9,7 +9,7 @@ import { A_ROUTING } from '@app/constants';
 
 import { FormHelper } from '@cross/form/form-helper';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
+import * as CommonCommands from '@core/common/commands/common.commands';
 
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
@@ -51,7 +51,7 @@ export class FeedbackPageComponent extends BaseComponent<FeedbackState> implemen
       feedback: ['', [Validators.required, Validators.minLength(25)]]
     });
 
-    isBrowser && this._store.dispatch(new LoaderCommands.Hide());
+    isBrowser && this._store.dispatch(new CommonCommands.HideLoader());
   }
 
   onFormSubmit(): void {

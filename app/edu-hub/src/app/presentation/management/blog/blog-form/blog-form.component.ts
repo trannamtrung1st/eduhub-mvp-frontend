@@ -6,8 +6,6 @@ import { Store } from '@ngxs/store';
 
 import { FormHelper } from '@cross/form/form-helper';
 
-import { LoaderCommands } from '@core/global/commands/loader.commands';
-
 import { BaseComponent } from '@presentation/cross/components/base-component/base-component';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -46,8 +44,6 @@ export class BlogFormComponent extends BaseComponent<BlogFormState> implements O
       description: ['', [Validators.required]],
       blogContent: this.blogContentControl,
     });
-
-    this._store.dispatch(new LoaderCommands.Hide());
   }
 
   onFormSubmit(): void {
